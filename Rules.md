@@ -119,6 +119,8 @@ The five docs and the website are the project's record. They are updated **at th
 | R9.10 | **MUST** mark a withdrawn result as ⛔ with the reason and date, never silently remove it. |
 | R9.11 | **NEVER** publish `data/`, `.env`, cache files, annotation files, or labeled Exp 2 data on the site. CI checks the built `site/` folder for them. |
 | R9.12 | **SHOULD** keep each Session log entry under 10 lines. Detail belongs in commits and results folders. |
+| R9.13 | **MUST** update the `README.md` of every folder whose contents, scripts, or interfaces were added or modified during the session. |
+| R9.14 | **MUST** maintain a root `handover.md` file. Every agent/researcher session **MUST** start by reading `handover.md` to load recent state, and **MUST** conclude by updating `handover.md` with accomplishments, open blockers, decisions made, and exact next tasks. |
 
 ### 9.2 Session close procedure
 
@@ -130,10 +132,12 @@ Run in this order at the end of every session:
 3. Update Phase.md                              # Last updated, Current status, Snapshot, checkboxes, Session log
 4. Update Architecture.md                       # if structure changed (tree, diagrams, Change log)
 5. Update Design.md                             # if an interface or config changed
-6. mkdocs build --strict                        # site builds with zero warnings
-7. git add -A && git commit -m "session: <date> <one-line summary>"
-8. git push origin main                         # triggers the Pages deploy
-9. Report to researchers (Agent.md 5.3 format) with the Session log entry pasted in
+6. Update folder README.md files                # for all directories worked on (Rule R9.13)
+7. Update handover.md                           # session summary, blockers, next tasks (Rule R9.14)
+8. mkdocs build --strict                        # site builds with zero warnings
+9. git add -A && git commit -m "session: <date> <one-line summary>"
+10. git push origin main                        # triggers the Pages deploy
+11. Report to researchers (Agent.md 5.3 format) with the Session log entry pasted in
 ```
 
 ### 9.3 Session log entry format (in `Phase.md`)
@@ -147,3 +151,13 @@ Run in this order at the end of every session:
 - Open / blocked: <anything waiting on a human, with owner>
 - Next session: <first task>
 ```
+
+### 9.4 Handover file format (`handover.md`)
+
+`handover.md` sits at the repository root as the active relay between sessions. Each new session opens by reading `handover.md`. It contains:
+
+- **Current State**: Phase status, active branch, latest commit SHA.
+- **Accomplishments**: Work completed in the most recent session.
+- **Key Decisions**: Rationale for architectural or design choices made.
+- **Blockers & Pending Actions**: External dependencies (e.g. API keys, human review).
+- **Immediate Next Tasks**: Concrete next steps for the incoming agent or researcher.
