@@ -1,8 +1,8 @@
 site_name: MedVerify-C
 site_description: "Local NLI Cross-Encoder vs API-Based LLM-as-a-Judge for Hallucination Verification in Healthcare Agentic RAG"
-site_url: ""  # Set after repo is published
-repo_url: ""  # Set after repo is published
-repo_name: ""
+site_url: "https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/"
+repo_url: "https://github.com/saadktk10/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag"
+repo_name: "saadktk10/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag"
 
 theme:
   name: material
