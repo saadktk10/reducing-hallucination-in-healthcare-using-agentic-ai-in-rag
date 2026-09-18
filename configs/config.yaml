@@ -1,0 +1,79 @@
+project: hallucination-verifier-c
+seed: 42
+plan: 1                          # set after Week 1 pilot: 1 or 2
+
+paths:
+  data: data
+  cache: data/cache
+  results: results
+  prompts: prompts
+
+datasets:
+  medhallu:
+    hf_id: UTAustin-AIHealth/MedHallu
+    config: pqa_labeled
+    revision: TBD                # pin HF commit hash
+    columns:                     # confirm in Phase 1, update if different
+      question: Question
+      context: Knowledge
+      ground_truth: Ground Truth
+      hallucinated: Hallucinated Answer
+      difficulty: Difficulty Level
+      category: Category of Hallucination
+  pubmedqa:
+    hf_id: qiaojin/PubMedQA
+    config: pqa_labeled
+    revision: TBD
+
+exp1:
+  n_questions: 250
+  dev_questions: 50
+  test_questions: 200
+  stratify_by: difficulty
+
+exp2:
+  n_normal: 50
+  n_degraded: 50
+  extra_degraded_max: 20         # used only if < 25% Hallucinated
+  exclude_exp1_dev: true
+  chunk_tokens: 250
+  chunk_overlap: 30
+  top_k: 3
+  degraded_search_k: 20          # search wider, drop own doc, keep top_k
+
+models:
+  embedder: BAAI/bge-small-en-v1.5
+  nli_main: cross-encoder/nli-deberta-v3-small
+  nli_optional: cross-encoder/nli-deberta-v3-base
+  generator:
+    provider: groq
+    model_id: TBD                # exact ID, logged
+    temperature: 0
+    max_tokens: 256
+  judge:
+    provider: gemini
+    model_id: TBD                # exact Gemini Flash ID, logged
+    base_url: https://generativelanguage.googleapis.com/v1beta/openai/
+    temperature: 0
+    max_tokens: 64
+    rpm_limit: TBD               # from current free-tier docs
+
+filter_b:
+  num_threads: 6
+  batch_size: 16
+  max_length: 512
+  sentence_splitter: pysbd
+
+baseline:
+  rouge_variant: rougeL
+  rouge_field: precision         # confirm on dev; see Design.md section 6.3
+
+timing:
+  warmup_pairs: 10
+  repeats: 2
+  percentiles: [50, 95]
+
+stats:
+  bootstrap_resamples: 1000
+  ci: 0.95
+  bootstrap_unit: question       # resample questions, keep pairs together

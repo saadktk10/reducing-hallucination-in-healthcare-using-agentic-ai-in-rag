@@ -1,0 +1,42 @@
+# Environment and secrets
+.env
+
+# Data directory (large/derived files) — Rule R5.8
+data/
+
+# Results raw predictions (large)
+results/*/raw/
+
+# Model weights
+*.bin
+*.safetensors
+
+# FAISS index
+*.index
+
+# Logs
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

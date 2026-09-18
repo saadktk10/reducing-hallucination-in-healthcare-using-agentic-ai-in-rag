@@ -1,0 +1,64 @@
+[project]
+name = "hallucination-verifier-c"
+version = "0.1.0"
+description = "Local NLI Cross-Encoder vs API-Based LLM-as-a-Judge for Hallucination Verification in Healthcare Agentic RAG"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    # Core
+    "pandas>=2.2",
+    "numpy>=1.26",
+    "pyyaml>=6.0",
+    "pydantic>=2.7",
+    "python-dotenv>=1.0",
+    "tqdm>=4.66",
+    # Hugging Face
+    "datasets>=2.20",
+    "huggingface_hub>=0.23",
+    "transformers>=4.42",
+    "sentence-transformers>=3.0",
+    # Torch CPU — installed via extra index
+    "torch>=2.3",
+    # Retrieval
+    "faiss-cpu>=1.8",
+    # APIs
+    "openai>=1.35",
+    "groq>=0.9",
+    "tenacity>=8.4",
+    # Text processing
+    "pysbd>=0.3",
+    "nltk>=3.8",
+    "rouge-score>=0.1",
+    # Evaluation
+    "scikit-learn>=1.5",
+    "statsmodels>=0.14",
+    "scipy>=1.13",
+    # Plots
+    "matplotlib>=3.9",
+    "seaborn>=0.13",
+    # System
+    "psutil>=5.9",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2",
+    "ruff>=0.5",
+    "jupyterlab>=4.2",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP"]
+ignore = ["E501"]  # line length handled by formatter
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

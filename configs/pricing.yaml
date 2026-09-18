@@ -1,0 +1,6 @@
+judge:
+  model_id: TBD
+  input_per_million_usd: null
+  output_per_million_usd: null
+  checked_on: null               # YYYY-MM-DD
+  source_url: null
