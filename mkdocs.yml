@@ -1,0 +1,66 @@
+site_name: MedVerify-C
+site_description: "Local NLI Cross-Encoder vs API-Based LLM-as-a-Judge for Hallucination Verification in Healthcare Agentic RAG"
+site_url: ""  # Set after repo is published
+repo_url: ""  # Set after repo is published
+repo_name: ""
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - toc.follow
+    - search.highlight
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: teal
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: teal
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.snippets:
+      base_path: ["."]
+      check_paths: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+hooks:
+  - hooks/build_stamp.py
+  - hooks/tiles.py
+  - hooks/progress.py
+  - hooks/external_numbers.py
+
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - Manuscript: manuscript/index.md
+  - Write-up: writeup/index.md
+  - Progress: progress.md
+  - Reference:
+      - Design: design.md
+      - Rules: rules.md
+
+extra_css:
+  - assets/extra.css

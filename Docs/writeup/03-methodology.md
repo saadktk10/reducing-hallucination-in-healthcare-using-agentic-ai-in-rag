@@ -1,0 +1,1 @@
+--8<-- "writeup/03-methodology.md"

@@ -4,6 +4,33 @@ Detailed implementation plan over 10 weeks. Each phase lists goal, owner, tasks,
 
 **Owners.** R1 = researcher leading Experiment 1. R2 = researcher leading Experiment 2. Both = both researchers. Agent = Antigravity.
 
+*Last updated: YYYY-MM-DD, session 0. Updated at the end of every session (Rules section 9).*
+
+**Current status:** Phase 0 not started.
+
+## Snapshot
+
+Status legend: ✅ done · 🟡 partial · 🔲 planned · 🔴 open defect · 🔵 blocked · ⛔ withdrawn. The website's Progress board is generated from this table, so keep the three columns and start every State cell with one icon (Rules R9.6).
+
+| Phase | Scope | State |
+| --- | --- | --- |
+| 0 | Environment and scaffold | 🔲 Planned |
+| 0b | Project website (MkDocs, GitHub Pages) | 🔲 Planned |
+| 1 | Pilot checks (Gate G1) | 🔲 Planned |
+| 2 | Experiment 1 pairs and splits | 🔲 Planned |
+| 3 | Verifiers and dev tuning | 🔲 Planned |
+| 4 | Experiment 2 index and generation | 🔲 Planned |
+| 5 | Experiment 1 test runs and timing | 🔲 Planned |
+| 6 | Two-annotator labeling (Gate G2) | 🔲 Planned |
+| 7 | Verifiers on the RAG set | 🔲 Planned |
+| 8 | Metrics and statistics | 🔲 Planned |
+| 9 | Cross-experiment and additional analyses | 🔲 Planned |
+| 10 | Figures, write-up digests, manuscript pages | 🔲 Planned |
+| 11 | Revision and release | 🔲 Planned |
+| S | Session close and site sync (every session) | 🟡 Ongoing |
+
+When a State changes, keep it short and sourced, for example: `✅ Done (2026-02-03). Dev F1 0.81 [0.72, 0.89] (n=100, results/exp1/.../dev_metrics.csv). Thresholds frozen.`
+
 ## Timeline at a Glance
 
 ```mermaid
@@ -13,6 +40,7 @@ gantt
     axisFormat  W%W
     section Setup
     P0 Environment and scaffold        :p0, 2026-01-05, 4d
+    P0b Project website                :p0b, after p0, 2d
     P1 Pilot checks                    :p1, after p0, 3d
     Decision gate G1                   :milestone, g1, after p1, 0d
     section Experiment 1
@@ -27,22 +55,24 @@ gantt
     P8 Metrics and statistics          :p8, after p7, 6d
     P9 Cross-experiment + extras       :p9, after p8, 5d
     section Writing
-    P10 Figures and draft support      :p10, after p9, 7d
+    P10 Figures, write-up, manuscript  :p10, after p9, 7d
     P11 Revision and release           :p11, after p10, 7d
+    section Every session
+    S Session close + site sync        :s, 2026-01-05, 70d
 ```
 
 (Dates are placeholders. Replace the start date with the real Week 1 Monday.)
 
 | Week | Phases | R1 | R2 |
 | --- | --- | --- | --- |
-| 1 | P0, P1, G1 | Environment, pilot | Environment, pilot |
+| 1 | P0, P0b, P1, G1 | Environment, pilot | Environment, website, pilot |
 | 2 | P2, P3 start, P4 start | Pairs, prompt drafts | Corpus, index |
 | 3 | P3, P4 | Dev tuning, freeze | Generation |
 | 4 | P5, P6 | Test runs, timing | Annotation (both label) |
 | 5 | P6 end, P7 | Annotation | Annotation, run verifiers on RAG |
 | 6 | P8 | Metrics, stats | Metrics, stats |
 | 7 | P9 | Cross-experiment | Qualitative review |
-| 8 | P10 | Figures | Draft |
+| 8 | P10 | Figures, write-up digests | Manuscript pages |
 | 9 to 10 | P11 | Revision | Revision |
 
 ---
@@ -84,6 +114,33 @@ gantt
 
 ---
 
+## Phase 0b: Project Website
+
+**Week 1, days 4 to 5, after Phase 0. Owner: Agent, Both review.**
+
+**Goal.** A live site in the AdaptiShield style that updates itself on every push, before any result exists, so the update habit starts on day one.
+
+### Tasks
+
+1. Run `Website_Prompt.md` as one Antigravity task.
+2. Create the GitHub repo (if not done), enable Pages with Source set to "GitHub Actions".
+3. Create empty `results/site/numbers_of_record.json` (`{"numbers": {}}`) so every tile shows `pending`.
+4. Researchers write `docs/claim.md` later; until then the Home page shows the research questions.
+5. Add candidate rows to `paper/external_numbers.json` from the literature review with `human_verified: false`. A researcher verifies each against the primary source and flips the flag.
+6. Add `.github/workflows/ci.yml` (pytest + ruff) alongside `pages.yml`.
+7. Run the first session close (Rules 9.2) and confirm the Progress page shows Phase 0 ✅ and Phase 0b 🟡 or ✅.
+
+### Acceptance criteria
+
+- [ ] Live URL works; Home, Architecture, Manuscript, Write-up, Progress all render.
+- [ ] `mkdocs build --strict` passes locally and in CI.
+- [ ] All tiles render `pending`; no hand-typed number anywhere on the site.
+- [ ] Changing one Snapshot State in `Phase.md` and pushing updates the board with no other edit.
+- [ ] Footer shows commit SHA, build time, and the not-for-clinical-use notice.
+- [ ] CI check confirms no `data/` or `.env` content in the built site.
+
+---
+
 ## Phase 1: Pilot Checks
 
 **Week 1, days 4 to 5. Owner: Agent builds, Both judge.**
@@ -105,7 +162,7 @@ gantt
 | Unsupported ground truth under 10% **and** ROUGE-L AUROC under 0.95 | **Plan 1**: Exp 1 main, Exp 2 is 100-pair validation |
 | Otherwise | **Plan 2**: Exp 2 main, grow to 200 pairs, Exp 1 secondary with caveats |
 
-Researchers set `plan:` in config and commit with message `G1: plan N, unsupported=X%, auroc=Y`. All pilot numbers go in the paper regardless.
+Researchers set `plan:` in config and commit with message `G1: plan N, unsupported=X%, auroc=Y`. All pilot numbers go in the paper regardless. Run `python -m src.site_export` so the two pilot tiles go live on the Home page, and record the decision in the Snapshot and Session log.
 
 ### Acceptance criteria
 
@@ -333,12 +390,14 @@ Clinician or medical student reviews 20 to 30 pairs; their labels are stored sep
 3. Breakdowns: F1 by difficulty and category (Exp 1), by condition (Exp 2).
 4. Precision-recall curve data for Filter B (both experiments).
 5. Write `results/<exp>/<run_id>/tables/*.csv` and a `summary.md` that states numbers only, no interpretation.
+6. Record the valid run IDs in `results/LATEST.json`, run `python -m src.site_export`, and check every Phase 8 tile on the Home page is live (no longer `pending`).
 
 ### Acceptance criteria
 
 - [ ] All metric tests pass against hand-computed values.
 - [ ] Every number in `summary.md` traces to a CSV in the same run folder.
 - [ ] Exp 2 CIs reported, and `summary.md` notes that Exp 2 is for direction of findings.
+- [ ] Home page tiles for Exp 1 and Exp 2 match `summary.md` exactly.
 
 ---
 
@@ -363,20 +422,27 @@ Clinician or medical student reviews 20 to 30 pairs; their labels are stored sep
 
 ---
 
-## Phase 10: Figures and Draft Support
+## Phase 10: Figures, Write-up Digests, Manuscript Pages
 
-**Week 8. Owner: Agent, Both write.**
+**Week 8. Owner: Agent builds, Both write.**
 
 ### Tasks
 
-1. `figures.py` produces all six figures in Design.md section 10 from the latest run folders, PNG and PDF, 300 dpi.
-2. Export result tables as LaTeX (`booktabs`) and CSV.
+1. `figures.py` produces all six figures in Design.md section 10 from the latest run folders, PNG and PDF, 300 dpi. The site copies them at build time.
+2. Export result tables as LaTeX (`booktabs`), CSV, and Markdown (the Markdown version is what the manuscript pages include).
 3. Generate a `results/REPORT.md` index linking each figure and table to the run ID that produced it.
+4. **Write-up digests** in `writeup/`, one file per paper section (00-abstract to 06-conclusion) plus `README.md`. Every bullet in the form `statement : value [95% CI] (n, results/...) [meaning: plain words]`. The agent drafts these from `summary.md` and cross-experiment outputs; researchers check each bullet against its source.
+5. **Rules pages**: `writeup/rules/general-research-paper-rules.md` and a venue rules page once the supervisor picks the target (conference or journal).
+6. **Manuscript pages** in `paper/manuscript/`, one file per section with front matter `status: draft`. Headings, generated tables, and figure includes are scaffolded by the agent; prose is written by the researchers from the digests.
+7. Researchers write `docs/claim.md` (the one sentence the paper reduces to) once Phase 9 is done.
+8. Researchers verify the rows of `paper/external_numbers.json` they want shown on Home.
 
 ### Acceptance criteria
 
 - [ ] `python -m src.figures` regenerates every figure from cached results with no API calls.
-- [ ] Consistent verifier colors across all figures.
+- [ ] Consistent verifier colors across all figures and Home tiles.
+- [ ] Every number in `writeup/` has a source path that exists; a test checks this.
+- [ ] Write-up and Manuscript sections render on the site; each manuscript page shows its status badge.
 
 ---
 
@@ -390,14 +456,32 @@ Clinician or medical student reviews 20 to 30 pairs; their labels are stored sep
 2. `scripts/run_all.sh` reproduces all tables and figures from cache in one command. Test it on a fresh clone.
 3. README: setup, reproduction steps, model IDs, dataset revisions, dates, limitations, not-for-clinical-use notice.
 4. Check dataset licenses before publishing labeled Exp 2 data.
-5. Tag release `v1.0-paper`.
+5. Final site pass: claim box written, all tiles live, every manuscript page `status: final`, Progress shows the research phase closed with a dated notice at the top of `Phase.md`.
+6. Tag release `v1.0-paper`.
 
 ### Acceptance criteria
 
 - [ ] Fresh clone plus cache reproduces every reported number.
 - [ ] All five docs match the final code.
+- [ ] No tile shows `pending`; every Snapshot row is ✅, ⛔, or explained 🟡.
 
 ---
+
+## Every Session: Close and Sync
+
+**Continuous, all 10 weeks. Owner: whoever ran the session (Agent or researcher).**
+
+This is not a phase that finishes. It runs at the end of every session, following Rules section 9.2:
+
+1. Tests and lint green.
+2. `python -m src.site_export` if new results exist.
+3. Update this file: `Last updated`, `Current status`, Snapshot rows, checkboxes, and a Session log entry (format in Rules 9.3).
+4. Update `Architecture.md` if any file, module, folder, or data flow changed (tree, diagram, Change log).
+5. Update `Design.md` if an interface or config key changed.
+6. `mkdocs build --strict`, commit `session: <date> <summary>`, push to `main`.
+7. Confirm the live Progress page shows the new Session log entry.
+
+A session that skips this leaves the site wrong, which is worse than no site. If time runs out, do steps 3, 6, and 7 at minimum.
 
 ## Risk Register
 
@@ -411,3 +495,18 @@ Clinician or medical student reviews 20 to 30 pairs; their labels are stored sep
 | Low kappa | P6 | Refine guide on a fresh sample, relabel, report both |
 | RAM pressure | P3, P4 | Load one model at a time, lower batch size |
 | Laptop timing noise | P5 | Checklist, warm-up, two repeats, median and p95 |
+| Site drifts from repo | Every session | Includes instead of copies, numbers only via `site_export`, strict build in CI |
+| Session close skipped | Every session | Minimum steps 3, 6, 7; next session starts by checking the last Session log date |
+| Private data published | P0b onward | CI grep of built `site/`, `data/` git-ignored |
+
+## Session Log
+
+Newest first. One entry per session, format in Rules 9.3. Never delete entries (Rules R9.9).
+
+### YYYY-MM-DD, session 0 (setup)
+- Phases touched: none
+- Done: Agent.md, Rules.md, Architecture.md, Design.md, Phase.md, Website_Prompt.md written from Methodology C
+- Numbers produced: none
+- Docs changed: all (initial)
+- Open / blocked: GitHub repo name and username for `site_url` (researchers)
+- Next session: Phase 0, environment and scaffold

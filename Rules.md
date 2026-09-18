@@ -97,4 +97,53 @@ Hard rules for this repository. **MUST** and **NEVER** rules are not negotiable;
 | R8.2 | **MUST** state assumptions explicitly in the task report. |
 | R8.3 | **NEVER** delete cache files, results, or annotation files without explicit permission. |
 | R8.4 | **NEVER** modify `prompts/*_v1.txt` after freezing. A change means a new version (`v2`) and a researcher decision. |
-| R8.5 | **MUST** keep these five docs (`Agent.md`, `Rules.md`, `Architecture.md`, `Design.md`, `Phase.md`) in sync with code. If code must diverge, update the doc in the same commit and say so.
+| R8.5 | **MUST** keep these five docs (`Agent.md`, `Rules.md`, `Architecture.md`, `Design.md`, `Phase.md`) in sync with code. If code must diverge, update the doc in the same commit and say so. Section 9 defines when and how. |
+
+## 9. Living Documentation and Website
+
+The five docs and the website are the project's record. They are updated **at the end of every working session**, not at the end of a phase. A session is any block of work that produced a commit.
+
+### 9.1 Rules
+
+| ID | Rule |
+| --- | --- |
+| R9.1 | **MUST** run the session close procedure (9.2) before ending every session, even a short one. A session with code commits and no doc commit is incomplete. |
+| R9.2 | **MUST** update `Phase.md` every session: the `Last updated` line, the `Current status` line, the Snapshot row(s) touched, the checklist boxes completed, and a new Session log entry. |
+| R9.3 | **MUST** update `Architecture.md` in the same session whenever a module, file, folder, data flow, or dependency is added, renamed, moved, or removed. The directory tree (section 9) and the affected Mermaid diagram must match the repository exactly. Add a line to its Change log. |
+| R9.4 | **MUST** update `Design.md` when an interface, schema, config key, algorithm, or default value changes. **MUST** update `Rules.md` only with researcher approval (rules are not changed by the agent alone). |
+| R9.5 | **NEVER** type a result number into the website, `Phase.md` Snapshot, or `README.md` by hand. Numbers reach the site only through `src/site_export.py` and `results/site/numbers_of_record.json`. `Phase.md` may quote a number only with its source path, in the form `value [95% CI] (n, results/...)`. |
+| R9.6 | **MUST** keep the Snapshot table parseable: columns Phase, Scope, State, each State cell starting with one legend icon (✅ 🟡 🔲 🔴 🔵 ⛔). |
+| R9.7 | **MUST** run `mkdocs build --strict` locally before pushing doc changes. A failing build is fixed in the same session. |
+| R9.8 | **MUST** push to `main` at session close so GitHub Actions redeploys the site. After the Action finishes, check that the Progress page shows the new session. |
+| R9.9 | **NEVER** delete Session log entries or Change log lines. Corrections are new entries that reference the old one ("corrects 2026-01-12"). History is part of the record. |
+| R9.10 | **MUST** mark a withdrawn result as ⛔ with the reason and date, never silently remove it. |
+| R9.11 | **NEVER** publish `data/`, `.env`, cache files, annotation files, or labeled Exp 2 data on the site. CI checks the built `site/` folder for them. |
+| R9.12 | **SHOULD** keep each Session log entry under 10 lines. Detail belongs in commits and results folders. |
+
+### 9.2 Session close procedure
+
+Run in this order at the end of every session:
+
+```
+1. pytest -q && ruff check .                    # code is green
+2. python -m src.site_export                    # only if new results were produced
+3. Update Phase.md                              # Last updated, Current status, Snapshot, checkboxes, Session log
+4. Update Architecture.md                       # if structure changed (tree, diagrams, Change log)
+5. Update Design.md                             # if an interface or config changed
+6. mkdocs build --strict                        # site builds with zero warnings
+7. git add -A && git commit -m "session: <date> <one-line summary>"
+8. git push origin main                         # triggers the Pages deploy
+9. Report to researchers (Agent.md 5.3 format) with the Session log entry pasted in
+```
+
+### 9.3 Session log entry format (in `Phase.md`)
+
+```
+### YYYY-MM-DD, session N (agent / researcher name)
+- Phases touched: P3 (🟡 -> 🟡), P4 (🔲 -> 🟡)
+- Done: <what was completed, 1 to 3 bullets>
+- Numbers produced: <key = value [CI] (n, results/...)> or "none"
+- Docs changed: Phase.md, Architecture.md (added src/common/text.py)
+- Open / blocked: <anything waiting on a human, with owner>
+- Next session: <first task>
+```

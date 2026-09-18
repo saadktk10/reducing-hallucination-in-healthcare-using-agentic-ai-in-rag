@@ -1,6 +1,8 @@
 # Architecture.md
 
-System architecture for the hallucination verifier study. Diagrams use Mermaid (renders in GitHub, VS Code, and Antigravity markdown preview).
+System architecture for the hallucination verifier study. Diagrams use Mermaid (renders in GitHub, VS Code, Antigravity, and the project website).
+
+*Last updated: YYYY-MM-DD, session N. This file is updated in every session that changes structure (Rules R9.3). See the Change log at the end.*
 
 ## 1. System Overview
 
@@ -43,6 +45,8 @@ flowchart TB
     MH -. "exclude test questions" .-> GEN
     VER --> MET --> STAT --> XEXP --> FIG
     VER --> TIME --> FIG
+    FIG --> SITE["Project website<br/>MkDocs, GitHub Pages"]
+    STAT --> SITE
     CACHE[("data/cache<br/>API JSONL")] <--> FA
     CACHE <--> GEN
 ```
@@ -186,6 +190,7 @@ flowchart BT
     EV["evaluate.py"] --> MET & ST & IO
     XE["cross_experiment.py"] --> MET & IO
     FG["figures.py"] --> IO
+    SX["site_export.py"] --> IO & CFG
 ```
 
 ## 8. Runtime Memory Budget (8 GB)
@@ -216,8 +221,44 @@ hallucination-verifier-c/
 ├── Architecture.md
 ├── Design.md
 ├── Phase.md
+├── Website_Prompt.md             # build spec for the website
 ├── README.md                     # setup, how to reproduce, "not for clinical use"
 ├── pyproject.toml
+├── mkdocs.yml                    # website config
+├── requirements-docs.txt         # docs-only deps for CI (no torch)
+│
+├── .github/
+│   └── workflows/
+│       ├── ci.yml                # pytest + ruff
+│       └── pages.yml             # mkdocs build --strict, deploy to Pages
+│
+├── hooks/                        # MkDocs build hooks (stdlib + PyYAML only)
+│   ├── build_stamp.py            # commit SHA, build time, clinical notice
+│   ├── tiles.py                  # {{ tile:key }} -> number tiles
+│   ├── progress.py               # Phase.md Snapshot -> phase board
+│   └── external_numbers.py       # verified published numbers table
+│
+├── docs/                         # website pages (thin wrappers, include root docs)
+│   ├── index.md                  # Home: claim, status, numbers of record
+│   ├── claim.md                  # one-sentence claim (researchers write)
+│   ├── architecture.md           # --8<-- "Architecture.md"
+│   ├── design.md
+│   ├── rules.md
+│   ├── progress.md               # board + --8<-- "Phase.md"
+│   ├── manuscript/               # includes paper/manuscript/*
+│   ├── writeup/                  # includes writeup/*
+│   └── assets/
+│       ├── extra.css
+│       └── figures/              # copied from results/figures at build
+│
+├── paper/
+│   ├── manuscript/               # 00-abstract.md ... 06-conclusion.md (living draft)
+│   └── external_numbers.json     # published figures, human_verified flag
+│
+├── writeup/                      # bullet digests, every number sourced
+│   ├── README.md
+│   ├── 00-abstract.md ... 06-conclusion.md
+│   └── rules/
 ├── uv.lock
 ├── .env.example                  # GROQ_API_KEY=, GEMINI_API_KEY=, HF_TOKEN=
 ├── .gitignore                    # .env, data/, results/*/raw/, *.index, logs/
@@ -284,9 +325,14 @@ hallucination-verifier-c/
 │   │   └── stats.py              # McNemar, bootstrap CI, kappa
 │   ├── evaluate.py               # per-experiment tables + breakdowns
 │   ├── cross_experiment.py       # ranking check + threshold transfer
-│   └── figures.py                # all paper figures
+│   ├── figures.py                # all paper figures
+│   └── site_export.py            # results -> results/site/numbers_of_record.json
 │
 ├── results/
+│   ├── LATEST.json               # run_id of the valid run per experiment
+│   ├── site/
+│   │   ├── numbers_of_record.json   # only source of numbers on the website
+│   │   └── README.md
 │   ├── thresholds.json           # frozen after dev tuning
 │   ├── pilot/
 │   ├── exp1/<run_id>/            # predictions, metrics, timing, manifest
@@ -312,6 +358,7 @@ hallucination-verifier-c/
 │   ├── setup_env.sh
 │   └── run_all.sh                # full pipeline from cache
 │
+├── site/                         # mkdocs build output, git-ignored
 └── logs/                         # git-ignored
 ```
 
@@ -323,6 +370,94 @@ hallucination-verifier-c/
 | Data build | `pilot_checks`, `build_exp1_pairs`, `build_index`, `generate_rag`, `annotation` | Creating validated JSONL datasets | Compute metrics |
 | Verification | `filters/*`, `run_verifiers`, `tune_thresholds`, `timing` | Producing scores and verdicts | Read labels (except `tune_thresholds` on dev) |
 | Evaluation | `evaluation/*`, `evaluate`, `cross_experiment` | Metrics, statistics, comparisons | Call any API or model |
-| Presentation | `figures` | Plots | Compute new metrics |
+| Presentation | `figures`, `site_export` | Plots, website numbers | Compute new metrics |
+| Website | `mkdocs.yml`, `hooks/`, `docs/` | Rendering the record | Hold its own copy of any doc or number |
 
 The key separation: **verifiers never see labels during scoring**, and **evaluation never calls models**. This makes leakage structurally hard.
+
+## 11. Documentation Site and Update Loop
+
+The website mirrors the repository. Root docs are included, not copied, and numbers flow only from results files, so the site cannot drift from the code as long as the session close procedure (Rules 9.2) runs.
+
+### 11.1 How the site is built
+
+```mermaid
+flowchart LR
+    subgraph REPO["Repository (single source of truth)"]
+        PH["Phase.md"]
+        AR["Architecture.md"]
+        DE["Design.md + Rules.md"]
+        RS["results/EXP/RUN_ID/tables"]
+        FG["results/figures"]
+        MS["paper/manuscript"]
+        WU["writeup/"]
+        EX["paper/external_numbers.json"]
+    end
+
+    RS --> SE["src/site_export.py"] --> NR["results/site/<br/>numbers_of_record.json"]
+
+    subgraph BUILD["mkdocs build --strict (hooks)"]
+        H1["tiles.py"]
+        H2["progress.py"]
+        H3["external_numbers.py"]
+        H4["build_stamp.py"]
+        SN["pymdownx.snippets<br/>includes"]
+    end
+
+    NR --> H1
+    PH --> H2
+    EX --> H3
+    AR --> SN
+    DE --> SN
+    MS --> SN
+    WU --> SN
+    PH --> SN
+    FG --> H4
+
+    BUILD --> SITE["site/"] --> GA["GitHub Actions<br/>pages.yml"] --> GP["GitHub Pages<br/>live site"]
+```
+
+### 11.2 Session update loop
+
+```mermaid
+flowchart TD
+    W["Work session<br/>code, runs, analysis"] --> T{"pytest + ruff<br/>pass?"}
+    T -- "No" --> W
+    T -- "Yes" --> R{"New results<br/>produced?"}
+    R -- "Yes" --> SE["python -m src.site_export"]
+    R -- "No" --> PH
+    SE --> PH["Update Phase.md<br/>status, Snapshot, Session log"]
+    PH --> S{"Structure<br/>changed?"}
+    S -- "Yes" --> AR["Update Architecture.md<br/>tree, diagrams, Change log"]
+    S -- "No" --> D
+    AR --> D{"Interface or<br/>config changed?"}
+    D -- "Yes" --> DS["Update Design.md"]
+    D -- "No" --> B
+    DS --> B["mkdocs build --strict"]
+    B -- "fails" --> PH
+    B -- "passes" --> C["commit + push main"]
+    C --> DEP["Actions redeploys site"]
+    DEP --> V["Check Progress page<br/>shows this session"]
+```
+
+### 11.3 What triggers which update
+
+| Change in the session | Phase.md | Architecture.md | Design.md | Site effect |
+| --- | --- | --- | --- | --- |
+| Any commit | Session log, Last updated | | | Progress page |
+| Task or checkbox finished | Checkbox, Snapshot state | | | Phase board |
+| New or moved file, module, folder | Session log | Tree, diagram, Change log | If it has an interface | Architecture page |
+| New dependency between modules | | Section 7 graph | | Architecture page |
+| Config key or schema change | | | Sections 2 to 3 | Design page |
+| New results run | Snapshot, sourced numbers | | | Home tiles via `site_export` |
+| Result withdrawn | ⛔ with reason | | | Board shows ⛔ |
+| Frozen artifact versioned (v2) | Session log, Snapshot | Tree if files added | Affected section | All pages |
+
+## 12. Change log
+
+Append one line per structural change. Never delete lines (Rules R9.9).
+
+| Date | Session | Change |
+| --- | --- | --- |
+| YYYY-MM-DD | 0 | Initial architecture from Methodology C |
+| YYYY-MM-DD | 0 | Added website layer (mkdocs, hooks, docs/, paper/, writeup/, site_export) |

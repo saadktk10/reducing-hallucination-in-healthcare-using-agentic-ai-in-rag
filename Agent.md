@@ -1,6 +1,6 @@
 # Agent.md
 
-Instructions for the AI coding agent (Antigravity) working on this repository. Read this file, then `Rules.md`, `Architecture.md`, `Design.md`, and `Phase.md` before writing any code.
+Instructions for the AI coding agent (Antigravity) working on this repository. Read this file, then `Rules.md`, `Architecture.md`, `Design.md`, and `Phase.md` before writing any code. `Website_Prompt.md` is the build spec for the project website (Phase 0b).
 
 ## 1. Project in One Paragraph
 
@@ -90,6 +90,10 @@ Commands to reproduce:
 Outputs written: 
 Open questions for researchers: 
 ```
+
+### 5.4 End of every session
+
+Run the session close procedure in `Rules.md` section 9.2. At minimum: update `Phase.md` (status, Snapshot, Session log), update `Architecture.md` if structure changed, `mkdocs build --strict`, push to `main`. Start the next session by reading the last Session log entry.
 
 ## 6. When to Stop and Ask
 

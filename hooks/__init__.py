@@ -1,0 +1,1 @@
+"""MkDocs build hooks package."""

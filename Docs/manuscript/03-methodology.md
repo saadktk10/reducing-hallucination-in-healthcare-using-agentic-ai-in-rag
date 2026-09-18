@@ -1,0 +1,1 @@
+--8<-- "paper/manuscript/03-methodology.md"

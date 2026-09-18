@@ -1,0 +1,37 @@
+{
+  "description": "Published figures from the literature for comparison. Only rows with human_verified: true appear on the website. The agent may add candidate rows; a researcher must set human_verified to true after reading the primary source.",
+  "rows": [
+    {
+      "system": "Self-MedRAG",
+      "setting": "PubMedQA, with NLI verification",
+      "metric": "Accuracy",
+      "value": "TBD",
+      "source_url": "",
+      "human_verified": false
+    },
+    {
+      "system": "Self-MedRAG",
+      "setting": "PubMedQA, without NLI verification",
+      "metric": "Accuracy",
+      "value": "TBD",
+      "source_url": "",
+      "human_verified": false
+    },
+    {
+      "system": "Luna",
+      "setting": "Cost and latency reduction vs GPT-3.5",
+      "metric": "Cost reduction",
+      "value": "TBD",
+      "source_url": "",
+      "human_verified": false
+    },
+    {
+      "system": "MiniCheck",
+      "setting": "Model size",
+      "metric": "Parameters",
+      "value": "TBD",
+      "source_url": "",
+      "human_verified": false
+    }
+  ]
+}

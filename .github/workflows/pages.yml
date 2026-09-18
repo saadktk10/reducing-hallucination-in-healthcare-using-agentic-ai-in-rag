@@ -1,0 +1,51 @@
+name: Deploy docs to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  pages: write
+  id-token: write
+  contents: read
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install docs dependencies
+        run: pip install -r requirements-docs.txt
+
+      - name: Verify no private data leaks
+        run: |
+          mkdir -p docs/assets/figures
+          mkdocs build --strict
+          # Ensure no private data in built site
+          if grep -r "GROQ_API_KEY\|GEMINI_API_KEY\|HF_TOKEN" site/ 2>/dev/null; then
+            echo "ERROR: Private data found in built site!"
+            exit 1
+          fi
+          if find site/ -name "*.csv" -path "*/annotation/*" 2>/dev/null | head -1 | grep -q .; then
+            echo "ERROR: Annotation CSVs found in built site!"
+            exit 1
+          fi
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,1 @@
+--8<-- "writeup/05-discussion.md"

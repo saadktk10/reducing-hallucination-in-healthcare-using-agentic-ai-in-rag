@@ -1,0 +1,159 @@
+/* MedVerify-C: tile grid + phase board styling (Website_Prompt.md §9) */
+
+/* ---- Okabe-Ito colors matching Design.md §10 ---- */
+:root {
+  --color-filter-a: #E69F00;   /* amber — Gemini API judge */
+  --color-filter-b: #0072B2;   /* blue  — DeBERTa NLI */
+  --color-rouge:    #009E73;   /* teal  — ROUGE-L baseline */
+  --color-pending:  #999999;
+}
+
+/* ---- Tile grid ---- */
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+@media (min-width: 768px) {
+  .tile-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.tile {
+  background: var(--md-code-bg-color, #f5f5f5);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  border-left: 4px solid var(--md-primary-fg-color, #009688);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.tile-pending {
+  border-left-color: var(--color-pending);
+  opacity: 0.7;
+}
+
+.tile-value {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--md-primary-fg-color, #009688);
+}
+
+.tile-pending .tile-value {
+  color: var(--color-pending);
+  font-size: 1.2rem;
+}
+
+.tile-ci {
+  display: inline;
+  font-size: 0.75rem;
+  color: var(--md-default-fg-color--light, #666);
+}
+
+.tile-n {
+  display: inline;
+  font-size: 0.75rem;
+  color: var(--md-default-fg-color--light, #666);
+}
+
+.tile-label {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 0.3rem;
+  color: var(--md-default-fg-color--light, #666);
+  font-family: var(--md-code-font, monospace);
+}
+
+.tile-phase {
+  display: block;
+  font-size: 0.7rem;
+  margin-top: 0.2rem;
+  color: var(--color-pending);
+  font-style: italic;
+}
+
+.tile-source {
+  font-size: 0.6rem !important;
+  color: var(--md-default-fg-color--lighter, #999) !important;
+  word-break: break-all;
+}
+
+.tile-pair {
+  display: flex;
+  gap: 0.5rem;
+  grid-column: span 2;
+}
+
+.tile-pair .tile {
+  flex: 1;
+}
+
+/* ---- Phase board ---- */
+.phase-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.phase-card {
+  background: var(--md-code-bg-color, #f5f5f5);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--md-default-fg-color--lighter, #ccc);
+  cursor: default;
+  transition: transform 0.15s ease;
+}
+
+.phase-card:hover {
+  transform: translateY(-1px);
+}
+
+.phase-card.phase-done     { border-left-color: #4caf50; }
+.phase-card.phase-partial  { border-left-color: #ff9800; }
+.phase-card.phase-planned  { border-left-color: #9e9e9e; }
+.phase-card.phase-open.defect { border-left-color: #f44336; }
+.phase-card.phase-blocked  { border-left-color: #2196f3; }
+.phase-card.phase-withdrawn { border-left-color: #795548; }
+
+.phase-icon {
+  font-size: 1.2rem;
+  margin-right: 0.3rem;
+}
+
+.phase-scope {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--md-default-fg-color--light, #666);
+  margin-top: 0.2rem;
+}
+
+.phase-state {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--md-default-fg-color--lighter, #999);
+  margin-top: 0.3rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- Build stamp footer ---- */
+.build-stamp {
+  text-align: center;
+  font-size: 0.75rem;
+  padding: 0.5rem 1rem;
+  color: var(--md-default-fg-color--lighter, #999);
+  border-top: 1px solid var(--md-default-fg-color--lightest, #eee);
+  margin-top: 2rem;
+}
