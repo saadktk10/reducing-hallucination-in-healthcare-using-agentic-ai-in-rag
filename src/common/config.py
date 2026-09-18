@@ -20,6 +20,7 @@ logger = logging.getLogger(__name__)
 # Sub-models
 # ---------------------------------------------------------------------------
 
+
 class PathsConfig(BaseModel):
     data: str = "data"
     cache: str = "data/cache"
@@ -118,6 +119,7 @@ class StatsConfig(BaseModel):
 # Top-level config
 # ---------------------------------------------------------------------------
 
+
 class Config(BaseModel):
     """Top-level project configuration."""
 
@@ -139,6 +141,7 @@ class Config(BaseModel):
 # ---------------------------------------------------------------------------
 # Loader
 # ---------------------------------------------------------------------------
+
 
 def load_config(path: str | Path = "configs/config.yaml") -> Config:
     """Load and validate the project configuration.

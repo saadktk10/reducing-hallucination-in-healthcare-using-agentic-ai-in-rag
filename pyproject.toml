@@ -7,7 +7,7 @@ requires-python = ">=3.12"
 dependencies = [
     # Core
     "pandas>=2.2",
-    "numpy>=1.26",
+    "numpy>=1.26,<2.0",
     "pyyaml>=6.0",
     "pydantic>=2.7",
     "python-dotenv>=1.0",
@@ -60,7 +60,7 @@ line-length = 100
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "W", "UP"]
-ignore = ["E501"]  # line length handled by formatter
+ignore = ["E501", "UP047"]  # line length handled by formatter, keep standard TypeVar
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

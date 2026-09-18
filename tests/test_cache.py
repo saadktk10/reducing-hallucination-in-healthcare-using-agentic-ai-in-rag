@@ -2,8 +2,6 @@
 
 from pathlib import Path
 
-import pytest
-
 from src.common.cache import JsonlCache, make_cache_key
 from src.common.io import CacheRecord
 

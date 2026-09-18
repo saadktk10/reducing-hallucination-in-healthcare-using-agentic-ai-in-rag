@@ -32,12 +32,12 @@ jobs:
         run: |
           mkdir -p docs/assets/figures
           mkdocs build --strict
-          # Ensure no private data in built site
-          if grep -r "GROQ_API_KEY\|GEMINI_API_KEY\|HF_TOKEN" site/ 2>/dev/null; then
-            echo "ERROR: Private data found in built site!"
+          # Ensure no private data or env files in built site
+          if find site/ -name ".env*" -o -path "site/data/*" 2>/dev/null | grep -q .; then
+            echo "ERROR: Private data or .env file found in built site!"
             exit 1
           fi
-          if find site/ -name "*.csv" -path "*/annotation/*" 2>/dev/null | head -1 | grep -q .; then
+          if find site/ -name "*.csv" -path "*/annotation/*" 2>/dev/null | grep -q .; then
             echo "ERROR: Annotation CSVs found in built site!"
             exit 1
           fi

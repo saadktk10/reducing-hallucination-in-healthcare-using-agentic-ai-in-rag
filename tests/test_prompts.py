@@ -1,18 +1,17 @@
 """Tests for src/common/prompts.py — prompt loading, freezing, and hash verification."""
 
-from pathlib import Path
-
 import json
+from pathlib import Path
 
 import pytest
 
 from src.common.prompts import (
+    PromptHashMismatchError,
     compute_hash,
     fill_prompt,
     freeze_prompt,
     load_prompt,
     verify_frozen,
-    PromptHashMismatchError,
 )
 
 

@@ -1,8 +1,6 @@
 """Tests for src/common/text.py — sentence splitting and token-aware chunking."""
 
-import pytest
-
-from src.common.text import split_sentences, token_chunks, normalize_question
+from src.common.text import normalize_question, split_sentences, token_chunks
 
 
 class TestSplitSentences:

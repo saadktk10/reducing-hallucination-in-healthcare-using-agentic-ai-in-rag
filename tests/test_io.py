@@ -4,8 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from src.common.io import Pair, Chunk, VerifierResult, CacheRecord, read_jsonl, write_jsonl
-
+from src.common.io import CacheRecord, Chunk, Pair, VerifierResult, read_jsonl, write_jsonl
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

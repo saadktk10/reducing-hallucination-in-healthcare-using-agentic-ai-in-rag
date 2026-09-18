@@ -52,11 +52,30 @@ hooks:
   - hooks/progress.py
   - hooks/external_numbers.py
 
+not_in_nav: |
+  claim.md
+
 nav:
   - Home: index.md
   - Architecture: architecture.md
-  - Manuscript: manuscript/index.md
-  - Write-up: writeup/index.md
+  - Manuscript:
+      - Overview: manuscript/index.md
+      - Abstract: manuscript/00-abstract.md
+      - Introduction: manuscript/01-introduction.md
+      - Related Work: manuscript/02-related-work.md
+      - Methodology: manuscript/03-methodology.md
+      - Results: manuscript/04-results.md
+      - Discussion: manuscript/05-discussion.md
+      - Conclusion: manuscript/06-conclusion.md
+  - Write-up:
+      - Overview: writeup/index.md
+      - Abstract: writeup/00-abstract.md
+      - Introduction: writeup/01-introduction.md
+      - Related Work: writeup/02-related-work.md
+      - Methodology: writeup/03-methodology.md
+      - Results: writeup/04-results.md
+      - Discussion: writeup/05-discussion.md
+      - Conclusion: writeup/06-conclusion.md
   - Progress: progress.md
   - Reference:
       - Design: design.md

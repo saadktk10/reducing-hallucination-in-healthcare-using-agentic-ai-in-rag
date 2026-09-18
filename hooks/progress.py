@@ -76,14 +76,16 @@ def _parse_snapshot_table(phase_md_path: str = "Phase.md") -> list[dict]:
                 f"State cell must start with one of: {', '.join(sorted(_STATUS_ICONS))}"
             )
 
-        state_text = state[len(icon):].strip()
-        rows.append({
-            "phase": phase,
-            "scope": scope,
-            "state": state,
-            "icon": icon,
-            "state_text": state_text,
-        })
+        state_text = state[len(icon) :].strip()
+        rows.append(
+            {
+                "phase": phase,
+                "scope": scope,
+                "state": state,
+                "icon": icon,
+                "state_text": state_text,
+            }
+        )
 
     if not rows:
         raise ValueError("Snapshot table in Phase.md has no data rows")
@@ -152,27 +154,29 @@ def on_page_markdown(markdown, page, config, files, **kwargs):
         full_state = r["state_text"].replace('"', "&quot;")
         anchor = f"phase-{r['phase'].lower().replace(' ', '-')}"
         cards_html += (
-            f'<div class="phase-card phase-{_STATUS_LABELS.get(r["icon"], "unknown")}" '
+            f'<a href="#{anchor}" class="phase-card-link">\n'
+            f'  <div class="phase-card phase-{_STATUS_LABELS.get(r["icon"], "unknown")}" '
             f'title="{full_state}">\n'
-            f'  <span class="phase-icon">{r["icon"]}</span>\n'
-            f'  <strong>Phase {r["phase"]}</strong>\n'
-            f'  <span class="phase-scope">{r["scope"]}</span>\n'
-            f'  <span class="phase-state">{truncated}</span>\n'
-            f'</div>\n'
+            f'    <span class="phase-icon">{r["icon"]}</span>\n'
+            f"    <strong>Phase {r['phase']}</strong>\n"
+            f'    <span class="phase-scope">{r["scope"]}</span>\n'
+            f'    <span class="phase-state">{truncated}</span>\n'
+            f"  </div>\n"
+            f"</a>\n"
         )
-    cards_html += '</div>\n'
+    cards_html += "</div>\n"
 
     # Build the board content
     board = (
-        f'*Generated from `Phase.md`\'s Snapshot table at build time.*\n\n'
-        f'**Legend:** ✅ done · 🟡 partial · 🔲 planned · 🔴 open defect · 🔵 blocked · ⛔ withdrawn\n\n'
-        f'### Counters\n\n{counter_line}\n\n'
-        f'### Current status\n\n{status}\n\n'
-        f'### Phase board\n\n{cards_html}\n\n'
+        f"*Generated from `Phase.md`'s Snapshot table at build time.*\n\n"
+        f"**Legend:** ✅ done · 🟡 partial · 🔲 planned · 🔴 open defect · 🔵 blocked · ⛔ withdrawn\n\n"
+        f"### Counters\n\n{counter_line}\n\n"
+        f"### Current status\n\n{status}\n\n"
+        f"### Phase board\n\n{cards_html}\n\n"
     )
 
     if latest:
-        board += f'### Latest session\n\n{latest}\n\n'
+        board += f"### Latest session\n\n{latest}\n\n"
 
     markdown = markdown.replace("{{ progress_board }}", board)
     return markdown

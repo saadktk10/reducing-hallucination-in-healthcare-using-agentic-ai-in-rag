@@ -72,13 +72,26 @@ def token_chunks(
     for sent in sentences:
         sent_tokens = count_tokens(sent)
 
-        # If a single sentence exceeds the budget, it becomes its own chunk.
+        # If a single sentence exceeds the budget, split it into word-level sub-chunks.
         if sent_tokens > budget:
             if current_sentences:
                 chunks.append(" ".join(current_sentences))
                 current_sentences = []
                 current_tokens = 0
-            chunks.append(sent)
+            words = sent.split()
+            sub_words: list[str] = []
+            sub_tokens = 0
+            for w in words:
+                w_tok = count_tokens(w)
+                if sub_words and (sub_tokens + w_tok > budget):
+                    chunks.append(" ".join(sub_words))
+                    sub_words = [w]
+                    sub_tokens = w_tok
+                else:
+                    sub_words.append(w)
+                    sub_tokens += w_tok
+            if sub_words:
+                chunks.append(" ".join(sub_words))
             continue
 
         if current_tokens + sent_tokens > budget:

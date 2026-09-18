@@ -7,7 +7,7 @@ figures are never stale (Website_Prompt.md §6).
 import os
 import shutil
 import subprocess
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 _BUILD_SHA = ""
@@ -21,7 +21,10 @@ def _get_sha() -> str:
     try:
         result = subprocess.run(
             ["git", "rev-parse", "--short", "HEAD"],
-            capture_output=True, text=True, check=True, timeout=5,
+            capture_output=True,
+            text=True,
+            check=True,
+            timeout=5,
         )
         return result.stdout.strip()
     except Exception:
@@ -32,7 +35,7 @@ def on_config(config, **kwargs):
     """Capture build metadata at config time."""
     global _BUILD_SHA, _BUILD_TIME
     _BUILD_SHA = _get_sha()
-    _BUILD_TIME = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    _BUILD_TIME = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
     return config
 
 
@@ -59,9 +62,9 @@ def on_post_page(output, page, config, **kwargs):
     """Inject the footer notice into every page's HTML."""
     notice = (
         f'<div class="build-stamp">'
-        f'Commit <code>{_BUILD_SHA}</code> | Built {_BUILD_TIME} | '
-        f'<strong>Research prototype. Not for clinical use.</strong>'
-        f'</div>'
+        f"Commit <code>{_BUILD_SHA}</code> | Built {_BUILD_TIME} | "
+        f"<strong>Research prototype. Not for clinical use.</strong>"
+        f"</div>"
     )
     if "</body>" in output:
         output = output.replace("</body>", f"{notice}</body>")

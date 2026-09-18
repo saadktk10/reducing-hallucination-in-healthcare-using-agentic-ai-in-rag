@@ -56,3 +56,8 @@ def setup_logging(
         root.addHandler(file_handler)
 
     return root
+
+
+def get_logger(name: str) -> logging.Logger:
+    """Return a logger with the given name."""
+    return logging.getLogger(name)

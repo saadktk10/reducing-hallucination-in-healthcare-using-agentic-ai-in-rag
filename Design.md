@@ -115,18 +115,18 @@ All JSONL records are validated with pydantic models in `src/common/io.py`.
 
 ```python
 class Pair(BaseModel):
-    pair_id: str                 # "e1-<qid>-gt" | "e1-<qid>-hal" | "e2-<qid>"
-    question_id: str             # links both answers of a question
+    pair_id: str  # "e1-<qid>-gt" | "e1-<qid>-hal" | "e2-<qid>"
+    question_id: str  # links both answers of a question
     experiment: Literal["exp1", "exp2"]
     split: Literal["dev", "test", "rag"]
     question: str
-    context: str                 # exact text the verifiers see
+    context: str  # exact text the verifiers see
     answer: str
     label: Literal[0, 1] | None  # 0 Supported, 1 Hallucinated; None before annotation
-    difficulty: str | None       # exp1: easy | medium | hard
-    category: str | None         # exp1 hallucination category
-    condition: Literal["normal", "degraded"] | None   # exp2 only
-    source_doc_id: str | None    # PubMedQA PMID for the question
+    difficulty: str | None  # exp1: easy | medium | hard
+    category: str | None  # exp1 hallucination category
+    condition: Literal["normal", "degraded"] | None  # exp2 only
+    source_doc_id: str | None  # PubMedQA PMID for the question
 ```
 
 For Exp 2, `context` is the three retrieved chunks joined with `"\n\n"` in rank order. The joined string is stored, so every verifier sees byte-identical input.
@@ -135,8 +135,8 @@ For Exp 2, `context` is the three retrieved chunks joined with `"\n\n"` in rank 
 
 ```python
 class Chunk(BaseModel):
-    chunk_id: str                # "<doc_id>-<n>"
-    doc_id: str                  # PMID
+    chunk_id: str  # "<doc_id>-<n>"
+    doc_id: str  # PMID
     text: str
     n_tokens: int
 ```
@@ -149,7 +149,7 @@ class Generated(BaseModel):
     condition: Literal["normal", "degraded"]
     retrieved_chunk_ids: list[str]
     retrieved_doc_ids: list[str]
-    own_doc_in_context: bool     # must be False for degraded
+    own_doc_in_context: bool  # must be False for degraded
     context: str
     answer: str
     generator_model_id: str
@@ -163,14 +163,14 @@ class Generated(BaseModel):
 class VerifierResult(BaseModel):
     pair_id: str
     verifier: Literal["filter_a", "filter_b", "rouge", "filter_b_base"]
-    score: float | None          # higher = more supported; None for parse failure
-    verdict: Literal[0, 1] | None   # after threshold (A: direct from JSON)
-    confidence: float | None     # Filter A only
+    score: float | None  # higher = more supported; None for parse failure
+    verdict: Literal[0, 1] | None  # after threshold (A: direct from JSON)
+    confidence: float | None  # Filter A only
     latency_ms: float | None
-    input_tokens: int | None     # Filter A only
+    input_tokens: int | None  # Filter A only
     output_tokens: int | None
     parse_failure: bool = False
-    details: dict = {}           # e.g. per-sentence scores for Filter B
+    details: dict = {}  # e.g. per-sentence scores for Filter B
 ```
 
 **Score direction convention:** `score` is always "support" (high means supported). For AUROC and PR curves with Hallucinated as positive, use `1 - score` for Filter B and baseline.
@@ -179,7 +179,7 @@ class VerifierResult(BaseModel):
 
 ```python
 class CacheRecord(BaseModel):
-    key: str                     # sha256 of model_id|prompt_hash|context|answer (or question)
+    key: str  # sha256 of model_id|prompt_hash|context|answer (or question)
     provider: str
     model_id: str
     prompt_hash: str
@@ -189,7 +189,7 @@ class CacheRecord(BaseModel):
     input_tokens: int | None
     output_tokens: int | None
     latency_ms: float
-    attempt: int                 # 1 or 2 (parse retry)
+    attempt: int  # 1 or 2 (parse retry)
     mode: Literal["normal", "timing"]
     timestamp_utc: str
 ```
@@ -208,7 +208,8 @@ Each annotator gets an identical copy with empty `label` and `notes`. Rows are s
 # src/filters/base.py
 class Verifier(Protocol):
     name: str
-    def load(self) -> float: ...                    # returns load time in seconds
+
+    def load(self) -> float: ...  # returns load time in seconds
     def score(self, context: str, answer: str) -> VerifierResult: ...
     def score_batch(self, pairs: list[Pair]) -> list[VerifierResult]: ...
 ```

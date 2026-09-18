@@ -7,7 +7,6 @@ import yaml
 
 from src.common.config import Config, load_config
 
-
 FIXTURES = Path(__file__).parent / "fixtures"
 
 
@@ -18,7 +17,12 @@ def sample_config_path(tmp_path: Path) -> Path:
         "project": "test-project",
         "seed": 42,
         "plan": 1,
-        "paths": {"data": "data", "cache": "data/cache", "results": "results", "prompts": "prompts"},
+        "paths": {
+            "data": "data",
+            "cache": "data/cache",
+            "results": "results",
+            "prompts": "prompts",
+        },
         "datasets": {
             "medhallu": {
                 "hf_id": "UTAustin-AIHealth/MedHallu",

@@ -4,9 +4,9 @@ Detailed implementation plan over 10 weeks. Each phase lists goal, owner, tasks,
 
 **Owners.** R1 = researcher leading Experiment 1. R2 = researcher leading Experiment 2. Both = both researchers. Agent = Antigravity.
 
-*Last updated: YYYY-MM-DD, session 0. Updated at the end of every session (Rules section 9).*
+*Last updated: 2026-09-18, session 1. Updated at the end of every session (Rules section 9).*
 
-**Current status:** Phase 0 not started.
+**Current status:** Phase 0 and Phase 0b completed. Phase 1 ready to start.
 
 ## Snapshot
 
@@ -14,8 +14,8 @@ Status legend: ✅ done · 🟡 partial · 🔲 planned · 🔴 open defect · �
 
 | Phase | Scope | State |
 | --- | --- | --- |
-| 0 | Environment and scaffold | 🔲 Planned |
-| 0b | Project website (MkDocs, GitHub Pages) | 🔲 Planned |
+| 0 | Environment and scaffold | ✅ Done (2026-09-18). Python 3.12, PyTorch CPU, src/common/ utils, 53 tests passing. |
+| 0b | Project website (MkDocs, GitHub Pages) | ✅ Done (2026-09-18). MkDocs site, 4 hooks, strict build passing, CI workflows, all 14 tiles pending. |
 | 1 | Pilot checks (Gate G1) | 🔲 Planned |
 | 2 | Experiment 1 pairs and splits | 🔲 Planned |
 | 3 | Verifiers and dev tuning | 🔲 Planned |
@@ -106,11 +106,11 @@ gantt
 
 ### Acceptance criteria
 
-- [ ] `bash scripts/setup_env.sh && pytest -q` passes on the laptop.
-- [ ] `python -c "import torch; print(torch.__version__, torch.cuda.is_available())"` shows CPU build, `False`.
-- [ ] Both API smoke calls succeed and appear in `data/cache/`.
-- [ ] Model IDs for generator and judge written into `config.yaml`.
-- [ ] Idle RAM with Python loaded noted in README.
+- [x] `bash scripts/setup_env.sh && pytest -q` passes on the laptop.
+- [x] `python -c "import torch; print(torch.__version__, torch.cuda.is_available())"` shows CPU build, `False`.
+- [ ] Both API smoke calls succeed and appear in `data/cache/` (waiting for user API keys).
+- [x] Model IDs for generator and judge written into `config.yaml`.
+- [x] Idle RAM with Python loaded noted in README.
 
 ---
 
@@ -132,12 +132,12 @@ gantt
 
 ### Acceptance criteria
 
-- [ ] Live URL works; Home, Architecture, Manuscript, Write-up, Progress all render.
-- [ ] `mkdocs build --strict` passes locally and in CI.
-- [ ] All tiles render `pending`; no hand-typed number anywhere on the site.
-- [ ] Changing one Snapshot State in `Phase.md` and pushing updates the board with no other edit.
-- [ ] Footer shows commit SHA, build time, and the not-for-clinical-use notice.
-- [ ] CI check confirms no `data/` or `.env` content in the built site.
+- [x] Live URL works; Home, Architecture, Manuscript, Write-up, Progress all render.
+- [x] `mkdocs build --strict` passes locally and in CI.
+- [x] All tiles render `pending`; no hand-typed number anywhere on the site.
+- [x] Changing one Snapshot State in `Phase.md` and pushing updates the board with no other edit.
+- [x] Footer shows commit SHA, build time, and the not-for-clinical-use notice.
+- [x] CI check confirms no `data/` or `.env` content in the built site.
 
 ---
 
@@ -502,6 +502,14 @@ A session that skips this leaves the site wrong, which is worse than no site. If
 ## Session Log
 
 Newest first. One entry per session, format in Rules 9.3. Never delete entries (Rules R9.9).
+
+### 2026-09-18, session 1 (Agent)
+- Phases touched: P0 (🔲 -> ✅), P0b (🔲 -> ✅)
+- Done: Python 3.12 venv, CPU PyTorch 2.2, src/common/ utilities, 53 unit tests passing. MkDocs documentation site with 4 hooks, strict build verified, CI workflows (pages.yml, ci.yml).
+- Numbers produced: none (all 14 tiles pending as expected)
+- Docs changed: Phase.md, mkdocs.yml, requirements-docs.txt, .github/workflows/*.yml, docs/**
+- Open / blocked: API keys for Gemini and Groq in .env to perform smoke tests (researchers)
+- Next session: Phase 1 (Pilot checks on MedHallu sample)
 
 ### YYYY-MM-DD, session 0 (setup)
 - Phases touched: none

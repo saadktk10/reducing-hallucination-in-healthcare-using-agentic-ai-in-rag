@@ -10,7 +10,7 @@ import json
 import logging
 import platform
 import subprocess
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import psutil
@@ -39,7 +39,7 @@ def generate_run_id() -> str:
     Returns:
         A string like '20260115-1430-a1b2c3d'.
     """
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     timestamp = now.strftime("%Y%m%d-%H%M")
     sha = _short_git_sha()
     return f"{timestamp}-{sha}"
@@ -63,6 +63,7 @@ def get_machine_info() -> dict:
 
     try:
         import torch
+
         info["torch_version"] = torch.__version__
         info["cuda_available"] = torch.cuda.is_available()
         info["torch_num_threads"] = torch.get_num_threads()
@@ -100,7 +101,7 @@ def write_manifest(
     manifest = {
         "run_id": run_dir.name,
         "git_commit": _short_git_sha(),
-        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "timestamp_utc": datetime.now(UTC).isoformat(),
         "machine_info": get_machine_info(),
         "config_snapshot": config_snapshot,
         "prompt_hashes": prompt_hashes or {},

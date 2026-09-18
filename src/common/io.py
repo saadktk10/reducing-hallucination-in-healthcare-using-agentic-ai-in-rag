@@ -8,10 +8,9 @@ from __future__ import annotations
 import json
 import logging
 from pathlib import Path
-from typing import TypeVar
+from typing import Literal, TypeVar
 
 from pydantic import BaseModel, Field
-from typing import Literal
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +20,7 @@ T = TypeVar("T", bound=BaseModel)
 # ---------------------------------------------------------------------------
 # Schemas — Design.md §3
 # ---------------------------------------------------------------------------
+
 
 class Pair(BaseModel):
     """One (question, context, answer, label) record — §3.1."""
@@ -100,6 +100,7 @@ class CacheRecord(BaseModel):
 # JSONL I/O
 # ---------------------------------------------------------------------------
 
+
 def read_jsonl(path: str | Path, model: type[T]) -> list[T]:
     """Read a JSONL file and validate each record against a pydantic model.
 
@@ -128,9 +129,7 @@ def read_jsonl(path: str | Path, model: type[T]) -> list[T]:
                 raw = json.loads(line)
                 records.append(model.model_validate(raw))
             except (json.JSONDecodeError, Exception) as exc:
-                raise ValueError(
-                    f"Invalid record at {path}:{line_num}: {exc}"
-                ) from exc
+                raise ValueError(f"Invalid record at {path}:{line_num}: {exc}") from exc
 
     logger.info("Read %d records from %s", len(records), path)
     return records

@@ -64,7 +64,7 @@ def _render_tile(key: str) -> str:
             f'<span class="tile-value">pending</span>'
             f'<span class="tile-label">{key}</span>'
             f'<span class="tile-phase">{phase}</span>'
-            f'</div>'
+            f"</div>"
         )
 
     value = entry.get("display", str(entry.get("value", "?")))
@@ -76,24 +76,21 @@ def _render_tile(key: str) -> str:
     ci_str = f' <span class="tile-ci">[{ci[0]:.2f}, {ci[1]:.2f}]</span>' if ci else ""
     n_str = f' <span class="tile-n">n={n}</span>' if n else ""
     source_str = f'<code class="tile-source">{source}</code>' if source else ""
+    note_str = f'<span class="tile-note">{note}</span>' if note else ""
 
     return (
         f'<div class="tile">'
         f'<span class="tile-value">{value}</span>{ci_str}{n_str}'
         f'<span class="tile-label">{key}</span>'
-        f'{source_str}'
-        f'</div>'
+        f"{note_str}"
+        f"{source_str}"
+        f"</div>"
     )
 
 
 def _render_tile_pair(key_a: str, key_b: str) -> str:
     """Render two tiles side by side for comparison."""
-    return (
-        f'<div class="tile-pair">'
-        f'{_render_tile(key_a)}'
-        f'{_render_tile(key_b)}'
-        f'</div>'
-    )
+    return f'<div class="tile-pair">{_render_tile(key_a)}{_render_tile(key_b)}</div>'
 
 
 def on_page_markdown(markdown, page, config, files, **kwargs):
