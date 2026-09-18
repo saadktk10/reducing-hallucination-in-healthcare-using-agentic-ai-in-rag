@@ -24,7 +24,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -e ".[dev]"
+          pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
           pip install -r requirements-docs.txt
 
       - name: Run Ruff linter

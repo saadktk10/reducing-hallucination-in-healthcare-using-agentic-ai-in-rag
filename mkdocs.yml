@@ -3,6 +3,7 @@ site_description: "Local NLI Cross-Encoder vs API-Based LLM-as-a-Judge for Hallu
 site_url: "https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/"
 repo_url: "https://github.com/saadktk10/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag"
 repo_name: "saadktk10/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag"
+docs_dir: docs
 
 theme:
   name: material
