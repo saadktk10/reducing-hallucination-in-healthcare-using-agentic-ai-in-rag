@@ -11,7 +11,7 @@ Foundational utilities shared across all phases of the project.
 | `cache.py` | Append-only, SHA-256 keyed cache (`JsonlCache`) for API requests and model responses (Rule R5.2). |
 | `text.py` | Sentence splitting (`pysbd`), sliding-window token chunking with overlap, and question normalization. |
 | `prompts.py` | Prompt loading, SHA-256 hash freezing, and tampering detection against `prompts/FROZEN.json`. |
-| `manifest.py` | Unique run ID generator (`YYYYMMDD-HHMM-<sha>`) and immutable `manifest.json` metadata recording. |
+| `manifest.py` | Cross-platform git discovery (`find_git_binary`), unique run ID generator (`YYYYMMDD-HHMM-<sha>`), and immutable `manifest.json` metadata recording. |
 | `logging_utils.py` | Formatted logging configuration routing to stderr and timestamped log files in `logs/` (Rule R5.7). |
 
 ## Invariants

@@ -15,7 +15,7 @@ A **ROUGE-L baseline** tests whether either filter outperforms simple word overl
 
 Two experiments evaluate these verifiers:
 - **Experiment 1:** 500 MedHallu pairs with external ground-truth labels
-- **Experiment 2:** ~100 RAG-generated answers with independent human annotation
+- **Experiment 2:** 200 RAG-generated answers (100 normal, 100 degraded under Plan 2) with independent human annotation
 
 ## Researchers
 

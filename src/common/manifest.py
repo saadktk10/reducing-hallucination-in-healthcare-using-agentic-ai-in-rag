@@ -8,7 +8,9 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import platform
+import shutil
 import subprocess
 from datetime import UTC, datetime
 from pathlib import Path
@@ -18,11 +20,25 @@ import psutil
 logger = logging.getLogger(__name__)
 
 
+def find_git_binary() -> str:
+    """Find git executable on PATH or via GitHub Desktop on Windows."""
+    git_bin = shutil.which("git")
+    if git_bin:
+        return git_bin
+    local_app = Path(os.path.expanduser(r"~\AppData\Local\GitHubDesktop"))
+    if local_app.exists():
+        matches = sorted(local_app.glob("app-*/resources/app/git/cmd/git.exe"))
+        if matches:
+            return str(matches[-1])
+    return "git"
+
+
 def _short_git_sha() -> str:
     """Get the short git SHA of HEAD, or 'nogit' if unavailable."""
+    git_bin = find_git_binary()
     try:
         result = subprocess.run(
-            ["git", "rev-parse", "--short", "HEAD"],
+            [git_bin, "rev-parse", "--short", "HEAD"],
             capture_output=True,
             text=True,
             check=True,

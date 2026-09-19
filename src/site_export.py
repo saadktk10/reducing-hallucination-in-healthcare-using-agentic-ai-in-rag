@@ -17,6 +17,7 @@ from pathlib import Path
 from typing import Any
 
 from src.common.logging_utils import get_logger
+from src.common.manifest import find_git_binary
 
 logger = get_logger(__name__)
 
@@ -44,9 +45,10 @@ def get_git_sha() -> str:
     sha = os.environ.get("GITHUB_SHA", "")
     if sha:
         return sha[:7]
+    git_bin = find_git_binary()
     try:
         res = subprocess.run(
-            ["git", "rev-parse", "--short", "HEAD"],
+            [git_bin, "rev-parse", "--short", "HEAD"],
             capture_output=True,
             text=True,
             check=True,
