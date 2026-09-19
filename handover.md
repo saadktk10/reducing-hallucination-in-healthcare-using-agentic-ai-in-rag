@@ -9,7 +9,7 @@
 - **Date**: 2026-09-19
 - **Session**: 4 (Completed)
 - **Active Branch**: `main`
-- **Current Phase**: Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 🟡 Partial (Awaiting human spot-check annotation for Gate G1), Phase 2 ✅ Done, Phase 3 ✅ Done (Verifiers, dev tuning, frozen prompts & thresholds), Phase 4 🟡 In Progress (Index builder & chunking implemented).
+- **Current Phase**: Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done (Verifiers, dev tuning, frozen prompts & thresholds), Phase 4 🟡 In Progress (Index builder & chunking implemented).
 - **Test Status**: 105 passed in `pytest -q`, 0 lint errors in `ruff check .`.
 - **Site Build**: `mkdocs build --strict` passing with 0 warnings.
 - **Live Documentation**: [https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/](https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/)
@@ -51,25 +51,17 @@
 
 ## Blockers & Pending External Actions
 
-1. **Human Spot-Check Annotation (Gate G1)**:
-   - Researchers must open `data/pilot/spotcheck_50.csv` and annotate the `supported_yes_no` column (`yes` or `no`) for the 50 rows.
-   - Per Rule R1.5, the AI agent is forbidden from generating or suggesting labels for these 50 rows.
-   - Once filled, run `python -m src.pilot_checks --config configs/config.yaml --step report` to trigger Gate G1 evaluation.
-2. **Gate G1 Decision (Plan 1 vs Plan 2)**:
-   - Once the pilot report is generated, confirm the plan in `configs/config.yaml`.
+- None! Gate G1 is resolved to **Plan 2** based on human spot-check annotation (46.0% unsupported ground truth).
 
 ---
 
 ## Immediate Next Tasks
 
-1. **Researchers annotate `data/pilot/spotcheck_50.csv`**:
-   - Fill 50 rows in `supported_yes_no` column.
-   - Run `python -m src.pilot_checks --config configs/config.yaml --step report`.
-2. **Run Full PubMedQA Indexing & Generation (Phase 4)**:
+1. **Run Full PubMedQA Indexing & Generation (Phase 4)**:
    - Execute `python -m src.build_index --config configs/config.yaml` to build `faiss.index`, `corpus_chunks.jsonl`, and `questions.jsonl`.
    - Execute `python -m src.generate_rag --config configs/config.yaml` to produce `generated.jsonl`.
-3. **Experiment 1 Test Evaluation (Phase 5)**:
-   - Following Gate G1 resolution, run `python -m src.run_verifiers --config configs/config.yaml --split test` and laptop timing benchmarks.
+2. **Experiment 1 Test Evaluation (Phase 5)**:
+   - Run `python -m src.run_verifiers --config configs/config.yaml --split test` and laptop timing benchmarks.
 
 ---
 *Research prototype. Not for clinical use.*

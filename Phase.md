@@ -6,7 +6,7 @@ Detailed implementation plan over 10 weeks. Each phase lists goal, owner, tasks,
 
 *Last updated: 2026-09-19, session 4. Updated at the end of every session (Rules section 9).*
 
-**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 🟡 Partial (Awaiting human spot-check annotation for Gate G1), Phase 2 ✅ Done, Phase 3 ✅ Done (Verifiers implemented, dev thresholds tuned, prompts frozen), Phase 4 🟡 In Progress (PubMedQA chunking & FAISS index builder implemented).
+**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done (Verifiers implemented, dev thresholds tuned, prompts frozen), Phase 4 🟡 In Progress (PubMedQA chunking & FAISS index builder implemented).
 
 ## Snapshot
 
@@ -16,7 +16,7 @@ Status legend: ✅ done · 🟡 partial · 🔲 planned · 🔴 open defect · �
 | --- | --- | --- |
 | 0 | Environment and scaffold | ✅ Done (2026-09-19). Python 3.12, PyTorch CPU, API keys verified & smoke calls cached, models pinned. |
 | 0b | Project website (MkDocs, GitHub Pages) | ✅ Done (2026-09-18). MkDocs site, 4 hooks, strict build passing, CI workflows, all 14 tiles pending. |
-| 1 | Pilot checks (Gate G1) | 🟡 Partial (2026-09-19). Fields confirmed, spotcheck CSV exported, ROUGE-L AUROC = 0.49 (precision). Awaiting human spot-check annotation. |
+| 1 | Pilot checks (Gate G1) | ✅ Done (2026-09-19). Human spot-check complete (46.0% unsupported ground truth), ROUGE-L AUROC = 0.4894. Gate G1 passed → Plan 2. |
 | 2 | Experiment 1 pairs and splits | ✅ Done (2026-09-19). Canonical 250 questions / 500 pairs generated (100 dev / 400 test), zero question overlap, exact 50/50 balance. |
 | 3 | Verifiers and dev tuning | ✅ Done (2026-09-19). Verifiers implemented (baseline_rouge, filter_b, filter_a). Tested on dev. Thresholds frozen in results/thresholds.json (Filter B F1=0.67, ROUGE-L F1=0.67). Prompts frozen in FROZEN.json. 105 tests passing. |
 | 4 | Experiment 2 index and generation | 🟡 Partial (2026-09-19). PubMedQA chunking, deduplication, and FAISS index pipeline implemented in src/build_index.py; questions selected with zero leakage vs Exp 1 dev/test. generator_v1.txt frozen. |
@@ -166,10 +166,10 @@ Researchers set `plan:` in config and commit with message `G1: plan N, unsupport
 
 ### Acceptance criteria
 
-- [ ] Column names confirmed and in config.
-- [ ] Spot-check CSV filled by humans, not by the agent.
-- [ ] Pilot report generated from code, numbers reproducible.
-- [ ] `plan` set in config.
+- [x] Column names confirmed and in config.
+- [x] Spot-check CSV filled by humans, not by the agent.
+- [x] Pilot report generated from code, numbers reproducible.
+- [x] `plan` set in config.
 
 ---
 
