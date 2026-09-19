@@ -277,6 +277,7 @@ hallucination-verifier-c/
 │   ├── pilot/
 │   │   ├── fields_20.json
 │   │   ├── spotcheck_50.csv      # humans fill supported_yes_no
+│   │   ├── rouge_results.json    # ROUGE-L AUROC per variant
 │   │   └── pilot_report.json
 │   ├── exp1_medhallu/
 │   │   ├── dev.jsonl
@@ -350,6 +351,7 @@ hallucination-verifier-c/
 │   ├── test_text.py
 │   ├── test_filter_nli.py        # max/min aggregation, label order
 │   ├── test_filter_api.py        # JSON parsing, retry, mocked client
+│   ├── test_pilot.py             # Gate G1 logic, ROUGE-L AUROC, CSV format
 │   ├── test_metrics.py           # hand-computed examples
 │   ├── test_stats.py
 │   └── test_leakage.py           # Exp 2 vs Exp 1 test overlap = 0
@@ -461,3 +463,4 @@ Append one line per structural change. Never delete lines (Rules R9.9).
 | --- | --- | --- |
 | YYYY-MM-DD | 0 | Initial architecture from Methodology C |
 | YYYY-MM-DD | 0 | Added website layer (mkdocs, hooks, docs/, paper/, writeup/, site_export) |
+| 2026-09-19 | 2 | pilot_checks.py implemented (stub → full). Added PilotConfig to config.py. Added tests/test_pilot.py. Added data/pilot/rouge_results.json to tree. |

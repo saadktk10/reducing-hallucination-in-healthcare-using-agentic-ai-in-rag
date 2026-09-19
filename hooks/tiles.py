@@ -67,6 +67,11 @@ def _render_tile(key: str) -> str:
             f"</div>"
         )
 
+    if isinstance(entry, (int, float, str)):
+        entry = {"value": entry, "display": str(entry)}
+    elif not isinstance(entry, dict):
+        entry = {"value": str(entry), "display": str(entry)}
+
     value = entry.get("display", str(entry.get("value", "?")))
     ci = entry.get("ci")
     n = entry.get("n")

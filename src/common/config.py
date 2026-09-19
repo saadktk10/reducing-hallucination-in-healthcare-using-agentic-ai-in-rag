@@ -56,6 +56,12 @@ class Exp1Config(BaseModel):
     stratify_by: str = "difficulty"
 
 
+class PilotConfig(BaseModel):
+    spotcheck_n: int = 50
+    fields_n: int = 20
+    rouge_dev_questions: int = 50
+
+
 class Exp2Config(BaseModel):
     n_normal: int = 50
     n_degraded: int = 50
@@ -129,6 +135,7 @@ class Config(BaseModel):
 
     paths: PathsConfig = Field(default_factory=PathsConfig)
     datasets: DatasetsConfig
+    pilot: PilotConfig = Field(default_factory=PilotConfig)
     exp1: Exp1Config = Field(default_factory=Exp1Config)
     exp2: Exp2Config = Field(default_factory=Exp2Config)
     models: ModelsConfig = Field(default_factory=ModelsConfig)

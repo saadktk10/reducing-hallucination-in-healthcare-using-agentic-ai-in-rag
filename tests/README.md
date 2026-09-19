@@ -13,6 +13,7 @@ This directory contains automated unit, integration, and regression tests execut
 | `test_prompts.py` | `src/common/prompts.py` | Template loading, hash freezing, and tampering detection against `prompts/FROZEN.json`. |
 | `test_manifest.py` | `src/common/manifest.py` | Run ID timestamp format and machine environment metadata capture. |
 | `test_website.py` | `hooks/*.py`, `src/site_export.py` | Snapshot table parsing, missing tile handling, tile pairs, and site export logic. |
+| `test_pilot.py` | `src/pilot_checks.py` | Gate G1 decision logic, ROUGE-L AUROC hand-computed checks, spot-check CSV formatting, dev-set properties (Phase 1). |
 | `test_split.py` | `src/data_prep.py` | Dev/test question ID disjointness and label balance (Phase 2). |
 | `test_filter_nli.py` | `src/filters/filter_b.py` | Cross-encoder dynamic label indexing and min-of-max chunk aggregation (Phase 3). |
 | `test_filter_api.py` | `src/filters/filter_a.py` | Gemini JSON fence parsing, single retry logic, and timing mode (Phase 3). |

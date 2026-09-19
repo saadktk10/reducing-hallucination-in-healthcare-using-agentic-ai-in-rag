@@ -25,6 +25,11 @@ datasets:
     config: pqa_labeled
     revision: TBD
 
+pilot:
+  spotcheck_n: 50
+  fields_n: 20
+  rouge_dev_questions: 50           # same as exp1.dev_questions
+
 exp1:
   n_questions: 250
   dev_questions: 50

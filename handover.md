@@ -6,61 +6,75 @@
 
 ## Current State
 
-- **Date**: 2026-09-18
-- **Session**: 1 (Completed)
+- **Date**: 2026-09-19
+- **Session**: 2 (Completed)
 - **Active Branch**: `main`
-- **Latest Commit**: `0596e97`
-- **Current Phase**: Phase 0 ✅ Done, Phase 0b ✅ Done. Ready for Phase 1.
+- **Current Phase**: Phase 0 ✅ Done, Phase 0b ✅ Done. Phase 1 🟡 In Progress (Awaiting human spot-check annotation for Gate G1).
+- **Test Status**: 70 passed in `pytest -q`, 0 lint errors in `ruff check .`.
+- **Site Build**: `mkdocs build --strict` passing with 0 warnings.
 - **Live Documentation**: [https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/](https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/)
 
 ---
 
-## Accomplishments (Session 1)
+## Accomplishments (Session 2)
 
-1. **Phase 0 (Environment & Scaffold)**:
-   - Configured Python 3.12 virtual environment and installed CPU-only PyTorch (`torch==2.2.2`, `numpy==1.26.4`).
-   - Implemented `src/common/`: `config.py`, `io.py`, `cache.py`, `text.py`, `prompts.py`, `manifest.py`, `logging_utils.py`.
-   - Built comprehensive unit test suite: 53 tests passing across all common modules, schemas, and chunkers.
-2. **Phase 0b (Project Website)**:
-   - Configured **MkDocs + Material for MkDocs** with 4 custom build hooks (`hooks/build_stamp.py`, `hooks/tiles.py`, `hooks/progress.py`, `hooks/external_numbers.py`).
-   - Verified strict build (`mkdocs build --strict`) with zero warnings.
-   - Configured GitHub Actions workflows (`.github/workflows/pages.yml` and `ci.yml`) with automated privacy leak verification.
-   - Deployed live site to GitHub Pages with working navigation (Home, Architecture, Manuscript, Write-up, Progress, Reference).
-3. **Repository Documentation**:
-   - Added detailed, purpose-built `README.md` files to every directory in the codebase.
-   - Updated `Rules.md` with:
-     - **Rule R9.13**: Update folder READMEs at the end of every session.
-     - **Rule R9.14**: Read `handover.md` at session start, update `handover.md` at session close.
+1. **Phase 1 Implementation (`src/pilot_checks.py`)**:
+   - Implemented 4 CLI steps: `--step fields`, `--step spotcheck`, `--step rouge`, `--step report`.
+   - Integrated `pilot` section in `configs/config.yaml` and typed `PilotConfig` in `src/common/config.py`.
+2. **MedHallu Download & Column Verification (`--step fields`)**:
+   - Downloaded and validated dataset: 1000 rows, 6 columns (`Question`, `Knowledge`, `Ground Truth`, `Hallucinated Answer`, `Difficulty Level`, `Category of Hallucination`).
+   - Discovered and addressed: `Knowledge` column contains `List[str]` (paragraphs/sentences); implemented `_get_context()` helper to cleanly join elements with spaces.
+   - Exported 20 sample rows to `data/pilot/fields_20.json`.
+3. **Spot-Check Export (`--step spotcheck`)**:
+   - Deterministically sampled 50 questions (`seed=42`).
+   - Exported `data/pilot/spotcheck_50.csv` with empty annotation columns (`supported_yes_no`, `notes`) per Rule R1.5 for human annotation.
+4. **ROUGE-L AUROC Computation (`--step rouge`)**:
+   - Built provisional dev set: 100 pairs from 50 questions, exactly balanced (50 label=0, 50 label=1), stratified across difficulty levels.
+   - Computed ROUGE-L AUROCs across all 3 variants:
+     - `rougeL_precision`: **0.4894** (primary variant, chance level, well below 0.95 lexical shortcut threshold)
+     - `rougeL_recall`: **0.7052**
+     - `rougeL_fmeasure`: **0.7130**
+   - Stored results in `data/pilot/rouge_results.json`.
+5. **Testing & QA**:
+   - Implemented 17 new unit tests in `tests/test_pilot.py` (Gate G1 decision logic, ROUGE-L AUROC hand-computed checks, spot-check CSV schema, dev-set determinism and balance, report JSON parsing).
+   - Total test suite expanded to 70 tests (100% passing).
+   - Defensive schema guard added to `hooks/tiles.py` and `src/site_export.py`.
+6. **Documentation & Session Close Updates**:
+   - Updated `Phase.md` (Snapshot table and Session log entry for session 2).
+   - Updated `Architecture.md` (directory tree, test suite table, change log).
+   - Updated `src/README.md` and `tests/README.md` per Rule R9.13.
 
 ---
 
 ## Key Technical Decisions
 
-- **Folder Case Sensitivity**: Renamed `Docs/` to `docs/` in git so Ubuntu runners in GitHub Actions can locate documentation files.
-- **NumPy & Torch ABI Compatibility**: Pinned `numpy>=1.26,<2.0` in `pyproject.toml` and installed compatible `scipy` and `contourpy` to prevent C-extension warnings with PyTorch 2.2.
-- **Strict Build Invariants**: In `mkdocs.yml`, added `not_in_nav: | \n claim.md` so snippet-only files do not trigger unlisted page warnings under `--strict`.
+- **MedHallu Knowledge Column Handling**: MedHallu stores `Knowledge` as a list of strings rather than a single string. Standardized with `_get_context()` joining on spaces.
+- **HuggingFace datasets 5.x compatibility**: Removed deprecated `trust_remote_code=True` parameter from `load_dataset`.
+- **Lexical Shortcut Validation**: ROUGE-L precision AUROC is ~0.49 on the provisional dev pairs. This confirms ROUGE precision alone cannot easily separate supported from hallucinated answers, meaning there is no trivial lexical shortcut in the dataset.
+- **Defensive Site Export & Tile Rendering**: Handled both dictionary and primitive numbers gracefully in `hooks/tiles.py` to prevent any runtime exceptions during site generation.
 
 ---
 
 ## Blockers & Pending External Actions
 
-- **API Keys Needed**: Need `GEMINI_API_KEY` and `GROQ_API_KEY` added to `.env` (from `.env.example`) to perform live API smoke tests and run Filter A.
-- **MedHallu Hugging Face Access**: Ensure HF dataset access is configured for Phase 1 pilot download.
+1. **Human Spot-Check Annotation**:
+   - Researchers must open `data/pilot/spotcheck_50.csv` and annotate the `supported_yes_no` column (`yes` or `no`) for the 50 rows.
+   - Once filled, run `python -m src.pilot_checks --config configs/config.yaml --step report` to trigger Gate G1 evaluation.
+2. **API Keys Needed**:
+   - Still need `GEMINI_API_KEY` and `GROQ_API_KEY` in `.env` for upcoming Phase 3 (Filter A dev tuning) and Phase 4 (generation).
 
 ---
 
-## Immediate Next Tasks (Phase 1: Pilot Checks)
+## Immediate Next Tasks
 
-1. **Implement `src/pilot.py`**:
-   - Spot-check 50 ground-truth answers from MedHallu dev set for unsupported claims (Decision Gate G1 threshold: < 15%).
-   - Compute ROUGE-L AUROC on dev set to check lexical overlap shortcut (Decision Gate G1 threshold: > 0.70).
-2. **Execute Pilot Checks**:
-   - Record results in `results/pilot/metrics.json`.
-   - Run `python -m src.site_export` to update `results/site/numbers_of_record.json` with `pilot.unsupported_rate` and `pilot.rouge_auroc`.
-3. **Session Close**:
-   - Update `Phase.md` Snapshot and Session log.
-   - Update `handover.md` with Gate G1 outcome.
-   - Re-build docs and push to `main`.
+1. **Complete Gate G1**:
+   - Complete human annotation of `data/pilot/spotcheck_50.csv`.
+   - Run `python -m src.pilot_checks --config configs/config.yaml --step report`.
+   - Confirm Gate G1 plan recommendation (Plan 1 vs Plan 2).
+2. **Phase 2 (Experiment 1 Pairs & Splits)**:
+   - Implement `src/build_exp1_pairs.py` to create canonical 500-question (1000-pair) dataset.
+   - Stratify and split into dev (100 pairs / 50 questions) and test (400 pairs / 200 questions).
+   - Ensure strict question disjointness (`test_split.py`).
 
 ---
 *Research prototype. Not for clinical use.*

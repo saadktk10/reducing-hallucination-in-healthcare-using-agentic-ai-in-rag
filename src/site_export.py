@@ -83,7 +83,15 @@ def export_site_numbers(
                 pilot_data = json.load(f)
             for k in ["pilot.unsupported_rate", "pilot.rouge_auroc"]:
                 if k in pilot_data:
-                    numbers[k] = pilot_data[k]
+                    val = pilot_data[k]
+                    if isinstance(val, dict):
+                        numbers[k] = val
+                    else:
+                        numbers[k] = {
+                            "value": val,
+                            "display": f"{val:.4f}" if isinstance(val, float) else str(val),
+                            "source": str(pilot_metrics_file),
+                        }
         except Exception as e:
             logger.warning("Failed to read %s: %s", pilot_metrics_file, e)
 
