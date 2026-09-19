@@ -1,0 +1,924 @@
+{
+  "n_pairs": 100,
+  "n_questions": 50,
+  "label_distribution": {
+    "0": 50,
+    "1": 50
+  },
+  "difficulty_distribution": {
+    "easy": 28,
+    "hard": 44,
+    "medium": 28
+  },
+  "auroc": {
+    "rougeL_precision": 0.48939999999999995,
+    "rougeL_recall": 0.7052,
+    "rougeL_fmeasure": 0.713
+  },
+  "primary_variant": "rougeL_precision",
+  "primary_auroc": 0.48939999999999995,
+  "seed": 42,
+  "per_pair_scores": [
+    {
+      "pair_id": "e1-q000-gt",
+      "question_id": "q000",
+      "label": 0,
+      "difficulty": "easy",
+      "rougeL_precision": 0.2127659574468085,
+      "rougeL_recall": 0.05917159763313609,
+      "rougeL_fmeasure": 0.0925925925925926
+    },
+    {
+      "pair_id": "e1-q000-hal",
+      "question_id": "q000",
+      "label": 1,
+      "difficulty": "easy",
+      "rougeL_precision": 0.22,
+      "rougeL_recall": 0.0650887573964497,
+      "rougeL_fmeasure": 0.10045662100456622
+    },
+    {
+      "pair_id": "e1-q001-gt",
+      "question_id": "q001",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.3069306930693069,
+      "rougeL_recall": 0.11231884057971014,
+      "rougeL_fmeasure": 0.16445623342175067
+    },
+    {
+      "pair_id": "e1-q001-hal",
+      "question_id": "q001",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.35,
+      "rougeL_recall": 0.025362318840579712,
+      "rougeL_fmeasure": 0.0472972972972973
+    },
+    {
+      "pair_id": "e1-q002-gt",
+      "question_id": "q002",
+      "label": 0,
+      "difficulty": "medium",
+      "rougeL_precision": 0.45,
+      "rougeL_recall": 0.0821917808219178,
+      "rougeL_fmeasure": 0.138996138996139
+    },
+    {
+      "pair_id": "e1-q002-hal",
+      "question_id": "q002",
+      "label": 1,
+      "difficulty": "medium",
+      "rougeL_precision": 0.3333333333333333,
+      "rougeL_recall": 0.045662100456621,
+      "rougeL_fmeasure": 0.08032128514056225
+    },
+    {
+      "pair_id": "e1-q003-gt",
+      "question_id": "q003",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.21333333333333335,
+      "rougeL_recall": 0.07766990291262135,
+      "rougeL_fmeasure": 0.11387900355871886
+    },
+    {
+      "pair_id": "e1-q003-hal",
+      "question_id": "q003",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.25,
+      "rougeL_recall": 0.03398058252427184,
+      "rougeL_fmeasure": 0.05982905982905983
+    },
+    {
+      "pair_id": "e1-q004-gt",
+      "question_id": "q004",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.54,
+      "rougeL_recall": 0.1067193675889328,
+      "rougeL_fmeasure": 0.17821782178217818
+    },
+    {
+      "pair_id": "e1-q004-hal",
+      "question_id": "q004",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.3783783783783784,
+      "rougeL_recall": 0.05533596837944664,
+      "rougeL_fmeasure": 0.09655172413793102
+    },
+    {
+      "pair_id": "e1-q005-gt",
+      "question_id": "q005",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.48484848484848486,
+      "rougeL_recall": 0.08040201005025126,
+      "rougeL_fmeasure": 0.13793103448275862
+    },
+    {
+      "pair_id": "e1-q005-hal",
+      "question_id": "q005",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.40789473684210525,
+      "rougeL_recall": 0.15577889447236182,
+      "rougeL_fmeasure": 0.2254545454545455
+    },
+    {
+      "pair_id": "e1-q006-gt",
+      "question_id": "q006",
+      "label": 0,
+      "difficulty": "easy",
+      "rougeL_precision": 0.5294117647058824,
+      "rougeL_recall": 0.08653846153846154,
+      "rougeL_fmeasure": 0.14876033057851237
+    },
+    {
+      "pair_id": "e1-q006-hal",
+      "question_id": "q006",
+      "label": 1,
+      "difficulty": "easy",
+      "rougeL_precision": 0.4666666666666667,
+      "rougeL_recall": 0.0673076923076923,
+      "rougeL_fmeasure": 0.11764705882352941
+    },
+    {
+      "pair_id": "e1-q007-gt",
+      "question_id": "q007",
+      "label": 0,
+      "difficulty": "medium",
+      "rougeL_precision": 0.3950617283950617,
+      "rougeL_recall": 0.09329446064139942,
+      "rougeL_fmeasure": 0.1509433962264151
+    },
+    {
+      "pair_id": "e1-q007-hal",
+      "question_id": "q007",
+      "label": 1,
+      "difficulty": "medium",
+      "rougeL_precision": 0.5862068965517241,
+      "rougeL_recall": 0.04956268221574344,
+      "rougeL_fmeasure": 0.0913978494623656
+    },
+    {
+      "pair_id": "e1-q008-gt",
+      "question_id": "q008",
+      "label": 0,
+      "difficulty": "medium",
+      "rougeL_precision": 0.3582089552238806,
+      "rougeL_recall": 0.0916030534351145,
+      "rougeL_fmeasure": 0.1458966565349544
+    },
+    {
+      "pair_id": "e1-q008-hal",
+      "question_id": "q008",
+      "label": 1,
+      "difficulty": "medium",
+      "rougeL_precision": 0.3484848484848485,
+      "rougeL_recall": 0.08778625954198473,
+      "rougeL_fmeasure": 0.1402439024390244
+    },
+    {
+      "pair_id": "e1-q009-gt",
+      "question_id": "q009",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.32075471698113206,
+      "rougeL_recall": 0.08900523560209424,
+      "rougeL_fmeasure": 0.13934426229508198
+    },
+    {
+      "pair_id": "e1-q009-hal",
+      "question_id": "q009",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.55,
+      "rougeL_recall": 0.05759162303664921,
+      "rougeL_fmeasure": 0.1042654028436019
+    },
+    {
+      "pair_id": "e1-q010-gt",
+      "question_id": "q010",
+      "label": 0,
+      "difficulty": "easy",
+      "rougeL_precision": 0.3076923076923077,
+      "rougeL_recall": 0.05755395683453238,
+      "rougeL_fmeasure": 0.09696969696969698
+    },
+    {
+      "pair_id": "e1-q010-hal",
+      "question_id": "q010",
+      "label": 1,
+      "difficulty": "easy",
+      "rougeL_precision": 0.4166666666666667,
+      "rougeL_recall": 0.03597122302158273,
+      "rougeL_fmeasure": 0.06622516556291391
+    },
+    {
+      "pair_id": "e1-q011-gt",
+      "question_id": "q011",
+      "label": 0,
+      "difficulty": "easy",
+      "rougeL_precision": 0.4827586206896552,
+      "rougeL_recall": 0.10071942446043165,
+      "rougeL_fmeasure": 0.16666666666666669
+    },
+    {
+      "pair_id": "e1-q011-hal",
+      "question_id": "q011",
+      "label": 1,
+      "difficulty": "easy",
+      "rougeL_precision": 0.47619047619047616,
+      "rougeL_recall": 0.03597122302158273,
+      "rougeL_fmeasure": 0.06688963210702341
+    },
+    {
+      "pair_id": "e1-q012-gt",
+      "question_id": "q012",
+      "label": 0,
+      "difficulty": "easy",
+      "rougeL_precision": 0.4,
+      "rougeL_recall": 0.03592814371257485,
+      "rougeL_fmeasure": 0.06593406593406594
+    },
+    {
+      "pair_id": "e1-q012-hal",
+      "question_id": "q012",
+      "label": 1,
+      "difficulty": "easy",
+      "rougeL_precision": 0.5454545454545454,
+      "rougeL_recall": 0.03592814371257485,
+      "rougeL_fmeasure": 0.06741573033707866
+    },
+    {
+      "pair_id": "e1-q013-gt",
+      "question_id": "q013",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.25,
+      "rougeL_recall": 0.10084033613445378,
+      "rougeL_fmeasure": 0.14371257485029942
+    },
+    {
+      "pair_id": "e1-q013-hal",
+      "question_id": "q013",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.5555555555555556,
+      "rougeL_recall": 0.12605042016806722,
+      "rougeL_fmeasure": 0.2054794520547945
+    },
+    {
+      "pair_id": "e1-q014-gt",
+      "question_id": "q014",
+      "label": 0,
+      "difficulty": "medium",
+      "rougeL_precision": 0.375,
+      "rougeL_recall": 0.08071748878923767,
+      "rougeL_fmeasure": 0.1328413284132841
+    },
+    {
+      "pair_id": "e1-q014-hal",
+      "question_id": "q014",
+      "label": 1,
+      "difficulty": "medium",
+      "rougeL_precision": 0.5652173913043478,
+      "rougeL_recall": 0.05829596412556054,
+      "rougeL_fmeasure": 0.1056910569105691
+    },
+    {
+      "pair_id": "e1-q015-gt",
+      "question_id": "q015",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.36363636363636365,
+      "rougeL_recall": 0.06060606060606061,
+      "rougeL_fmeasure": 0.1038961038961039
+    },
+    {
+      "pair_id": "e1-q015-hal",
+      "question_id": "q015",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.34146341463414637,
+      "rougeL_recall": 0.0707070707070707,
+      "rougeL_fmeasure": 0.11715481171548117
+    },
+    {
+      "pair_id": "e1-q016-gt",
+      "question_id": "q016",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.56,
+      "rougeL_recall": 0.058823529411764705,
+      "rougeL_fmeasure": 0.10646387832699619
+    },
+    {
+      "pair_id": "e1-q016-hal",
+      "question_id": "q016",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.47619047619047616,
+      "rougeL_recall": 0.04201680672268908,
+      "rougeL_fmeasure": 0.07722007722007723
+    },
+    {
+      "pair_id": "e1-q017-gt",
+      "question_id": "q017",
+      "label": 0,
+      "difficulty": "easy",
+      "rougeL_precision": 0.5714285714285714,
+      "rougeL_recall": 0.064,
+      "rougeL_fmeasure": 0.11510791366906473
+    },
+    {
+      "pair_id": "e1-q017-hal",
+      "question_id": "q017",
+      "label": 1,
+      "difficulty": "easy",
+      "rougeL_precision": 0.4,
+      "rougeL_recall": 0.112,
+      "rougeL_fmeasure": 0.17500000000000002
+    },
+    {
+      "pair_id": "e1-q018-gt",
+      "question_id": "q018",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.625,
+      "rougeL_recall": 0.06116207951070336,
+      "rougeL_fmeasure": 0.11142061281337046
+    },
+    {
+      "pair_id": "e1-q018-hal",
+      "question_id": "q018",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.5357142857142857,
+      "rougeL_recall": 0.045871559633027525,
+      "rougeL_fmeasure": 0.08450704225352113
+    },
+    {
+      "pair_id": "e1-q019-gt",
+      "question_id": "q019",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.5428571428571428,
+      "rougeL_recall": 0.06620209059233449,
+      "rougeL_fmeasure": 0.11801242236024843
+    },
+    {
+      "pair_id": "e1-q019-hal",
+      "question_id": "q019",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.5357142857142857,
+      "rougeL_recall": 0.05226480836236934,
+      "rougeL_fmeasure": 0.09523809523809523
+    },
+    {
+      "pair_id": "e1-q020-gt",
+      "question_id": "q020",
+      "label": 0,
+      "difficulty": "medium",
+      "rougeL_precision": 0.5,
+      "rougeL_recall": 0.15544041450777202,
+      "rougeL_fmeasure": 0.23715415019762845
+    },
+    {
+      "pair_id": "e1-q020-hal",
+      "question_id": "q020",
+      "label": 1,
+      "difficulty": "medium",
+      "rougeL_precision": 0.6666666666666666,
+      "rougeL_recall": 0.06217616580310881,
+      "rougeL_fmeasure": 0.11374407582938388
+    },
+    {
+      "pair_id": "e1-q021-gt",
+      "question_id": "q021",
+      "label": 0,
+      "difficulty": "medium",
+      "rougeL_precision": 0.5128205128205128,
+      "rougeL_recall": 0.06514657980456026,
+      "rougeL_fmeasure": 0.11560693641618497
+    },
+    {
+      "pair_id": "e1-q021-hal",
+      "question_id": "q021",
+      "label": 1,
+      "difficulty": "medium",
+      "rougeL_precision": 0.5882352941176471,
+      "rougeL_recall": 0.06514657980456026,
+      "rougeL_fmeasure": 0.11730205278592375
+    },
+    {
+      "pair_id": "e1-q022-gt",
+      "question_id": "q022",
+      "label": 0,
+      "difficulty": "easy",
+      "rougeL_precision": 0.35555555555555557,
+      "rougeL_recall": 0.08080808080808081,
+      "rougeL_fmeasure": 0.13168724279835392
+    },
+    {
+      "pair_id": "e1-q022-hal",
+      "question_id": "q022",
+      "label": 1,
+      "difficulty": "easy",
+      "rougeL_precision": 0.47619047619047616,
+      "rougeL_recall": 0.050505050505050504,
+      "rougeL_fmeasure": 0.091324200913242
+    },
+    {
+      "pair_id": "e1-q023-gt",
+      "question_id": "q023",
+      "label": 0,
+      "difficulty": "easy",
+      "rougeL_precision": 0.35714285714285715,
+      "rougeL_recall": 0.08620689655172414,
+      "rougeL_fmeasure": 0.1388888888888889
+    },
+    {
+      "pair_id": "e1-q023-hal",
+      "question_id": "q023",
+      "label": 1,
+      "difficulty": "easy",
+      "rougeL_precision": 0.23529411764705882,
+      "rougeL_recall": 0.06896551724137931,
+      "rougeL_fmeasure": 0.10666666666666667
+    },
+    {
+      "pair_id": "e1-q024-gt",
+      "question_id": "q024",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.3,
+      "rougeL_recall": 0.07947019867549669,
+      "rougeL_fmeasure": 0.1256544502617801
+    },
+    {
+      "pair_id": "e1-q024-hal",
+      "question_id": "q024",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.2857142857142857,
+      "rougeL_recall": 0.039735099337748346,
+      "rougeL_fmeasure": 0.06976744186046513
+    },
+    {
+      "pair_id": "e1-q025-gt",
+      "question_id": "q025",
+      "label": 0,
+      "difficulty": "medium",
+      "rougeL_precision": 0.41379310344827586,
+      "rougeL_recall": 0.16666666666666666,
+      "rougeL_fmeasure": 0.2376237623762376
+    },
+    {
+      "pair_id": "e1-q025-hal",
+      "question_id": "q025",
+      "label": 1,
+      "difficulty": "medium",
+      "rougeL_precision": 0.3269230769230769,
+      "rougeL_recall": 0.11805555555555555,
+      "rougeL_fmeasure": 0.17346938775510207
+    },
+    {
+      "pair_id": "e1-q026-gt",
+      "question_id": "q026",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.6818181818181818,
+      "rougeL_recall": 0.06382978723404255,
+      "rougeL_fmeasure": 0.11673151750972761
+    },
+    {
+      "pair_id": "e1-q026-hal",
+      "question_id": "q026",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.32142857142857145,
+      "rougeL_recall": 0.07659574468085106,
+      "rougeL_fmeasure": 0.12371134020618557
+    },
+    {
+      "pair_id": "e1-q027-gt",
+      "question_id": "q027",
+      "label": 0,
+      "difficulty": "easy",
+      "rougeL_precision": 0.5,
+      "rougeL_recall": 0.029508196721311476,
+      "rougeL_fmeasure": 0.05572755417956657
+    },
+    {
+      "pair_id": "e1-q027-hal",
+      "question_id": "q027",
+      "label": 1,
+      "difficulty": "easy",
+      "rougeL_precision": 0.5263157894736842,
+      "rougeL_recall": 0.03278688524590164,
+      "rougeL_fmeasure": 0.0617283950617284
+    },
+    {
+      "pair_id": "e1-q028-gt",
+      "question_id": "q028",
+      "label": 0,
+      "difficulty": "medium",
+      "rougeL_precision": 0.6428571428571429,
+      "rougeL_recall": 0.04639175257731959,
+      "rougeL_fmeasure": 0.08653846153846155
+    },
+    {
+      "pair_id": "e1-q028-hal",
+      "question_id": "q028",
+      "label": 1,
+      "difficulty": "medium",
+      "rougeL_precision": 0.6,
+      "rougeL_recall": 0.030927835051546393,
+      "rougeL_fmeasure": 0.058823529411764705
+    },
+    {
+      "pair_id": "e1-q029-gt",
+      "question_id": "q029",
+      "label": 0,
+      "difficulty": "medium",
+      "rougeL_precision": 0.5789473684210527,
+      "rougeL_recall": 0.048458149779735685,
+      "rougeL_fmeasure": 0.08943089430894309
+    },
+    {
+      "pair_id": "e1-q029-hal",
+      "question_id": "q029",
+      "label": 1,
+      "difficulty": "medium",
+      "rougeL_precision": 0.5217391304347826,
+      "rougeL_recall": 0.05286343612334802,
+      "rougeL_fmeasure": 0.09600000000000002
+    },
+    {
+      "pair_id": "e1-q030-gt",
+      "question_id": "q030",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.5526315789473685,
+      "rougeL_recall": 0.09905660377358491,
+      "rougeL_fmeasure": 0.168
+    },
+    {
+      "pair_id": "e1-q030-hal",
+      "question_id": "q030",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.37142857142857144,
+      "rougeL_recall": 0.06132075471698113,
+      "rougeL_fmeasure": 0.10526315789473684
+    },
+    {
+      "pair_id": "e1-q031-gt",
+      "question_id": "q031",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.4027777777777778,
+      "rougeL_recall": 0.10861423220973783,
+      "rougeL_fmeasure": 0.17109144542772858
+    },
+    {
+      "pair_id": "e1-q031-hal",
+      "question_id": "q031",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.5714285714285714,
+      "rougeL_recall": 0.0449438202247191,
+      "rougeL_fmeasure": 0.08333333333333333
+    },
+    {
+      "pair_id": "e1-q032-gt",
+      "question_id": "q032",
+      "label": 0,
+      "difficulty": "easy",
+      "rougeL_precision": 0.36363636363636365,
+      "rougeL_recall": 0.16551724137931034,
+      "rougeL_fmeasure": 0.22748815165876776
+    },
+    {
+      "pair_id": "e1-q032-hal",
+      "question_id": "q032",
+      "label": 1,
+      "difficulty": "easy",
+      "rougeL_precision": 0.4482758620689655,
+      "rougeL_recall": 0.0896551724137931,
+      "rougeL_fmeasure": 0.14942528735632185
+    },
+    {
+      "pair_id": "e1-q033-gt",
+      "question_id": "q033",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.3673469387755102,
+      "rougeL_recall": 0.08530805687203792,
+      "rougeL_fmeasure": 0.13846153846153847
+    },
+    {
+      "pair_id": "e1-q033-hal",
+      "question_id": "q033",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.22413793103448276,
+      "rougeL_recall": 0.061611374407582936,
+      "rougeL_fmeasure": 0.09665427509293681
+    },
+    {
+      "pair_id": "e1-q034-gt",
+      "question_id": "q034",
+      "label": 0,
+      "difficulty": "medium",
+      "rougeL_precision": 0.3103448275862069,
+      "rougeL_recall": 0.10285714285714286,
+      "rougeL_fmeasure": 0.15450643776824033
+    },
+    {
+      "pair_id": "e1-q034-hal",
+      "question_id": "q034",
+      "label": 1,
+      "difficulty": "medium",
+      "rougeL_precision": 0.25,
+      "rougeL_recall": 0.10857142857142857,
+      "rougeL_fmeasure": 0.15139442231075698
+    },
+    {
+      "pair_id": "e1-q035-gt",
+      "question_id": "q035",
+      "label": 0,
+      "difficulty": "medium",
+      "rougeL_precision": 0.38461538461538464,
+      "rougeL_recall": 0.10416666666666667,
+      "rougeL_fmeasure": 0.16393442622950818
+    },
+    {
+      "pair_id": "e1-q035-hal",
+      "question_id": "q035",
+      "label": 1,
+      "difficulty": "medium",
+      "rougeL_precision": 0.4375,
+      "rougeL_recall": 0.09722222222222222,
+      "rougeL_fmeasure": 0.1590909090909091
+    },
+    {
+      "pair_id": "e1-q036-gt",
+      "question_id": "q036",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.41025641025641024,
+      "rougeL_recall": 0.06956521739130435,
+      "rougeL_fmeasure": 0.11895910780669146
+    },
+    {
+      "pair_id": "e1-q036-hal",
+      "question_id": "q036",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.5,
+      "rougeL_recall": 0.05652173913043478,
+      "rougeL_fmeasure": 0.1015625
+    },
+    {
+      "pair_id": "e1-q037-gt",
+      "question_id": "q037",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.84,
+      "rougeL_recall": 0.07865168539325842,
+      "rougeL_fmeasure": 0.14383561643835616
+    },
+    {
+      "pair_id": "e1-q037-hal",
+      "question_id": "q037",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.5625,
+      "rougeL_recall": 0.033707865168539325,
+      "rougeL_fmeasure": 0.0636042402826855
+    },
+    {
+      "pair_id": "e1-q038-gt",
+      "question_id": "q038",
+      "label": 0,
+      "difficulty": "easy",
+      "rougeL_precision": 0.4375,
+      "rougeL_recall": 0.08171206225680934,
+      "rougeL_fmeasure": 0.13770491803278687
+    },
+    {
+      "pair_id": "e1-q038-hal",
+      "question_id": "q038",
+      "label": 1,
+      "difficulty": "easy",
+      "rougeL_precision": 0.4594594594594595,
+      "rougeL_recall": 0.06614785992217899,
+      "rougeL_fmeasure": 0.11564625850340135
+    },
+    {
+      "pair_id": "e1-q039-gt",
+      "question_id": "q039",
+      "label": 0,
+      "difficulty": "medium",
+      "rougeL_precision": 0.48717948717948717,
+      "rougeL_recall": 0.05846153846153846,
+      "rougeL_fmeasure": 0.10439560439560437
+    },
+    {
+      "pair_id": "e1-q039-hal",
+      "question_id": "q039",
+      "label": 1,
+      "difficulty": "medium",
+      "rougeL_precision": 0.2727272727272727,
+      "rougeL_recall": 0.055384615384615386,
+      "rougeL_fmeasure": 0.09207161125319695
+    },
+    {
+      "pair_id": "e1-q040-gt",
+      "question_id": "q040",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.34146341463414637,
+      "rougeL_recall": 0.1044776119402985,
+      "rougeL_fmeasure": 0.15999999999999998
+    },
+    {
+      "pair_id": "e1-q040-hal",
+      "question_id": "q040",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.7307692307692307,
+      "rougeL_recall": 0.1417910447761194,
+      "rougeL_fmeasure": 0.2375
+    },
+    {
+      "pair_id": "e1-q041-gt",
+      "question_id": "q041",
+      "label": 0,
+      "difficulty": "easy",
+      "rougeL_precision": 0.3684210526315789,
+      "rougeL_recall": 0.10194174757281553,
+      "rougeL_fmeasure": 0.15969581749049427
+    },
+    {
+      "pair_id": "e1-q041-hal",
+      "question_id": "q041",
+      "label": 1,
+      "difficulty": "easy",
+      "rougeL_precision": 0.3333333333333333,
+      "rougeL_recall": 0.10679611650485436,
+      "rougeL_fmeasure": 0.16176470588235292
+    },
+    {
+      "pair_id": "e1-q042-gt",
+      "question_id": "q042",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.37209302325581395,
+      "rougeL_recall": 0.07766990291262135,
+      "rougeL_fmeasure": 0.1285140562248996
+    },
+    {
+      "pair_id": "e1-q042-hal",
+      "question_id": "q042",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.30434782608695654,
+      "rougeL_recall": 0.03398058252427184,
+      "rougeL_fmeasure": 0.0611353711790393
+    },
+    {
+      "pair_id": "e1-q043-gt",
+      "question_id": "q043",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.4528301886792453,
+      "rougeL_recall": 0.11059907834101383,
+      "rougeL_fmeasure": 0.1777777777777778
+    },
+    {
+      "pair_id": "e1-q043-hal",
+      "question_id": "q043",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.6666666666666666,
+      "rougeL_recall": 0.055299539170506916,
+      "rougeL_fmeasure": 0.1021276595744681
+    },
+    {
+      "pair_id": "e1-q044-gt",
+      "question_id": "q044",
+      "label": 0,
+      "difficulty": "medium",
+      "rougeL_precision": 0.4444444444444444,
+      "rougeL_recall": 0.0182648401826484,
+      "rougeL_fmeasure": 0.03508771929824561
+    },
+    {
+      "pair_id": "e1-q044-hal",
+      "question_id": "q044",
+      "label": 1,
+      "difficulty": "medium",
+      "rougeL_precision": 0.4444444444444444,
+      "rougeL_recall": 0.0365296803652968,
+      "rougeL_fmeasure": 0.06751054852320675
+    },
+    {
+      "pair_id": "e1-q045-gt",
+      "question_id": "q045",
+      "label": 0,
+      "difficulty": "easy",
+      "rougeL_precision": 0.3974358974358974,
+      "rougeL_recall": 0.14351851851851852,
+      "rougeL_fmeasure": 0.21088435374149658
+    },
+    {
+      "pair_id": "e1-q045-hal",
+      "question_id": "q045",
+      "label": 1,
+      "difficulty": "easy",
+      "rougeL_precision": 0.25,
+      "rougeL_recall": 0.06481481481481481,
+      "rougeL_fmeasure": 0.10294117647058823
+    },
+    {
+      "pair_id": "e1-q046-gt",
+      "question_id": "q046",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.41025641025641024,
+      "rougeL_recall": 0.0599250936329588,
+      "rougeL_fmeasure": 0.10457516339869281
+    },
+    {
+      "pair_id": "e1-q046-hal",
+      "question_id": "q046",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.375,
+      "rougeL_recall": 0.02247191011235955,
+      "rougeL_fmeasure": 0.04240282685512367
+    },
+    {
+      "pair_id": "e1-q047-gt",
+      "question_id": "q047",
+      "label": 0,
+      "difficulty": "hard",
+      "rougeL_precision": 0.475,
+      "rougeL_recall": 0.10160427807486631,
+      "rougeL_fmeasure": 0.16740088105726875
+    },
+    {
+      "pair_id": "e1-q047-hal",
+      "question_id": "q047",
+      "label": 1,
+      "difficulty": "hard",
+      "rougeL_precision": 0.43478260869565216,
+      "rougeL_recall": 0.053475935828877004,
+      "rougeL_fmeasure": 0.09523809523809525
+    },
+    {
+      "pair_id": "e1-q048-gt",
+      "question_id": "q048",
+      "label": 0,
+      "difficulty": "easy",
+      "rougeL_precision": 0.46774193548387094,
+      "rougeL_recall": 0.16022099447513813,
+      "rougeL_fmeasure": 0.23868312757201646
+    },
+    {
+      "pair_id": "e1-q048-hal",
+      "question_id": "q048",
+      "label": 1,
+      "difficulty": "easy",
+      "rougeL_precision": 0.5333333333333333,
+      "rougeL_recall": 0.08839779005524862,
+      "rougeL_fmeasure": 0.15165876777251186
+    },
+    {
+      "pair_id": "e1-q049-gt",
+      "question_id": "q049",
+      "label": 0,
+      "difficulty": "medium",
+      "rougeL_precision": 0.45454545454545453,
+      "rougeL_recall": 0.06756756756756757,
+      "rougeL_fmeasure": 0.11764705882352941
+    },
+    {
+      "pair_id": "e1-q049-hal",
+      "question_id": "q049",
+      "label": 1,
+      "difficulty": "medium",
+      "rougeL_precision": 0.41935483870967744,
+      "rougeL_recall": 0.11711711711711711,
+      "rougeL_fmeasure": 0.18309859154929578
+    }
+  ],
+  "computed_at": "2026-09-19T20:20:35.518338+00:00"
+}

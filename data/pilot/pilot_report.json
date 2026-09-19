@@ -1,0 +1,27 @@
+{
+  "spotcheck": {
+    "total_rows": 50,
+    "total_checked": 50,
+    "unfilled": 0,
+    "unsupported_count": 23,
+    "unsupported_rate": 0.46
+  },
+  "rouge": {
+    "n_pairs": 100,
+    "n_questions": 50,
+    "auroc": {
+      "rougeL_precision": 0.48939999999999995,
+      "rougeL_recall": 0.7052,
+      "rougeL_fmeasure": 0.713
+    },
+    "primary_variant": "rougeL_precision",
+    "primary_auroc": 0.48939999999999995
+  },
+  "gate_g1": {
+    "threshold_unsupported": 0.1,
+    "threshold_auroc": 0.95,
+    "recommended_plan": 2,
+    "reason": "Unsupported rate=46.0% (>= 10%), ROUGE-L AUROC=0.4894 (< 0.95) \u2192 Plan 2"
+  },
+  "generated_at": "2026-09-19T17:09:36.730111+00:00"
+}

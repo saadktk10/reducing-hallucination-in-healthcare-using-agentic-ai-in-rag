@@ -1,0 +1,49 @@
+{
+  "run_id": "20260919T202128Z",
+  "phase": "4",
+  "script": "src.generate_rag",
+  "git_sha": "unknown",
+  "config_snapshot": {
+    "generator": {
+      "provider": "groq",
+      "model_id": "qwen/qwen3.8-27b",
+      "temperature": 0,
+      "max_tokens": 256
+    },
+    "exp2": {
+      "n_normal": 100,
+      "n_degraded": 100,
+      "extra_degraded_max": 20,
+      "exclude_exp1_dev": true,
+      "chunk_tokens": 250,
+      "chunk_overlap": 30,
+      "top_k": 3,
+      "degraded_search_k": 20
+    },
+    "seed": 42
+  },
+  "prompt_name": "generator_v1.txt",
+  "prompt_hash": "dc1e252732c8b177a5c076d0828154def65ad313f962c547ddb9fdbed5516c6e",
+  "embedder_model": "BAAI/bge-small-en-v1.5",
+  "dataset_revision": "9001f2853fb87cab8d220904e0de81ac6973b318",
+  "questions_total": 200,
+  "questions_generated": 200,
+  "total_input_tokens": 145898,
+  "total_output_tokens": 18070,
+  "length_stats_words": {
+    "normal": {
+      "n": 100,
+      "mean": 68.56,
+      "min": 35.0,
+      "max": 98.0
+    },
+    "degraded": {
+      "n": 100,
+      "mean": 66.73,
+      "min": 47.0,
+      "max": 103.0
+    }
+  },
+  "elapsed_s": 1197.3198697999997,
+  "timestamp_utc": "2026-09-19T20:41:26.058106+00:00"
+}

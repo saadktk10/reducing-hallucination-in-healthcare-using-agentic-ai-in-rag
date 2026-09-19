@@ -2,7 +2,7 @@
 .env
 
 # Data directory (large/derived files) — Rule R5.8
-data/
+# data/
 
 # Results raw predictions (large)
 results/*/raw/

@@ -1,0 +1,14 @@
+{
+  "n_abstracts": 1000,
+  "n_chunks": 1790,
+  "embedding_dim": 384,
+  "embedder_model": "BAAI/bge-small-en-v1.5",
+  "build_time_s": 9.83944590000101,
+  "peak_ram_mb": 451.76953125,
+  "retrieval_sanity": {
+    "normal_evaluated": 20,
+    "normal_top3_hit_rate": 1.0,
+    "degraded_verified": 100,
+    "degraded_leak_count": 0
+  }
+}

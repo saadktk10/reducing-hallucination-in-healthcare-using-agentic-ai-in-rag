@@ -1,0 +1,82 @@
+{
+  "experiment": "exp1",
+  "dataset": "UTAustin-AIHealth/MedHallu",
+  "revision": "515060458a945c633debc6fd5baac7764416b724",
+  "seed": 42,
+  "total_questions": 250,
+  "total_pairs": 500,
+  "splits": {
+    "dev": {
+      "n_questions": 50,
+      "n_pairs": 100,
+      "labels": {
+        "0": 50,
+        "1": 50
+      },
+      "difficulty_counts_pairs": {
+        "easy": 28,
+        "hard": 44,
+        "medium": 28
+      },
+      "difficulty_counts_questions": {
+        "easy": 14,
+        "hard": 22,
+        "medium": 14
+      },
+      "category_counts_pairs": {
+        "Incomplete Information": 26,
+        "Mechanism and Pathway Misattribution": 8,
+        "Misinterpretation of #Question#": 66
+      },
+      "category_counts_questions": {
+        "Incomplete Information": 13,
+        "Mechanism and Pathway Misattribution": 4,
+        "Misinterpretation of #Question#": 33
+      }
+    },
+    "test": {
+      "n_questions": 200,
+      "n_pairs": 400,
+      "labels": {
+        "0": 200,
+        "1": 200
+      },
+      "difficulty_counts_pairs": {
+        "easy": 108,
+        "hard": 160,
+        "medium": 132
+      },
+      "difficulty_counts_questions": {
+        "easy": 54,
+        "hard": 80,
+        "medium": 66
+      },
+      "category_counts_pairs": {
+        "Incomplete Information": 68,
+        "Mechanism and Pathway Misattribution": 6,
+        "Methodological and Evidence Fabrication": 2,
+        "Misinterpretation of #Question#": 324
+      },
+      "category_counts_questions": {
+        "Incomplete Information": 34,
+        "Mechanism and Pathway Misattribution": 3,
+        "Methodological and Evidence Fabrication": 1,
+        "Misinterpretation of #Question#": 162
+      }
+    }
+  },
+  "overall": {
+    "difficulty_counts_questions": {
+      "easy": 68,
+      "hard": 102,
+      "medium": 80
+    },
+    "category_counts_questions": {
+      "Incomplete Information": 47,
+      "Mechanism and Pathway Misattribution": 7,
+      "Methodological and Evidence Fabrication": 1,
+      "Misinterpretation of #Question#": 195
+    }
+  },
+  "created_at": "2026-09-19T20:17:20.875470+00:00"
+}
