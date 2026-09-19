@@ -10,13 +10,13 @@ src/
 ├── filters/             # Hallucination verifiers (Filter A Gemini judge, Filter B DeBERTa NLI, ROUGE baseline)
 ├── evaluation/          # Metrics, cost computation, and statistical significance tests
 ├── pilot_checks.py      # Phase 1 pilot validation checks (Gate G1) ← implemented
-├── build_exp1_pairs.py  # MedHallu ingestion, stratification, and split construction (Phase 2)
+├── build_exp1_pairs.py  # MedHallu ingestion, stratification, and split construction (Phase 2) ← implemented
 ├── build_index.py       # PubMedQA FAISS indexing (Phase 4)
 ├── generate_rag.py      # Degraded/normal RAG generation (Phase 4)
 ├── annotation.py        # Annotation template export, kappa, disagreements (Phase 6)
-├── run_verifiers.py     # Main verification execution loop (Phases 3, 5, 7)
+├── run_verifiers.py     # Main verification execution loop (Phases 3, 5, 7) ← implemented
 ├── timing.py            # Latency measurement protocol (Phase 5)
-├── tune_thresholds.py   # Dev-only threshold optimization (Phase 3)
+├── tune_thresholds.py   # Dev-only threshold optimization (Phase 3) ← implemented
 ├── evaluate.py          # Per-experiment tables and breakdowns (Phase 8)
 ├── cross_experiment.py  # Cross-experiment ranking check (Phase 9)
 ├── figures.py           # Paper figures generation (Phase 10)

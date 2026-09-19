@@ -6,6 +6,8 @@ data/
 
 # Results raw predictions (large)
 results/*/raw/
+results/dev_tuning/
+results/**/*.jsonl
 
 # Model weights
 *.bin

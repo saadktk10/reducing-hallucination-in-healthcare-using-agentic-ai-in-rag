@@ -7,74 +7,74 @@
 ## Current State
 
 - **Date**: 2026-09-19
-- **Session**: 2 (Completed)
+- **Session**: 3 (Completed)
 - **Active Branch**: `main`
-- **Current Phase**: Phase 0 ✅ Done, Phase 0b ✅ Done. Phase 1 🟡 In Progress (Awaiting human spot-check annotation for Gate G1).
-- **Test Status**: 70 passed in `pytest -q`, 0 lint errors in `ruff check .`.
+- **Current Phase**: Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 🟡 Partial (Awaiting human spot-check annotation for Gate G1), Phase 2 ✅ Done, Phase 3 🟡 In Progress.
+- **Test Status**: 101 passed in `pytest -q`, 0 lint errors in `ruff check .`.
 - **Site Build**: `mkdocs build --strict` passing with 0 warnings.
 - **Live Documentation**: [https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/](https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/)
 
 ---
 
-## Accomplishments (Session 2)
+## Accomplishments (Session 3)
 
-1. **Phase 1 Implementation (`src/pilot_checks.py`)**:
-   - Implemented 4 CLI steps: `--step fields`, `--step spotcheck`, `--step rouge`, `--step report`.
-   - Integrated `pilot` section in `configs/config.yaml` and typed `PilotConfig` in `src/common/config.py`.
-2. **MedHallu Download & Column Verification (`--step fields`)**:
-   - Downloaded and validated dataset: 1000 rows, 6 columns (`Question`, `Knowledge`, `Ground Truth`, `Hallucinated Answer`, `Difficulty Level`, `Category of Hallucination`).
-   - Discovered and addressed: `Knowledge` column contains `List[str]` (paragraphs/sentences); implemented `_get_context()` helper to cleanly join elements with spaces.
-   - Exported 20 sample rows to `data/pilot/fields_20.json`.
-3. **Spot-Check Export (`--step spotcheck`)**:
-   - Deterministically sampled 50 questions (`seed=42`).
-   - Exported `data/pilot/spotcheck_50.csv` with empty annotation columns (`supported_yes_no`, `notes`) per Rule R1.5 for human annotation.
-4. **ROUGE-L AUROC Computation (`--step rouge`)**:
-   - Built provisional dev set: 100 pairs from 50 questions, exactly balanced (50 label=0, 50 label=1), stratified across difficulty levels.
-   - Computed ROUGE-L AUROCs across all 3 variants:
-     - `rougeL_precision`: **0.4894** (primary variant, chance level, well below 0.95 lexical shortcut threshold)
-     - `rougeL_recall`: **0.7052**
-     - `rougeL_fmeasure`: **0.7130**
-   - Stored results in `data/pilot/rouge_results.json`.
-5. **Testing & QA**:
-   - Implemented 17 new unit tests in `tests/test_pilot.py` (Gate G1 decision logic, ROUGE-L AUROC hand-computed checks, spot-check CSV schema, dev-set determinism and balance, report JSON parsing).
-   - Total test suite expanded to 70 tests (100% passing).
-   - Defensive schema guard added to `hooks/tiles.py` and `src/site_export.py`.
-6. **Documentation & Session Close Updates**:
-   - Updated `Phase.md` (Snapshot table and Session log entry for session 2).
-   - Updated `Architecture.md` (directory tree, test suite table, change log).
-   - Updated `src/README.md` and `tests/README.md` per Rule R9.13.
+1. **API Keys Verification & Model Pinning (Phase 0 Task 7 & 8)**:
+   - Validated all three keys from `.env`: `HF_TOKEN`, `GROQ_API_KEY`, `GEMINI_API_KEY`.
+   - Pinned generator model: `qwen/qwen3.8-27b` (Groq provider).
+   - Pinned judge model: `gemini-3.6-flash` (Gemini OpenAI endpoint, 15 RPM limit, `max_tokens=500` to budget reasoning tokens).
+   - Implemented `scripts/smoke_apis.py` and successfully executed smoke calls cached to `data/cache/judge_gemini.jsonl` and `data/cache/generator_groq.jsonl`.
+2. **Experiment 1 Dataset Construction (Phase 2)**:
+   - Executed `src/build_exp1_pairs.py`: generated canonical 250 questions (500 pairs) stratified by difficulty.
+   - Built `data/exp1_medhallu/dev.jsonl` (100 pairs / 50 questions) and `data/exp1_medhallu/test.jsonl` (400 pairs / 200 questions).
+   - Verified strict disjointness (0 question overlap) and exact 50/50 label balance.
+   - Verified that Phase 2 dev set matches Phase 1 pilot provisional dev set byte-identically.
+3. **Verifier Implementation (Phase 3)**:
+   - **Baseline ROUGE-L (`src/filters/baseline_rouge.py`)**: Implemented `RougeLVerifier` supporting precision, recall, and fmeasure variants.
+   - **Filter B NLI (`src/filters/filter_nli.py`)**: Implemented `NLIVerifier` (`nli-deberta-v3-small`). Resolved PyTorch 2.2 / transformers dependency constraints, automated HF authentication, dynamic `id2label` entailment index resolution (Rule R5.5), and sentence-level min-of-max chunk aggregation.
+   - **Filter A API Judge (`src/filters/filter_api.py`)**: Implemented `APIJudgeVerifier` with token bucket rate limiter (15 RPM), tenacity exponential backoff, robust JSON extraction, single retry on parse failure (Rule R2.6), and disk caching (Rule R2.5).
+4. **Evaluation & Verification Framework (Phases 3 & 8)**:
+   - Implemented `src/evaluation/metrics.py`: Precision, Recall, F1, FNR, FPR, AUROC, latency summaries, and shadow cost per 1k verifications.
+   - Implemented `src/evaluation/stats.py`: exact McNemar test, percentile bootstrap confidence intervals, and Cohen's kappa.
+   - Implemented `src/run_verifiers.py`: unified multi-split runner. Successfully ran dev scoring for ROUGE-L (100 pairs) and smoke runs for Filter A and Filter B.
+   - Implemented `src/tune_thresholds.py`: dev-only F1 maximization with lower FNR tie-breaking.
+5. **Testing & Code Quality**:
+   - Added 31 new tests: `test_baseline_rouge.py`, `test_filter_nli.py`, `test_filter_api.py`, `test_metrics.py`, `test_stats.py`.
+   - Total test suite expanded from 70 to 101 tests (100% passing).
+   - Clean lint status (`ruff check .` passes).
 
 ---
 
 ## Key Technical Decisions
 
-- **MedHallu Knowledge Column Handling**: MedHallu stores `Knowledge` as a list of strings rather than a single string. Standardized with `_get_context()` joining on spaces.
-- **HuggingFace datasets 5.x compatibility**: Removed deprecated `trust_remote_code=True` parameter from `load_dataset`.
-- **Lexical Shortcut Validation**: ROUGE-L precision AUROC is ~0.49 on the provisional dev pairs. This confirms ROUGE precision alone cannot easily separate supported from hallucinated answers, meaning there is no trivial lexical shortcut in the dataset.
-- **Defensive Site Export & Tile Rendering**: Handled both dictionary and primitive numbers gracefully in `hooks/tiles.py` to prevent any runtime exceptions during site generation.
+- **Transformers & PyTorch Compatibility**: `transformers 5.x` requires `torch >= 2.5`. Because macOS environment has CPU-only PyTorch 2.2.2, constrained `transformers>=4.42,<5.0` and `sentence-transformers>=3.0,<4.0` in `pyproject.toml`.
+- **HuggingFace HTTP Streaming**: Removed `hf-xet` to avoid hung file lock operations on macOS, allowing fast and stable model downloads via standard HTTP fallback.
+- **Gemini 3.x Flash Reasoning Tokens**: Gemini 3.x Flash models include thinking tokens in completion budgets. Increased `max_tokens` from 64 to 500 and set `reasoning_effort="low"` in `APIJudgeVerifier` to prevent truncated/empty completions.
+- **Automatic `.env` Ingestion**: Added `load_dotenv()` directly to `src/common/config.py:load_config()` so all tools and HuggingFace API clients seamlessly authenticate.
 
 ---
 
 ## Blockers & Pending External Actions
 
-1. **Human Spot-Check Annotation**:
+1. **Human Spot-Check Annotation (Gate G1)**:
    - Researchers must open `data/pilot/spotcheck_50.csv` and annotate the `supported_yes_no` column (`yes` or `no`) for the 50 rows.
+   - Per Rule R1.5, the AI agent is forbidden from generating or suggesting labels for these 50 rows.
    - Once filled, run `python -m src.pilot_checks --config configs/config.yaml --step report` to trigger Gate G1 evaluation.
-2. **API Keys Needed**:
-   - Still need `GEMINI_API_KEY` and `GROQ_API_KEY` in `.env` for upcoming Phase 3 (Filter A dev tuning) and Phase 4 (generation).
+2. **Gate G1 Decision (Plan 1 vs Plan 2)**:
+   - Once the pilot report is generated, confirm the plan in `configs/config.yaml`.
 
 ---
 
 ## Immediate Next Tasks
 
-1. **Complete Gate G1**:
-   - Complete human annotation of `data/pilot/spotcheck_50.csv`.
+1. **Researchers annotate `data/pilot/spotcheck_50.csv`**:
+   - Fill 50 rows in `supported_yes_no` column.
    - Run `python -m src.pilot_checks --config configs/config.yaml --step report`.
-   - Confirm Gate G1 plan recommendation (Plan 1 vs Plan 2).
-2. **Phase 2 (Experiment 1 Pairs & Splits)**:
-   - Implement `src/build_exp1_pairs.py` to create canonical 500-question (1000-pair) dataset.
-   - Stratify and split into dev (100 pairs / 50 questions) and test (400 pairs / 200 questions).
-   - Ensure strict question disjointness (`test_split.py`).
+2. **Complete Dev Tuning (Phase 3d)**:
+   - Run `python -m src.run_verifiers --config configs/config.yaml --split dev --verifier filter_b`.
+   - Run `python -m src.run_verifiers --config configs/config.yaml --split dev --verifier filter_a`.
+   - Run `python -m src.tune_thresholds --config configs/config.yaml` to freeze thresholds in `results/thresholds.json`.
+3. **Freeze Judge Prompt**:
+   - Verify `prompts/judge_v1.txt` and freeze its SHA-256 in `prompts/FROZEN.json` via `freeze_prompt("judge_v1.txt")`.
 
 ---
 *Research prototype. Not for clinical use.*

@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
@@ -166,6 +167,8 @@ def load_config(path: str | Path = "configs/config.yaml") -> Config:
     path = Path(path)
     if not path.exists():
         raise FileNotFoundError(f"Config file not found: {path}")
+
+    load_dotenv()
 
     with open(path) as f:
         raw: dict[str, Any] = yaml.safe_load(f)

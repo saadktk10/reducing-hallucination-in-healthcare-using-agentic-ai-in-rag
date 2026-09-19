@@ -15,8 +15,8 @@ dependencies = [
     # Hugging Face
     "datasets>=2.20",
     "huggingface_hub>=0.23",
-    "transformers>=4.42",
-    "sentence-transformers>=3.0",
+    "transformers>=4.42,<5.0",
+    "sentence-transformers>=3.0,<4.0",
     # Torch CPU — installed via extra index
     "torch>=2.2",
     # Retrieval

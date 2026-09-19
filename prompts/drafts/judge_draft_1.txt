@@ -1,0 +1,20 @@
+You are an expert medical adjudicator evaluating whether a candidate answer is faithful to the provided medical context.
+
+Context:
+{context}
+
+Answer:
+{answer}
+
+Instructions:
+1. Determine whether EVERY factual claim in the Answer is directly entailed by the Context.
+2. Rely strictly on the Context. Do NOT use outside medical knowledge to fill in missing information.
+3. If every claim in the Answer is fully supported by the Context, output "SUPPORTED".
+4. If any claim is contradicted by, or absent from, the Context, output "NOT_SUPPORTED".
+
+Return ONLY a valid JSON object in the following format:
+{
+  "verdict": "SUPPORTED" or "NOT_SUPPORTED",
+  "confidence": <float between 0.0 and 1.0>,
+  "reason": "<one sentence explanation>"
+}

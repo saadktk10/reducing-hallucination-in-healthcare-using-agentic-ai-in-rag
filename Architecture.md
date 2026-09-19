@@ -464,3 +464,4 @@ Append one line per structural change. Never delete lines (Rules R9.9).
 | YYYY-MM-DD | 0 | Initial architecture from Methodology C |
 | YYYY-MM-DD | 0 | Added website layer (mkdocs, hooks, docs/, paper/, writeup/, site_export) |
 | 2026-09-19 | 2 | pilot_checks.py implemented (stub → full). Added PilotConfig to config.py. Added tests/test_pilot.py. Added data/pilot/rouge_results.json to tree. |
+| 2026-09-19 | 3 | Pinned generator (qwen/qwen3.8-27b) and judge (gemini-3.6-flash). Executed API smoke tests. Phase 2 executed (dev.jsonl, test.jsonl, split_summary.json). Implemented Baseline ROUGE-L, Filter B NLI, Filter A Gemini judge, evaluation metrics, evaluation stats, run_verifiers.py, tune_thresholds.py. Total test suite expanded to 101 tests (100% passing). |

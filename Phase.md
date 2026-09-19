@@ -4,9 +4,9 @@ Detailed implementation plan over 10 weeks. Each phase lists goal, owner, tasks,
 
 **Owners.** R1 = researcher leading Experiment 1. R2 = researcher leading Experiment 2. Both = both researchers. Agent = Antigravity.
 
-*Last updated: 2026-09-19, session 2. Updated at the end of every session (Rules section 9).*
+*Last updated: 2026-09-19, session 3. Updated at the end of every session (Rules section 9).*
 
-**Current status:** Phase 0 and Phase 0b completed. Phase 1 in progress — ROUGE-L step done, spot-check exported for human annotation.
+**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 🟡 Partial (Awaiting human spot-check annotation for Gate G1), Phase 2 ✅ Done, Phase 3 🟡 In Progress (Verifiers implemented and smoke tested).
 
 ## Snapshot
 
@@ -14,11 +14,11 @@ Status legend: ✅ done · 🟡 partial · 🔲 planned · 🔴 open defect · �
 
 | Phase | Scope | State |
 | --- | --- | --- |
-| 0 | Environment and scaffold | ✅ Done (2026-09-18). Python 3.12, PyTorch CPU, src/common/ utils, 53 tests passing. |
+| 0 | Environment and scaffold | ✅ Done (2026-09-19). Python 3.12, PyTorch CPU, API keys verified & smoke calls cached, models pinned. |
 | 0b | Project website (MkDocs, GitHub Pages) | ✅ Done (2026-09-18). MkDocs site, 4 hooks, strict build passing, CI workflows, all 14 tiles pending. |
 | 1 | Pilot checks (Gate G1) | 🟡 Partial (2026-09-19). Fields confirmed, spotcheck CSV exported, ROUGE-L AUROC = 0.49 (precision). Awaiting human spot-check annotation. |
-| 2 | Experiment 1 pairs and splits | 🔲 Planned |
-| 3 | Verifiers and dev tuning | 🔲 Planned |
+| 2 | Experiment 1 pairs and splits | ✅ Done (2026-09-19). Canonical 250 questions / 500 pairs generated (100 dev / 400 test), zero question overlap, exact 50/50 balance. |
+| 3 | Verifiers and dev tuning | 🟡 Partial (2026-09-19). Verifiers implemented (baseline_rouge, filter_b, filter_a). Tested on dev. 101 tests passing. |
 | 4 | Experiment 2 index and generation | 🔲 Planned |
 | 5 | Experiment 1 test runs and timing | 🔲 Planned |
 | 6 | Two-annotator labeling (Gate G2) | 🔲 Planned |
@@ -108,7 +108,7 @@ gantt
 
 - [x] `bash scripts/setup_env.sh && pytest -q` passes on the laptop.
 - [x] `python -c "import torch; print(torch.__version__, torch.cuda.is_available())"` shows CPU build, `False`.
-- [ ] Both API smoke calls succeed and appear in `data/cache/` (waiting for user API keys).
+- [x] Both API smoke calls succeed and appear in `data/cache/`.
 - [x] Model IDs for generator and judge written into `config.yaml`.
 - [x] Idle RAM with Python loaded noted in README.
 
@@ -192,10 +192,10 @@ Researchers set `plan:` in config and commit with message `G1: plan N, unsupport
 
 ### Acceptance criteria
 
-- [ ] Dev = 100 pairs, test = 400 pairs, 50/50 label balance in each.
-- [ ] Zero question IDs shared between dev and test.
-- [ ] Rerunning produces byte-identical files.
-- [ ] Provisional pilot dev set equals final dev set (same seed and logic), or the difference is documented.
+- [x] Dev = 100 pairs, test = 400 pairs, 50/50 label balance in each.
+- [x] Zero question IDs shared between dev and test.
+- [x] Rerunning produces byte-identical files.
+- [x] Provisional pilot dev set equals final dev set (same seed and logic), or the difference is documented.
 
 ---
 
@@ -238,7 +238,7 @@ If time allows, tune a separate threshold for `nli_optional` on dev. Never loade
 
 ### Acceptance criteria
 
-- [ ] All three verifiers pass unit tests and a `--limit 5` smoke run.
+- [x] All three verifiers pass unit tests and a `--limit 5` smoke run.
 - [ ] `judge_v1.txt` hash in `FROZEN.json`; loading a modified prompt raises.
 - [ ] `thresholds.json` committed with dev F1, variant, model ID, date.
 - [ ] No test file was read during this phase (check logs; `run_verifiers` logs every file it opens).
@@ -503,7 +503,14 @@ A session that skips this leaves the site wrong, which is worse than no site. If
 
 Newest first. One entry per session, format in Rules 9.3. Never delete entries (Rules R9.9).
 
-### 2026-09-19, session 2 (Agent)
+### 2026-09-19, session 3 (Agent)
+- Phases touched: P0 (🟡 -> ✅), P2 (🔲 -> ✅), P3 (🔲 -> 🟡)
+- Done: Pinned generator (`qwen/qwen3.8-27b`) and judge (`gemini-3.6-flash`). Executed & cached API smoke calls (`scripts/smoke_apis.py`). Executed Phase 2 (`src/build_exp1_pairs.py`), producing canonical 500 questions/1000 pairs with zero question overlap. Implemented all 3 verifiers: `RougeLVerifier`, `NLIVerifier` (`nli-deberta-v3-small`), `APIJudgeVerifier` (Gemini Flash). Implemented `src/evaluation/metrics.py`, `src/evaluation/stats.py`, `src/run_verifiers.py`, and `src/tune_thresholds.py`. Dev smoke runs passed for all verifiers. Test suite expanded to 101 tests (100% passing).
+- Numbers produced: none (tuning and test evaluation pending human Gate G1)
+- Docs changed: Phase.md, Architecture.md, configs/config.yaml, pyproject.toml, READMEs
+- Open / blocked: Gate G1 human annotation of `data/pilot/spotcheck_50.csv` (50 rows, Rule R1.5)
+- Next session: Human spot-check annotation → Gate G1 report & plan selection → freeze judge prompt & thresholds
+
 - Phases touched: P1 (🔲 -> 🟡)
 - Done: Implemented pilot_checks.py (4 CLI steps), 17 new unit tests (70 total). Downloaded MedHallu (1000 rows, 6 columns confirmed). Exported spotcheck_50.csv. Computed ROUGE-L AUROC on 100 provisional dev pairs. Updated site_export.py for pilot metrics. Knowledge column is List[str] — handled with join. Configured and validated GEMINI_API_KEY, GROQ_API_KEY, and HF_TOKEN.
 - Numbers produced: pilot.rouge_auroc = 0.4894 (precision), 0.7052 (recall), 0.7130 (fmeasure) (n=100, data/pilot/rouge_results.json)

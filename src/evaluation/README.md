@@ -6,9 +6,8 @@ This directory contains evaluation metric calculations, financial shadow cost es
 
 | Module | Purpose |
 | :--- | :--- |
-| `metrics.py` | Computes classification metrics on binary labels (1=hallucinated, 0=supported): Precision, Recall, F1, False Negative Rate (FNR), False Positive Rate (FPR). |
-| `cost.py` | Estimates the shadow dollar cost of Filter A API calls per 1,000 verifications based on `configs/pricing.yaml` and recorded token usage. |
-| `stats.py` | Statistical hypothesis testing: exact McNemar test for paired verifier decisions and stratified bootstrap resampling for 95% confidence intervals. |
+| `metrics.py` | Computes classification metrics on binary labels (1=hallucinated, 0=supported): Precision, Recall, F1, FNR, FPR, AUROC, latency summaries, and shadow cost per 1,000 verifications (Design.md §8.1). |
+| `stats.py` | Statistical hypothesis testing: exact McNemar test for paired verifier decisions, percentile bootstrap resampling for 95% confidence intervals, and Cohen's kappa for annotators (Design.md §8.2). |
 
 ## Standards
 

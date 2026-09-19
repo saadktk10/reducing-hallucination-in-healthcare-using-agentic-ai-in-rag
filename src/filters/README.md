@@ -7,10 +7,9 @@ This directory contains the implementations of the hallucination verifiers compa
 | Module | Verifier | Description |
 | :--- | :--- | :--- |
 | `base.py` | `Verifier` (Protocol) | Abstract protocol defining `name`, `load() -> float`, `score(context, answer) -> VerifierResult`, and `score_batch()`. |
-| `filter_a.py` | Filter A (API Judge) | Gemini Flash LLM judge with structured JSON output parsing and single retry logic (Rule R5.1). |
-| `filter_b.py` | Filter B (NLI Large) | Local cross-encoder `deberta-v3-large` fine-tuned on NLI. Entailment probability scoring with sentence-level min-of-max aggregation (Rule R5.5). |
-| `filter_b_base.py` | Filter B Base (NLI Base) | Lightweight `deberta-v3-base` NLI comparison model for resource-constrained edge deployments. |
-| `rouge.py` | ROUGE Baseline | Lexical overlap baseline computing ROUGE-L F1 between context and answer. |
+| `filter_api.py` | `APIJudgeVerifier` (Filter A) | Gemini Flash LLM judge with structured JSON output parsing, token bucket rate limiter, tenacity retry, and single retry logic (Design.md §5, Rule R2.6). |
+| `filter_nli.py` | `NLIVerifier` (Filter B) | Local cross-encoder `nli-deberta-v3-small`. Entailment probability scoring with token-aware chunking and sentence-level min-of-max aggregation (Design.md §6, Rule R5.5). |
+| `baseline_rouge.py` | `RougeLVerifier` (Baseline) | Lexical overlap baseline computing ROUGE-L precision (default) between context and answer (Design.md §6.3). |
 
 ## Protocol & Conventions
 
