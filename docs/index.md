@@ -12,7 +12,7 @@ Muhammad Saad, Rabia Qaiser. Supervisor: Dr. Laeeq Ahmed. UET Peshawar, Jalozai 
 
 !!! info "Current status"
 
-    Phase 0, 0b, 1, 2, 3, 4 Done (Gate G1 resolved to Plan 2, Exp 2 index built, 200 RAG answers generated); Phase 5 planned. See [Progress](progress.md) for details.
+    Phase 0, 0b, 1, 2, 3, 4 Done (Gate G1 resolved to Plan 2, Exp 2 index built, 200 RAG answers generated); Phase 5 partial (Filter B & Baseline ROUGE-L evaluated on 400 test pairs, laptop CPU benchmarks recorded, shadow cost computed; Filter A deferred per researcher decision); Phase 6 tooling implemented (200 pairs exported for blind human annotation). See [Progress](progress.md) for details.
 
 ## Numbers of record
 
