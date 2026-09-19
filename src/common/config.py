@@ -147,7 +147,24 @@ class Config(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# Loader
+# Pricing config
+# ---------------------------------------------------------------------------
+
+
+class JudgePricingConfig(BaseModel):
+    model_id: str
+    input_per_million_usd: float | None = None
+    output_per_million_usd: float | None = None
+    checked_on: str | None = None
+    source_url: str | None = None
+
+
+class PricingConfig(BaseModel):
+    judge: JudgePricingConfig
+
+
+# ---------------------------------------------------------------------------
+# Loaders
 # ---------------------------------------------------------------------------
 
 
@@ -176,3 +193,24 @@ def load_config(path: str | Path = "configs/config.yaml") -> Config:
     cfg = Config(**raw)
     logger.info("Loaded config from %s (project=%s, plan=%d)", path, cfg.project, cfg.plan)
     return cfg
+
+
+def load_pricing(path: str | Path = "configs/pricing.yaml") -> PricingConfig:
+    """Load and validate the model pricing configuration.
+
+    Args:
+        path: Path to pricing YAML file.
+
+    Returns:
+        A validated PricingConfig instance.
+    """
+    path = Path(path)
+    if not path.exists():
+        raise FileNotFoundError(f"Pricing file not found: {path}")
+
+    with open(path, encoding="utf-8") as f:
+        raw: dict[str, Any] = yaml.safe_load(f)
+
+    pricing = PricingConfig(**raw)
+    logger.info("Loaded pricing from %s for %s", path, pricing.judge.model_id)
+    return pricing

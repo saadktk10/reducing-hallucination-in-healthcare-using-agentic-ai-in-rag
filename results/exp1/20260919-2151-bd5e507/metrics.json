@@ -1,0 +1,40 @@
+{
+  "accuracy": {
+    "rouge": {
+      "n": 400,
+      "parse_failures": 0,
+      "precision": 0.5013,
+      "recall": 0.995,
+      "f1": 0.6667,
+      "fnr": 0.005,
+      "fpr": 0.99,
+      "auroc": 0.4058
+    },
+    "filter_b": {
+      "n": 400,
+      "parse_failures": 0,
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6667,
+      "fnr": 0.0,
+      "fpr": 1.0,
+      "auroc": 0.5492
+    }
+  },
+  "cost.filter_a.per_1k_usd": {
+    "value": 0.0575,
+    "display": "$0.0575",
+    "source": "results/exp1/20260919-2151-bd5e507/metrics.json",
+    "checked_on": "2026-09-20"
+  },
+  "timing.rouge.median_ms": {
+    "value": 2.5,
+    "display": "2.5 ms",
+    "source": "results/exp1/20260919-2151-bd5e507/timing_rouge.json"
+  },
+  "timing.filter_b.median_ms": {
+    "value": 332.06,
+    "display": "332.1 ms",
+    "source": "results/exp1/20260919-2151-bd5e507/timing_filter_b.json"
+  }
+}

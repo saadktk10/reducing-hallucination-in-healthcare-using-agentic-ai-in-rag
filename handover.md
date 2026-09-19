@@ -7,61 +7,59 @@
 ## Current State
 
 - **Date**: 2026-09-20
-- **Session**: 5 (Completed)
+- **Session**: 6 (Completed)
 - **Active Branch**: `main`
-- **Current Phase**: Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done (PubMedQA chunking, FAISS index, 200 RAG answers generated, zero leakage verified).
-- **Test Status**: 105 passed in `pytest -q`, 0 lint errors in `ruff check .`.
+- **Current Phase**: Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & ROUGE-L accuracy runs done on 400 test pairs, laptop CPU timing benchmarks done, shadow cost computed, Filter A rate limit flagged).
+- **Test Status**: 107 passed in `pytest -q`, 0 lint errors in `ruff check .`.
 - **Site Build**: `mkdocs build --strict` passing with 0 warnings.
 - **Live Documentation**: [https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/](https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/)
 
 ---
 
-## Accomplishments (Session 5)
+## Accomplishments (Session 6)
 
-1. **Character Encoding Fix Across Windows Platform (Rules R5.6, R4.2)**:
-   - Updated `src/common/io.py`, `src/build_index.py`, `src/build_exp1_pairs.py`, `src/generate_rag.py`, `src/common/prompts.py`, `src/common/config.py` with explicit `encoding="utf-8"`, preventing Windows `cp1252` encoding errors on Greek letters and medical terminology.
-2. **Phase 4 Index & Retrieval Pipeline Fully Executed**:
-   - `src/build_index.py` executed: extracted 1,000 PubMedQA abstracts, created 1,790 chunks (~250 tokens, overlap 30), and built `faiss.index` using `BAAI/bge-small-en-v1.5` on CPU (peak RAM: 451.8 MB, well below the 4 GB limit of Rule R6.3).
-   - Validated normal condition retrieval top-3 hit rate: **100.00%**.
-   - Verified degraded retrieval assertion across all 100 degraded questions (`own_doc_in_context == False` with zero leakage).
-3. **Strict Zero-Leakage Invariant Enforced & Verified**:
-   - Made `src/build_index.py` strictly assert the presence of Exp 1 test and dev splits before question selection to prevent any possibility of unconstrained question assignment.
-   - Selected 200 disjoint Exp 2 questions (100 normal, 100 degraded) with zero question text or ID overlap with Exp 1 (`tests/test_leakage.py` passing 100%).
-4. **Full RAG Generation Pipeline (`src/generate_rag.py`)**:
-   - Implemented and executed end-to-end RAG answer generation with Groq `qwen/qwen3.8-27b` at temperature 0 (Rule R2.4).
-   - Verified generator prompt SHA-256 against `prompts/FROZEN.json` prior to inference (Rule R1.4).
-   - Generated and persisted all 200 answers in `data/exp2_rag/generated.jsonl` with request/response caching in `data/cache/` (Rule R2.5).
-   - Recorded per-condition answer length stats: normal = 68.6 words (min 35, max 98), degraded = 66.7 words (min 47, max 103).
-   - Generated execution manifest in `data/exp2_rag/run_manifest_generate.json` (Rule R4.3).
-5. **Living Documentation & Quality Verification**:
-   - All 105 tests passing in `pytest -q`.
-   - 0 errors in `ruff check .`.
-   - `mkdocs build --strict` built in 0.56s with 0 warnings.
-   - Synchronized `Phase.md`, `Architecture.md`, `src/README.md`, `docs/index.md`.
-
----
-
-## Key Technical Decisions
-
-- **Home Virtual Environment Isolation**: Maintained standard development dependencies in `~/.venv_research` to bypass Windows AppControl file blocking on cython/wheel extractions in the local directory, enabling fast CPU-native PyTorch, Transformers, and FAISS execution.
-- **Strict Leakage Pre-check**: `select_exp2_questions` raises `FileNotFoundError` if Exp 1 test/dev data is absent rather than proceeding with a silent empty exclusion list.
-- **Idempotent Caching & Rate-Limiting**: `generate_rag.py` incorporates a 2-second rate-limiting delay on fresh Groq API requests, coupled with tenacity exponential backoff to smoothly handle Groq's 30 RPM limits without dropping calls.
+1. **Standardized Timing Protocol Implemented (`src/timing.py`, `tests/test_timing.py`)**:
+   - Implemented `measure_verifier_timing()` enforcing Rules §3: pre-run checklist (`--confirm`), separate model load timing and memory tracking, 10 warm-up pairs discarded, two repeat passes measuring latency with `time.perf_counter()` around inference only (batch size 1), peak RAM sampling via `psutil`, and strict assertion that no timing latency comes from cache hits (Rule R3.2).
+   - Created `tests/test_timing.py` covering mock timing runs, metrics reporting, and cache hit violation detection (all 107 tests passing).
+2. **Pricing Configuration & Shadow Cost Model (Phase 5c)**:
+   - Added `PricingConfig` and `load_pricing()` to `src/common/config.py`.
+   - Updated `configs/pricing.yaml` with Gemini Flash rates ($0.10/1M input tokens, $0.40/1M output tokens, `checked_on: "2026-09-20"`).
+   - Computed shadow cost: `$0.0575` per 1,000 verifications, saved in `results/exp1/20260919-2151-bd5e507/metrics.json`.
+3. **Phase 5a Accuracy Runs Executed for Baseline ROUGE-L & Filter B**:
+   - Enhanced `src/run_verifiers.py` with dynamic run folder resolution (`results/exp1/<run_id>/`), standard prediction filenames (`predictions_<verifier>.jsonl`), manifest creation via `write_manifest()`, and automated classification metrics computation.
+   - Evaluated Baseline ROUGE-L on all 400 test pairs: F1 = **0.6667**, Precision = 0.5013, Recall = 0.9950, FNR = 0.0050, FPR = 0.9900, AUROC = 0.4058.
+   - Evaluated Filter B (`nli-deberta-v3-small`) on all 400 test pairs on CPU: F1 = **0.6667**, Precision = 0.5000, Recall = 1.0000, FNR = 0.0000, FPR = 1.0000, AUROC = 0.5492.
+4. **Phase 5b Laptop Timing Benchmarks Executed**:
+   - ROUGE-L benchmark on laptop CPU: Load time = 0.0001 s, Peak RAM = 355.4 MB, Warm-up = 10 discarded, Pass 1 p50 = 2.5 ms (p95 = 4.3 ms), Pass 2 p50 = 2.5 ms (p95 = 4.1 ms), **POOLED p50 = 2.5 ms (p95 = 4.3 ms)**.
+   - Filter B benchmark on laptop CPU: Load time = 3.5990 s, Peak RAM = **855.7 MB** (well within the 4 GB limit of Rule R6.3), Warm-up = 10 discarded, Pass 1 p50 = 334.3 ms (p95 = 969.1 ms), Pass 2 p50 = 326.7 ms (p95 = 982.1 ms), **POOLED p50 = 332.1 ms (p95 = 978.0 ms)**.
+   - Stored structured timing logs and per-pair latency CSVs in `results/exp1/20260919-2151-bd5e507/`.
+5. **Living Documentation & Website Synchronized**:
+   - `src/site_export.py` updated `results/site/numbers_of_record.json` with `timing.filter_b.median_ms = 332.1 ms` and `cost.filter_a.per_1k_usd = $0.0575`.
+   - `mkdocs build --strict` verified in 0.55s with 0 warnings.
+   - Updated `Phase.md`, `Architecture.md`, `src/README.md`, `tests/README.md`.
 
 ---
 
-## Blockers & Pending External Actions
+## Key Technical Findings & Critical Blocker
 
-- None! Phase 4 is 100% complete and verified.
+- **Filter A Free-Tier Quota Constraint (Rule R8.1 & Risk Register)**:
+  - During test scoring, Google AI Studio returned `429 RESOURCE_EXHAUSTED` with violation:
+    `quotaId: GenerateRequestsPerDayPerProjectPerModel-FreeTier`, `quotaValue: 20` for `gemini-3.6-flash`.
+  - On Google AI Studio's Free Tier, `gemini-3.6-flash` is strictly capped at **20 requests per day**. Evaluating 400 test pairs would require 20 days on this free tier.
+  - Per Rule R8.1 ("MUST stop and ask when a rule blocks progress, instead of working around it") and the Risk Register ("Model ID deprecated mid-study | Any | Stop, report, researchers decide; never auto-switch"), this is flagged for researcher decision.
+- **Researcher Options for Filter A**:
+  - **Option 1 (Recommended)**: Enable Google AI Studio Pay-as-you-go (Tier 1) on the project. This lifts the rate limit to 1,000 RPM. For 400 test pairs, the total cost will be approximately **$0.17** (17 cents) and will complete in ~3 minutes.
+  - **Option 2**: Switch the judge model to an active production model with standard free-tier quotas (e.g., `gemini-3.8-flash` which has a 5 RPM free tier, or `gemini-3.5-flash-lite`), update `configs/config.yaml`, and re-freeze prompts if necessary.
 
 ---
 
 ## Immediate Next Tasks
 
-1. **Phase 5: Experiment 1 Test Evaluation & Laptop Timing**:
-   - Run `python -m src.run_verifiers --config configs/config.yaml --split test` for Filter A, Filter B, and Baseline ROUGE-L.
-   - Run laptop timing benchmarks per Rules section 3 (`python -m src.timing --config configs/config.yaml`).
+1. **Researcher Decision on Filter A Quota**:
+   - Choose Option 1 (enable AI Studio billing) or Option 2 (approve model ID switch).
+   - Once resolved, run `python -m src.run_verifiers --split test --verifier filter_a` to complete the Filter A test evaluation.
 2. **Phase 6: Two-Annotator Blind Labeling Preparation**:
-   - Run `python -m src.annotation export` to generate blind annotation CSVs for human review.
+   - Implement `src/annotation.py export` to generate blind annotation CSVs (`annotator_1.csv`, `annotator_2.csv`) and `annotation_guide.md` from the 200 RAG answers.
 
 ---
 *Research prototype. Not for clinical use.*

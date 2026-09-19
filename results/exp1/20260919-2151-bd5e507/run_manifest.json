@@ -1,0 +1,127 @@
+{
+  "run_id": "20260919-2151-bd5e507",
+  "git_commit": "bd5e507",
+  "timestamp_utc": "2026-09-19T21:54:18.341270+00:00",
+  "machine_info": {
+    "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+    "cpu_count_logical": 12,
+    "cpu_count_physical": 6,
+    "ram_total_gb": 7.41,
+    "ram_available_gb": 0.88,
+    "os": "Windows 11",
+    "python": "3.13.13",
+    "torch_version": "2.7.1+cpu",
+    "cuda_available": false,
+    "torch_num_threads": 6
+  },
+  "config_snapshot": {
+    "project": "hallucination-verifier-c",
+    "seed": 42,
+    "plan": 2,
+    "paths": {
+      "data": "data",
+      "cache": "data/cache",
+      "results": "results",
+      "prompts": "prompts"
+    },
+    "datasets": {
+      "medhallu": {
+        "hf_id": "UTAustin-AIHealth/MedHallu",
+        "config": "pqa_labeled",
+        "revision": "515060458a945c633debc6fd5baac7764416b724",
+        "columns": {
+          "question": "Question",
+          "context": "Knowledge",
+          "ground_truth": "Ground Truth",
+          "hallucinated": "Hallucinated Answer",
+          "difficulty": "Difficulty Level",
+          "category": "Category of Hallucination"
+        }
+      },
+      "pubmedqa": {
+        "hf_id": "qiaojin/PubMedQA",
+        "config": "pqa_labeled",
+        "revision": "9001f2853fb87cab8d220904e0de81ac6973b318",
+        "columns": null
+      }
+    },
+    "pilot": {
+      "spotcheck_n": 50,
+      "fields_n": 20,
+      "rouge_dev_questions": 50
+    },
+    "exp1": {
+      "n_questions": 250,
+      "dev_questions": 50,
+      "test_questions": 200,
+      "stratify_by": "difficulty"
+    },
+    "exp2": {
+      "n_normal": 100,
+      "n_degraded": 100,
+      "extra_degraded_max": 20,
+      "exclude_exp1_dev": true,
+      "chunk_tokens": 250,
+      "chunk_overlap": 30,
+      "top_k": 3,
+      "degraded_search_k": 20
+    },
+    "models": {
+      "embedder": "BAAI/bge-small-en-v1.5",
+      "nli_main": "cross-encoder/nli-deberta-v3-small",
+      "nli_optional": "cross-encoder/nli-deberta-v3-base",
+      "generator": {
+        "provider": "groq",
+        "model_id": "qwen/qwen3.8-27b",
+        "temperature": 0,
+        "max_tokens": 256
+      },
+      "judge": {
+        "provider": "gemini",
+        "model_id": "gemini-3.6-flash",
+        "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
+        "temperature": 0,
+        "max_tokens": 1000,
+        "rpm_limit": 10
+      }
+    },
+    "filter_b": {
+      "num_threads": 6,
+      "batch_size": 16,
+      "max_length": 512,
+      "sentence_splitter": "pysbd"
+    },
+    "baseline": {
+      "rouge_variant": "rougeL",
+      "rouge_field": "precision"
+    },
+    "timing": {
+      "warmup_pairs": 10,
+      "repeats": 2,
+      "percentiles": [
+        50,
+        95
+      ]
+    },
+    "stats": {
+      "bootstrap_resamples": 1000,
+      "ci": 0.95,
+      "bootstrap_unit": "question"
+    }
+  },
+  "prompt_hashes": {
+    "judge_v1.txt": "c096007737423b57b285685a39a06a65940173adac195fb3093e6c19dc96a2c2"
+  },
+  "model_ids": {
+    "baseline": "rougeL",
+    "filter_b": "cross-encoder/nli-deberta-v3-small",
+    "filter_a": "gemini-3.6-flash"
+  },
+  "dataset_revision": "515060458a945c633debc6fd5baac7764416b724",
+  "split": "test",
+  "n_pairs": 400,
+  "thresholds": {
+    "filter_b": 1.0,
+    "rouge": 0.7853846153846153
+  }
+}

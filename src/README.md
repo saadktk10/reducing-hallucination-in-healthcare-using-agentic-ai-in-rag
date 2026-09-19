@@ -15,7 +15,7 @@ src/
 ├── generate_rag.py      # Degraded/normal RAG generation (Phase 4) ← implemented
 ├── annotation.py        # Annotation template export, kappa, disagreements (Phase 6)
 ├── run_verifiers.py     # Main verification execution loop (Phases 3, 5, 7) ← implemented
-├── timing.py            # Latency measurement protocol (Phase 5)
+├── timing.py            # Latency measurement protocol (Phase 5) ← implemented
 ├── tune_thresholds.py   # Dev-only threshold optimization (Phase 3) ← implemented
 ├── evaluate.py          # Per-experiment tables and breakdowns (Phase 8)
 ├── cross_experiment.py  # Cross-experiment ranking check (Phase 9)

@@ -1,0 +1,47 @@
+{
+  "verifier": "filter_b",
+  "session": "morning",
+  "machine_info": {
+    "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+    "cpu_count_logical": 12,
+    "cpu_count_physical": 6,
+    "ram_total_gb": 7.41,
+    "ram_available_gb": 1.37,
+    "os": "Windows 11",
+    "python": "3.13.13",
+    "torch_version": "2.7.1+cpu",
+    "cuda_available": false,
+    "torch_num_threads": 6,
+    "on_charger": true
+  },
+  "load_time_seconds": 3.599,
+  "rss_initial_mb": 354.86,
+  "rss_after_load_mb": 478.07,
+  "peak_rss_mb": 855.66,
+  "warmup_pairs": 10,
+  "n_timed_pairs": 390,
+  "pass1": {
+    "median_ms": 334.33,
+    "p95_ms": 969.1,
+    "mean_ms": 413.73,
+    "min_ms": 120.75,
+    "max_ms": 1694.27,
+    "n": 390
+  },
+  "pass2": {
+    "median_ms": 326.72,
+    "p95_ms": 982.06,
+    "mean_ms": 412.19,
+    "min_ms": 107.37,
+    "max_ms": 1647.5,
+    "n": 390
+  },
+  "pooled": {
+    "median_ms": 332.06,
+    "p95_ms": 977.95,
+    "mean_ms": 412.96,
+    "min_ms": 107.37,
+    "max_ms": 1694.27,
+    "n": 780
+  }
+}

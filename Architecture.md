@@ -363,6 +363,7 @@ hallucination-verifier-c/
 │   ├── test_split.py             # question disjointness & label balance
 │   ├── test_stats.py             # McNemar test, bootstrap CI, kappa
 │   ├── test_text.py              # sentence splitting & chunking
+│   ├── test_timing.py            # timing benchmark protocol, warm-up discard, repeat passes
 │   └── test_website.py           # snapshot table parsing, tiles & export
 │
 ├── scripts/
@@ -476,3 +477,4 @@ Append one line per structural change. Never delete lines (Rules R9.9).
 | 2026-09-19 | 3 | Pinned generator (qwen/qwen3.8-27b) and judge (gemini-3.6-flash). Executed API smoke tests. Phase 2 executed (dev.jsonl, test.jsonl, split_summary.json). Implemented Baseline ROUGE-L, Filter B NLI, Filter A Gemini judge, evaluation metrics, evaluation stats, run_verifiers.py, tune_thresholds.py. Total test suite expanded to 101 tests (100% passing). |
 | 2026-09-19 | 4 | Implemented build_index.py for PubMedQA chunking & FAISS index. Added generator_v1.txt and froze both prompts in FROZEN.json. Tuned dev thresholds (results/thresholds.json). Updated site_export to populate pilot.unsupported_rate and pilot.rouge_auroc. Isolated tile unit tests in test_website.py. Expanded test suite to 105 tests (100% passing). Synchronized all folder READMEs. |
 | 2026-09-20 | 5 | Implemented and executed full generate_rag.py pipeline (200 answers generated via Groq qwen/qwen3.8-27b at temp 0). Fixed character encoding (utf-8) in io.py, build_index.py, build_exp1_pairs.py, prompts.py, config.py. Verified zero data leakage (test_leakage.py) and completed Phase 4. |
+| 2026-09-20 | 6 | Implemented timing protocol in src/timing.py and tests/test_timing.py. Added PricingConfig to src/common/config.py and updated configs/pricing.yaml. Executed Phase 5 test evaluations for ROUGE-L and Filter B across 400 test pairs. Executed laptop CPU timing benchmarks for ROUGE-L and Filter B. Exported timing.filter_b.median_ms (332.1 ms) and cost.filter_a.per_1k_usd ($0.0575) to site numbers of record. |

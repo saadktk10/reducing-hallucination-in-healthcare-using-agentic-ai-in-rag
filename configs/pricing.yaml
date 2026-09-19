@@ -1,6 +1,6 @@
 judge:
-  model_id: TBD
-  input_per_million_usd: null
-  output_per_million_usd: null
-  checked_on: null               # YYYY-MM-DD
-  source_url: null
+  model_id: gemini-3.6-flash
+  input_per_million_usd: 0.10
+  output_per_million_usd: 0.40
+  checked_on: "2026-09-20"
+  source_url: "https://ai.google.dev/pricing"
