@@ -12,7 +12,7 @@ src/
 ├── pilot_checks.py      # Phase 1 pilot validation checks (Gate G1) ← implemented
 ├── build_exp1_pairs.py  # MedHallu ingestion, stratification, and split construction (Phase 2) ← implemented
 ├── build_index.py       # PubMedQA context chunking & FAISS indexing (Phase 4) ← implemented
-├── generate_rag.py      # Degraded/normal RAG generation (Phase 4)
+├── generate_rag.py      # Degraded/normal RAG generation (Phase 4) ← implemented
 ├── annotation.py        # Annotation template export, kappa, disagreements (Phase 6)
 ├── run_verifiers.py     # Main verification execution loop (Phases 3, 5, 7) ← implemented
 ├── timing.py            # Latency measurement protocol (Phase 5)

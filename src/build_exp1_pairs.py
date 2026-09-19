@@ -357,7 +357,7 @@ def build_exp1_dataset(
 
     # Generate and write summary
     summary = generate_split_summary(dev_pairs, test_pairs, cfg)
-    with open(summary_file, "w") as f:
+    with open(summary_file, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2, default=str)
 
     logger.info("Wrote dev pairs: %s (%d pairs)", dev_file, len(dev_pairs))

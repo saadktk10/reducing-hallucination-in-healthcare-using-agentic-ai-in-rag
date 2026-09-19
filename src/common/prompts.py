@@ -82,7 +82,7 @@ def verify_frozen(name: str, base: str | Path = "prompts") -> str:
     if not frozen_file.exists():
         raise FileNotFoundError(f"FROZEN.json not found: {frozen_file}")
 
-    with open(frozen_file) as f:
+    with open(frozen_file, encoding="utf-8") as f:
         frozen: dict[str, str] = json.load(f)
 
     if name not in frozen:
@@ -121,12 +121,12 @@ def freeze_prompt(name: str, base: str | Path = "prompts") -> str:
     frozen_file = _frozen_path(base)
     frozen: dict[str, str] = {}
     if frozen_file.exists():
-        with open(frozen_file) as f:
+        with open(frozen_file, encoding="utf-8") as f:
             frozen = json.load(f)
 
     frozen[name] = prompt_hash
 
-    with open(frozen_file, "w") as f:
+    with open(frozen_file, "w", encoding="utf-8") as f:
         json.dump(frozen, f, indent=2)
         f.write("\n")
 

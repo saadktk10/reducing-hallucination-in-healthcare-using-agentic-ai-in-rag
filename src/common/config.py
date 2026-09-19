@@ -170,7 +170,7 @@ def load_config(path: str | Path = "configs/config.yaml") -> Config:
 
     load_dotenv()
 
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         raw: dict[str, Any] = yaml.safe_load(f)
 
     cfg = Config(**raw)

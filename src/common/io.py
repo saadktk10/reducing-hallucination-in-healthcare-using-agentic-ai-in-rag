@@ -131,7 +131,7 @@ def read_jsonl(path: str | Path, model: type[T]) -> list[T]:
         raise FileNotFoundError(f"JSONL file not found: {path}")
 
     records: list[T] = []
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         for line_num, line in enumerate(f, start=1):
             line = line.strip()
             if not line:
@@ -160,7 +160,7 @@ def write_jsonl(path: str | Path, records: list[BaseModel], *, append: bool = Fa
     path.parent.mkdir(parents=True, exist_ok=True)
 
     mode = "a" if append else "w"
-    with open(path, mode) as f:
+    with open(path, mode, encoding="utf-8") as f:
         for record in records:
             f.write(record.model_dump_json() + "\n")
 
@@ -177,5 +177,5 @@ def append_jsonl(path: str | Path, record: BaseModel) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    with open(path, "a") as f:
+    with open(path, "a", encoding="utf-8") as f:
         f.write(record.model_dump_json() + "\n")

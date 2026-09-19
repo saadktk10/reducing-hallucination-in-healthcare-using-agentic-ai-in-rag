@@ -4,9 +4,9 @@ Detailed implementation plan over 10 weeks. Each phase lists goal, owner, tasks,
 
 **Owners.** R1 = researcher leading Experiment 1. R2 = researcher leading Experiment 2. Both = both researchers. Agent = Antigravity.
 
-*Last updated: 2026-09-19, session 4. Updated at the end of every session (Rules section 9).*
+*Last updated: 2026-09-20, session 5. Updated at the end of every session (Rules section 9).*
 
-**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done (Verifiers implemented, dev thresholds tuned, prompts frozen), Phase 4 🟡 In Progress (PubMedQA chunking & FAISS index builder implemented).
+**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done (Verifiers implemented, dev thresholds tuned, prompts frozen), Phase 4 ✅ Done (PubMedQA chunking, FAISS index, 200 RAG answers generated, zero leakage verified).
 
 ## Snapshot
 
@@ -19,7 +19,7 @@ Status legend: ✅ done · 🟡 partial · 🔲 planned · 🔴 open defect · �
 | 1 | Pilot checks (Gate G1) | ✅ Done (2026-09-19). Human spot-check complete (46.0% unsupported ground truth), ROUGE-L AUROC = 0.4894. Gate G1 passed → Plan 2. |
 | 2 | Experiment 1 pairs and splits | ✅ Done (2026-09-19). Canonical 250 questions / 500 pairs generated (100 dev / 400 test), zero question overlap, exact 50/50 balance. |
 | 3 | Verifiers and dev tuning | ✅ Done (2026-09-19). Verifiers implemented (baseline_rouge, filter_b, filter_a). Tested on dev. Thresholds frozen in results/thresholds.json (Filter B F1=0.67, ROUGE-L F1=0.67). Prompts frozen in FROZEN.json. 105 tests passing. |
-| 4 | Experiment 2 index and generation | 🟡 Partial (2026-09-19). PubMedQA chunking, deduplication, and FAISS index pipeline implemented in src/build_index.py; questions selected with zero leakage vs Exp 1 dev/test. generator_v1.txt frozen. |
+| 4 | Experiment 2 index and generation | ✅ Done (2026-09-20). 1,790 chunks, FAISS index built on CPU (451.8 MB peak RAM), 100% normal retrieval hit rate. 200 answers (100 normal, 100 degraded) generated via Groq qwen/qwen3.8-27b at temp 0 with zero leakage vs Exp 1. |
 | 5 | Experiment 1 test runs and timing | 🔲 Planned |
 | 6 | Two-annotator labeling (Gate G2) | 🔲 Planned |
 | 7 | Verifiers on the RAG set | 🔲 Planned |
@@ -267,11 +267,11 @@ If time allows, tune a separate threshold for `nli_optional` on dev. Never loade
 
 ### Acceptance criteria
 
-- [ ] `faiss.index` rebuilds deterministically from `corpus_chunks.jsonl`.
-- [ ] 100 generated answers (50 normal, 50 degraded), all with `own_doc_in_context == False` for degraded.
+- [x] `faiss.index` rebuilds deterministically from `corpus_chunks.jsonl`.
+- [x] 100 generated answers (50 normal, 50 degraded), all with `own_doc_in_context == False` for degraded. (Under Plan 2, all 200 generated: 100 normal, 100 degraded).
 - [x] `test_leakage.py` passes.
 - [x] `generator_v1.txt` frozen before the first real generation.
-- [ ] Peak RAM of index build logged.
+- [x] Peak RAM of index build logged (451.8 MB).
 
 ---
 
@@ -502,6 +502,14 @@ A session that skips this leaves the site wrong, which is worse than no site. If
 ## Session Log
 
 Newest first. One entry per session, format in Rules 9.3. Never delete entries (Rules R9.9).
+
+### 2026-09-20, session 5 (Agent)
+- Phases touched: P1 (✅ confirmed live on site), P4 (🟡 -> ✅)
+- Done: Fixed Windows character encoding (`utf-8`) across I/O utilities. Built PubMedQA corpus chunks (1,790 chunks), generated FAISS index with `BAAI/bge-small-en-v1.5` on CPU (451.8 MB peak RAM, 100% normal retrieval hit rate). Verified zero leakage against Exp 1 dev/test splits (`tests/test_leakage.py`). Implemented and executed full RAG generation pipeline (`src/generate_rag.py`) with Groq `qwen/qwen3.8-27b` at temperature 0, generating all 200 answers (100 normal, 100 degraded) with response caching and manifest logging. Verified full test suite (105 tests passing, 0 ruff errors, strict mkdocs build passing).
+- Numbers produced: exp2.normal_answer_length = 68.6 words (n=100), exp2.degraded_answer_length = 66.7 words (n=100), index.peak_ram_mb = 451.8 MB (data/exp2_rag/index_summary.json)
+- Docs changed: Phase.md, Architecture.md, handover.md, docs/index.md, src/README.md
+- Open / blocked: None. Ready for Phase 5 (Exp 1 test evaluation & laptop timing) and Phase 6 (blind annotation export).
+- Next session: Execute Phase 5: `run_verifiers.py --split test` and laptop timing benchmarks.
 
 ### 2026-09-19, session 4 (Agent)
 - Phases touched: P3 (🟡 -> ✅), P4 (🔲 -> 🟡)

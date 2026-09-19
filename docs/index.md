@@ -12,7 +12,7 @@ Muhammad Saad, Rabia Qaiser. Supervisor: Dr. Laeeq Ahmed. UET Peshawar, Jalozai 
 
 !!! info "Current status"
 
-    Phase 0, 0b, 1, 2, 3 Done (Gate G1 resolved to Plan 2, verifiers implemented, dev thresholds tuned, prompts frozen); Phase 4 in progress. See [Progress](progress.md) for details.
+    Phase 0, 0b, 1, 2, 3, 4 Done (Gate G1 resolved to Plan 2, Exp 2 index built, 200 RAG answers generated); Phase 5 planned. See [Progress](progress.md) for details.
 
 ## Numbers of record
 

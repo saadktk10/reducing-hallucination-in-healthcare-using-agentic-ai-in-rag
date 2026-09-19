@@ -145,15 +145,23 @@ def select_exp2_questions(
     forbidden_questions: set[str] = set()
 
     test_path = data_dir / "exp1_medhallu" / "test.jsonl"
-    if test_path.exists():
-        for p in read_jsonl(test_path, Pair):
-            forbidden_questions.add(normalize_question(p.question))
+    if not test_path.exists():
+        raise FileNotFoundError(
+            f"Exp 1 test pairs not found at {test_path}. "
+            "Run 'python -m src.build_exp1_pairs' before build_index (Rule R1.8)."
+        )
+    for p in read_jsonl(test_path, Pair):
+        forbidden_questions.add(normalize_question(p.question))
 
     if cfg.exp2.exclude_exp1_dev:
         dev_path = data_dir / "exp1_medhallu" / "dev.jsonl"
-        if dev_path.exists():
-            for p in read_jsonl(dev_path, Pair):
-                forbidden_questions.add(normalize_question(p.question))
+        if not dev_path.exists():
+            raise FileNotFoundError(
+                f"Exp 1 dev pairs not found at {dev_path}. "
+                "Run 'python -m src.build_exp1_pairs' before build_index (Rule R1.8)."
+            )
+        for p in read_jsonl(dev_path, Pair):
+            forbidden_questions.add(normalize_question(p.question))
 
     logger.info(
         "Forbidden Exp 1 questions (test + dev): %d unique normalized questions",
@@ -337,17 +345,23 @@ def main() -> None:
         write_jsonl(chunks_file, chunks)
         print(f"Saved {len(chunks)} corpus chunks -> {chunks_file}")
 
-    # 4. Compute embeddings and build FAISS index
-    print(f"Computing embeddings for {len(chunks)} chunks on CPU...")
-    chunk_texts = [c.text for c in chunks]
-    embeddings = compute_embeddings(chunk_texts, tokenizer=tok, model=model, batch_size=64)
-
-    dim = embeddings.shape[1]
-    index = faiss.IndexFlatIP(dim)
-    index.add(embeddings)
+    # 4. Compute embeddings and build FAISS index (or load cached per Rule R4.7)
     index_file = exp2_dir / "faiss.index"
-    faiss.write_index(index, str(index_file))
-    print(f"Built FAISS index (ntotal={index.ntotal}, d={dim}) -> {index_file}")
+    if index_file.exists():
+        index = faiss.read_index(str(index_file))
+        dim = index.d
+        logger.info("Loaded cached FAISS index from %s", index_file)
+        print(f"Loaded cached FAISS index (ntotal={index.ntotal}, d={dim}) <- {index_file}")
+    else:
+        print(f"Computing embeddings for {len(chunks)} chunks on CPU...")
+        chunk_texts = [c.text for c in chunks]
+        embeddings = compute_embeddings(chunk_texts, tokenizer=tok, model=model, batch_size=64)
+
+        dim = embeddings.shape[1]
+        index = faiss.IndexFlatIP(dim)
+        index.add(embeddings)
+        faiss.write_index(index, str(index_file))
+        print(f"Built FAISS index (ntotal={index.ntotal}, d={dim}) -> {index_file}")
 
     # 5. Select 100 disjoint Exp 2 questions
     questions = select_exp2_questions(raw_rows, cfg)
@@ -380,7 +394,7 @@ def main() -> None:
         "retrieval_sanity": sanity,
     }
     summary_file = exp2_dir / "index_summary.json"
-    with open(summary_file, "w") as f:
+    with open(summary_file, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2)
 
     print("\n" + "=" * 60)

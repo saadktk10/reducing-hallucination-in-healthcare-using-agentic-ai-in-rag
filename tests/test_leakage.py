@@ -45,11 +45,12 @@ def test_zero_leakage_exp2_vs_exp1() -> None:
     assert len(overlap_dev) == 0, f"Leakage detected between Exp 2 and Exp 1 dev: {overlap_dev}"
 
     # 3. Assert count and balance
-    assert len(exp2_questions) == 100
+    expected_total = cfg.exp2.n_normal + cfg.exp2.n_degraded
+    assert len(exp2_questions) == expected_total
     n_normal = sum(1 for q in exp2_questions if q.condition == "normal")
     n_degraded = sum(1 for q in exp2_questions if q.condition == "degraded")
-    assert n_normal == 50
-    assert n_degraded == 50
+    assert n_normal == cfg.exp2.n_normal
+    assert n_degraded == cfg.exp2.n_degraded
 
 
 def test_exp2_questions_unique_ids() -> None:
