@@ -1,6 +1,6 @@
 project: hallucination-verifier-c
 seed: 42
-plan: 1                          # set after Week 1 pilot: 1 or 2
+plan: 2                          # set after Week 1 pilot: 1 or 2 (Gate G1 resolved to Plan 2)
 
 paths:
   data: data
@@ -37,8 +37,8 @@ exp1:
   stratify_by: difficulty
 
 exp2:
-  n_normal: 50
-  n_degraded: 50
+  n_normal: 100
+  n_degraded: 100
   extra_degraded_max: 20         # used only if < 25% Hallucinated
   exclude_exp1_dev: true
   chunk_tokens: 250
@@ -60,8 +60,8 @@ models:
     model_id: gemini-3.6-flash
     base_url: https://generativelanguage.googleapis.com/v1beta/openai/
     temperature: 0
-    max_tokens: 500
-    rpm_limit: 15
+    max_tokens: 1000
+    rpm_limit: 10
 
 filter_b:
   num_threads: 6

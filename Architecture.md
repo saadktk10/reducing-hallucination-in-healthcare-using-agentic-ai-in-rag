@@ -2,7 +2,7 @@
 
 System architecture for the hallucination verifier study. Diagrams use Mermaid (renders in GitHub, VS Code, Antigravity, and the project website).
 
-*Last updated: YYYY-MM-DD, session N. This file is updated in every session that changes structure (Rules R9.3). See the Change log at the end.*
+*Last updated: 2026-09-19, session 4. This file is updated in every session that changes structure (Rules R9.3). See the Change log at the end.*
 
 ## 1. System Overview
 
@@ -331,11 +331,14 @@ hallucination-verifier-c/
 │
 ├── results/
 │   ├── LATEST.json               # run_id of the valid run per experiment
+│   ├── thresholds.json           # frozen decision thresholds tuned strictly on Exp 1 dev
+│   ├── pilot/
+│   │   ├── metrics.json          # pilot.unsupported_rate and pilot.rouge_auroc
+│   │   └── pilot_report.md
+│   ├── dev_tuning/               # dev split scoring outputs
 │   ├── site/
 │   │   ├── numbers_of_record.json   # only source of numbers on the website
 │   │   └── README.md
-│   ├── thresholds.json           # frozen after dev tuning
-│   ├── pilot/
 │   ├── exp1/<run_id>/            # predictions, metrics, timing, manifest
 │   ├── exp2/<run_id>/
 │   ├── cross/<run_id>/
@@ -346,15 +349,21 @@ hallucination-verifier-c/
 │
 ├── tests/
 │   ├── fixtures/                 # 10-row toy datasets
-│   ├── test_io.py
-│   ├── test_split.py             # no question in both splits
-│   ├── test_text.py
+│   ├── test_baseline_rouge.py    # ROUGE-L precision/recall/fmeasure baseline
+│   ├── test_cache.py             # cache key determinism & jsonl persistence
+│   ├── test_config.py            # config loading & validation
+│   ├── test_filter_api.py        # JSON parsing, retry, mocked client, frozen prompt check
 │   ├── test_filter_nli.py        # max/min aggregation, label order
-│   ├── test_filter_api.py        # JSON parsing, retry, mocked client
+│   ├── test_io.py                # JSONL read/write, pydantic schemas
+│   ├── test_leakage.py           # Exp 2 vs Exp 1 test & dev overlap = 0
+│   ├── test_manifest.py          # run ID format and machine info capture
+│   ├── test_metrics.py           # hand-computed metric examples
 │   ├── test_pilot.py             # Gate G1 logic, ROUGE-L AUROC, CSV format
-│   ├── test_metrics.py           # hand-computed examples
-│   ├── test_stats.py
-│   └── test_leakage.py           # Exp 2 vs Exp 1 test overlap = 0
+│   ├── test_prompts.py           # prompt loading, freezing & tampering detection
+│   ├── test_split.py             # question disjointness & label balance
+│   ├── test_stats.py             # McNemar test, bootstrap CI, kappa
+│   ├── test_text.py              # sentence splitting & chunking
+│   └── test_website.py           # snapshot table parsing, tiles & export
 │
 ├── scripts/
 │   ├── setup_env.sh
@@ -465,3 +474,4 @@ Append one line per structural change. Never delete lines (Rules R9.9).
 | YYYY-MM-DD | 0 | Added website layer (mkdocs, hooks, docs/, paper/, writeup/, site_export) |
 | 2026-09-19 | 2 | pilot_checks.py implemented (stub → full). Added PilotConfig to config.py. Added tests/test_pilot.py. Added data/pilot/rouge_results.json to tree. |
 | 2026-09-19 | 3 | Pinned generator (qwen/qwen3.8-27b) and judge (gemini-3.6-flash). Executed API smoke tests. Phase 2 executed (dev.jsonl, test.jsonl, split_summary.json). Implemented Baseline ROUGE-L, Filter B NLI, Filter A Gemini judge, evaluation metrics, evaluation stats, run_verifiers.py, tune_thresholds.py. Total test suite expanded to 101 tests (100% passing). |
+| 2026-09-19 | 4 | Implemented build_index.py for PubMedQA chunking & FAISS index. Added generator_v1.txt and froze both prompts in FROZEN.json. Tuned dev thresholds (results/thresholds.json). Updated site_export to populate pilot.unsupported_rate and pilot.rouge_auroc. Isolated tile unit tests in test_website.py. Expanded test suite to 105 tests (100% passing). Synchronized all folder READMEs. |

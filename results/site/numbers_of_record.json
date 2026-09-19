@@ -1,5 +1,16 @@
 {
-  "generated_at": "2026-09-19T11:54:24.222711+00:00",
-  "git_sha": "94fc6b3",
-  "numbers": {}
+  "generated_at": "2026-09-19T14:56:24.795282+00:00",
+  "git_sha": "886eb4a",
+  "numbers": {
+    "pilot.unsupported_rate": {
+      "value": 0.46,
+      "display": "46.0%",
+      "source": "results/pilot/metrics.json"
+    },
+    "pilot.rouge_auroc": {
+      "value": 0.48939999999999995,
+      "display": "0.4894",
+      "source": "results/pilot/metrics.json"
+    }
+  }
 }

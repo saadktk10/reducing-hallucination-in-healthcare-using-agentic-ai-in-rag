@@ -29,7 +29,7 @@ datasets:
   medhallu:
     hf_id: UTAustin-AIHealth/MedHallu
     config: pqa_labeled
-    revision: TBD                # pin HF commit hash
+    revision: 515060458a945c633debc6fd5baac7764416b724 # pinned HF commit hash (Rule R4.4)
     columns:                     # confirm in Phase 1, update if different
       question: Question
       context: Knowledge
@@ -40,7 +40,7 @@ datasets:
   pubmedqa:
     hf_id: qiaojin/PubMedQA
     config: pqa_labeled
-    revision: TBD
+    revision: 9001f2853fb87cab8d220904e0de81ac6973b318 # pinned HF commit hash (Rule R4.4)
 
 exp1:
   n_questions: 250
@@ -64,16 +64,16 @@ models:
   nli_optional: cross-encoder/nli-deberta-v3-base
   generator:
     provider: groq
-    model_id: TBD                # exact ID, logged
+    model_id: qwen/qwen3.8-27b   # exact ID, logged
     temperature: 0
     max_tokens: 256
   judge:
     provider: gemini
-    model_id: TBD                # exact Gemini Flash ID, logged
+    model_id: gemini-3.6-flash   # exact Gemini Flash ID, logged
     base_url: https://generativelanguage.googleapis.com/v1beta/openai/
     temperature: 0
-    max_tokens: 64
-    rpm_limit: TBD               # from current free-tier docs
+    max_tokens: 500
+    rpm_limit: 15                # from current free-tier docs
 
 filter_b:
   num_threads: 6

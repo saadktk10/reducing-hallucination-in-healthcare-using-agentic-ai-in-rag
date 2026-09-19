@@ -6,8 +6,9 @@ This directory contains versioned prompts for LLM verification (Filter A) and ge
 
 | Path | Purpose |
 | :--- | :--- |
-| `*.txt` | Active frozen prompt templates (e.g. `judge_v1.txt`). Templates use placeholder tags like `{context}` and `{answer}`. |
-| `FROZEN.json` | Hash registry mapping prompt filenames to their SHA-256 digests. |
+| `judge_v1.txt` | Frozen LLM-as-a-judge evaluation prompt (Filter A). Evaluates evidence support and returns JSON verdict (`SUPPORTED` vs `UNSUPPORTED`). |
+| `generator_v1.txt` | Frozen RAG answer generator prompt (Groq Qwen 3.8-27b). Prompts the model to synthesize 2–4 sentence answers strictly grounded in provided scientific context. |
+| `FROZEN.json` | Hash registry mapping frozen prompt filenames to their SHA-256 digests (enforced by Rule R1.4). |
 | `drafts/` | Unfrozen, experimental prompt templates under development. |
 
 ## Freezing & Hash Verification Protocol (Rule R4.4)

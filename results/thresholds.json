@@ -1,0 +1,22 @@
+{
+  "filter_b": {
+    "threshold": 1.0,
+    "dev_f1": 0.6666666666666666,
+    "dev_precision": 0.5,
+    "dev_recall": 1.0,
+    "dev_fnr": 0.0,
+    "model_id": "cross-encoder/nli-deberta-v3-small",
+    "tuned_on": "exp1_dev",
+    "date": "2026-09-19"
+  },
+  "rouge": {
+    "threshold": 0.7853846153846153,
+    "variant": "precision",
+    "dev_f1": 0.6711409395973155,
+    "dev_precision": 0.5050505050505051,
+    "dev_recall": 1.0,
+    "dev_fnr": 0.0,
+    "tuned_on": "exp1_dev",
+    "date": "2026-09-19"
+  }
+}

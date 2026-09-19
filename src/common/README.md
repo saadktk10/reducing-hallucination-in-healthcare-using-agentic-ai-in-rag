@@ -7,7 +7,7 @@ Foundational utilities shared across all phases of the project.
 | Module | Responsibility |
 | :--- | :--- |
 | `config.py` | Validated Pydantic configuration schemas matching `configs/config.yaml`. |
-| `io.py` | Pydantic data schemas (`Pair`, `Chunk`, `VerifierResult`, `CacheRecord`) and robust JSONL read/write utilities. |
+| `io.py` | Pydantic data schemas (`Pair`, `Chunk`, `QuestionRecord`, `VerifierResult`, `CacheRecord`) and robust JSONL read/write utilities. |
 | `cache.py` | Append-only, SHA-256 keyed cache (`JsonlCache`) for API requests and model responses (Rule R5.2). |
 | `text.py` | Sentence splitting (`pysbd`), sliding-window token chunking with overlap, and question normalization. |
 | `prompts.py` | Prompt loading, SHA-256 hash freezing, and tampering detection against `prompts/FROZEN.json`. |

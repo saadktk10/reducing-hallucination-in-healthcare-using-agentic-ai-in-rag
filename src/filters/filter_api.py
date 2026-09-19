@@ -20,7 +20,7 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 from src.common.cache import JsonlCache, make_cache_key
 from src.common.config import Config, load_config
 from src.common.io import CacheRecord, Pair, VerifierResult
-from src.common.prompts import compute_hash, load_prompt
+from src.common.prompts import compute_hash, load_prompt, verify_frozen
 
 logger = logging.getLogger(__name__)
 
@@ -82,8 +82,11 @@ class APIJudgeVerifier:
         """Initialize client, load prompt template, and open cache."""
         t0 = time.perf_counter()
 
-        # 1. Load prompt template
-        self.template = load_prompt(self.prompt_name, base=self.cfg.paths.prompts)
+        # 1. Load prompt template (Rule R1.4: verify hash if frozen)
+        try:
+            self.template = verify_frozen(self.prompt_name, base=self.cfg.paths.prompts)
+        except KeyError:
+            self.template = load_prompt(self.prompt_name, base=self.cfg.paths.prompts)
         self.prompt_hash = compute_hash(self.template)
 
         # 2. Rate limiter
@@ -99,6 +102,7 @@ class APIJudgeVerifier:
             self.client = OpenAI(
                 api_key=api_key,
                 base_url=self.cfg.models.judge.base_url,
+                max_retries=0,
             )
 
         # 4. Cache
@@ -132,8 +136,20 @@ class APIJudgeVerifier:
             end = text.rfind("}")
             if start != -1 and end != -1 and end > start:
                 text = text[start : end + 1]
+            elif start != -1:
+                text = text[start:]
 
-        data = json.loads(text)
+        try:
+            data = json.loads(text)
+        except json.JSONDecodeError:
+            # Attempt to repair missing trailing quote or brace if cut off
+            repaired = text
+            if not repaired.endswith("}"):
+                if repaired.count('"') % 2 != 0:
+                    repaired += '"'
+                repaired += "\n}"
+            data = json.loads(repaired)
+
         if not isinstance(data, dict):
             raise ValueError(f"Parsed JSON is not a dictionary: {type(data)}")
 
@@ -162,8 +178,8 @@ class APIJudgeVerifier:
         assert self.rate_limiter is not None
 
         @retry(
-            wait=wait_exponential(multiplier=2, min=2, max=60),
-            stop=stop_after_attempt(6),
+            wait=wait_exponential(multiplier=2, min=3, max=60),
+            stop=stop_after_attempt(8),
             reraise=True,
         )
         def _execute() -> tuple[str, int | None, int | None, float]:

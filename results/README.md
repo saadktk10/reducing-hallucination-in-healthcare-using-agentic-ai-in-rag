@@ -7,8 +7,10 @@ This directory contains experimental outputs, timing benchmarks, evaluation metr
 ```text
 results/
 ├── LATEST.json                   # Pointers to latest valid run_id for each experiment
+├── thresholds.json               # Frozen decision thresholds tuned strictly on Exp 1 dev
 ├── figures/                      # Generated vector and PNG figures for the paper
-├── pilot/                        # Phase 1 pilot verification checks
+├── pilot/                        # Phase 1 pilot verification checks and metrics.json
+├── dev_tuning/                   # Dev split scoring outputs used for threshold tuning
 ├── exp1/
 │   └── <run_id>/                 # Timestamped experiment run (e.g. 20260115-1430-a1b2)
 │       ├── manifest.json         # Snapshot of config, git commit, prompt hashes, environment

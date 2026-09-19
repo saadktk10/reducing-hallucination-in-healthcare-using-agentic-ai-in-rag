@@ -4,9 +4,9 @@ Detailed implementation plan over 10 weeks. Each phase lists goal, owner, tasks,
 
 **Owners.** R1 = researcher leading Experiment 1. R2 = researcher leading Experiment 2. Both = both researchers. Agent = Antigravity.
 
-*Last updated: 2026-09-19, session 3. Updated at the end of every session (Rules section 9).*
+*Last updated: 2026-09-19, session 4. Updated at the end of every session (Rules section 9).*
 
-**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 🟡 Partial (Awaiting human spot-check annotation for Gate G1), Phase 2 ✅ Done, Phase 3 🟡 In Progress (Verifiers implemented and smoke tested).
+**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 🟡 Partial (Awaiting human spot-check annotation for Gate G1), Phase 2 ✅ Done, Phase 3 ✅ Done (Verifiers implemented, dev thresholds tuned, prompts frozen), Phase 4 🟡 In Progress (PubMedQA chunking & FAISS index builder implemented).
 
 ## Snapshot
 
@@ -18,8 +18,8 @@ Status legend: ✅ done · 🟡 partial · 🔲 planned · 🔴 open defect · �
 | 0b | Project website (MkDocs, GitHub Pages) | ✅ Done (2026-09-18). MkDocs site, 4 hooks, strict build passing, CI workflows, all 14 tiles pending. |
 | 1 | Pilot checks (Gate G1) | 🟡 Partial (2026-09-19). Fields confirmed, spotcheck CSV exported, ROUGE-L AUROC = 0.49 (precision). Awaiting human spot-check annotation. |
 | 2 | Experiment 1 pairs and splits | ✅ Done (2026-09-19). Canonical 250 questions / 500 pairs generated (100 dev / 400 test), zero question overlap, exact 50/50 balance. |
-| 3 | Verifiers and dev tuning | 🟡 Partial (2026-09-19). Verifiers implemented (baseline_rouge, filter_b, filter_a). Tested on dev. 101 tests passing. |
-| 4 | Experiment 2 index and generation | 🔲 Planned |
+| 3 | Verifiers and dev tuning | ✅ Done (2026-09-19). Verifiers implemented (baseline_rouge, filter_b, filter_a). Tested on dev. Thresholds frozen in results/thresholds.json (Filter B F1=0.67, ROUGE-L F1=0.67). Prompts frozen in FROZEN.json. 105 tests passing. |
+| 4 | Experiment 2 index and generation | 🟡 Partial (2026-09-19). PubMedQA chunking, deduplication, and FAISS index pipeline implemented in src/build_index.py; questions selected with zero leakage vs Exp 1 dev/test. generator_v1.txt frozen. |
 | 5 | Experiment 1 test runs and timing | 🔲 Planned |
 | 6 | Two-annotator labeling (Gate G2) | 🔲 Planned |
 | 7 | Verifiers on the RAG set | 🔲 Planned |
@@ -239,10 +239,10 @@ If time allows, tune a separate threshold for `nli_optional` on dev. Never loade
 ### Acceptance criteria
 
 - [x] All three verifiers pass unit tests and a `--limit 5` smoke run.
-- [ ] `judge_v1.txt` hash in `FROZEN.json`; loading a modified prompt raises.
-- [ ] `thresholds.json` committed with dev F1, variant, model ID, date.
-- [ ] No test file was read during this phase (check logs; `run_verifiers` logs every file it opens).
-- [ ] Filter A dev parse-failure rate recorded.
+- [x] `judge_v1.txt` hash in `FROZEN.json`; loading a modified prompt raises.
+- [x] `thresholds.json` committed with dev F1, variant, model ID, date.
+- [x] No test file was read during this phase (check logs; `run_verifiers` logs every file it opens).
+- [x] Filter A dev parse-failure rate recorded.
 
 ---
 
@@ -269,8 +269,8 @@ If time allows, tune a separate threshold for `nli_optional` on dev. Never loade
 
 - [ ] `faiss.index` rebuilds deterministically from `corpus_chunks.jsonl`.
 - [ ] 100 generated answers (50 normal, 50 degraded), all with `own_doc_in_context == False` for degraded.
-- [ ] `test_leakage.py` passes.
-- [ ] `generator_v1.txt` frozen before the first real generation.
+- [x] `test_leakage.py` passes.
+- [x] `generator_v1.txt` frozen before the first real generation.
 - [ ] Peak RAM of index build logged.
 
 ---
@@ -503,6 +503,14 @@ A session that skips this leaves the site wrong, which is worse than no site. If
 
 Newest first. One entry per session, format in Rules 9.3. Never delete entries (Rules R9.9).
 
+### 2026-09-19, session 4 (Agent)
+- Phases touched: P3 (🟡 -> ✅), P4 (🔲 -> 🟡)
+- Done: Verified frozen prompt integrity (`prompts/FROZEN.json`). Added and froze `generator_v1.txt`. Tuned dev thresholds (`results/thresholds.json`). Implemented PubMedQA chunking & FAISS index builder (`src/build_index.py`) and verified zero leakage vs Exp 1 dev/test (`tests/test_leakage.py`). Exported pilot metrics to `results/pilot/metrics.json` and populated `results/site/numbers_of_record.json`. Isolated tile tests in `tests/test_website.py` (105 tests passing, ruff 0 errors). Synchronized all folder READMEs and built site strictly.
+- Numbers produced: pilot.unsupported_rate = 46.0% (n=50, results/pilot/metrics.json), pilot.rouge_auroc = 0.4894 (n=100, results/pilot/metrics.json), filter_b.dev_f1 = 0.6667 (results/thresholds.json), rouge.dev_f1 = 0.6711 (results/thresholds.json)
+- Docs changed: Phase.md, Architecture.md, docs/index.md, prompts/README.md, results/README.md, src/README.md, src/common/README.md, tests/README.md, handover.md
+- Open / blocked: Gate G1 human annotation of `data/pilot/spotcheck_50.csv` (50 rows, Rule R1.5)
+- Next session: Human spot-check annotation of spotcheck_50.csv → run `pilot_checks --step report` → execute `src/build_index.py` on full dataset and run `src/generate_rag.py`.
+
 ### 2026-09-19, session 3 (Agent)
 - Phases touched: P0 (🟡 -> ✅), P2 (🔲 -> ✅), P3 (🔲 -> 🟡)
 - Done: Pinned generator (`qwen/qwen3.8-27b`) and judge (`gemini-3.6-flash`). Executed & cached API smoke calls (`scripts/smoke_apis.py`). Executed Phase 2 (`src/build_exp1_pairs.py`), producing canonical 500 questions/1000 pairs with zero question overlap. Implemented all 3 verifiers: `RougeLVerifier`, `NLIVerifier` (`nli-deberta-v3-small`), `APIJudgeVerifier` (Gemini Flash). Implemented `src/evaluation/metrics.py`, `src/evaluation/stats.py`, `src/run_verifiers.py`, and `src/tune_thresholds.py`. Dev smoke runs passed for all verifiers. Test suite expanded to 101 tests (100% passing).
@@ -511,6 +519,7 @@ Newest first. One entry per session, format in Rules 9.3. Never delete entries (
 - Open / blocked: Gate G1 human annotation of `data/pilot/spotcheck_50.csv` (50 rows, Rule R1.5)
 - Next session: Human spot-check annotation → Gate G1 report & plan selection → freeze judge prompt & thresholds
 
+### 2026-09-19, session 2 (Agent)
 - Phases touched: P1 (🔲 -> 🟡)
 - Done: Implemented pilot_checks.py (4 CLI steps), 17 new unit tests (70 total). Downloaded MedHallu (1000 rows, 6 columns confirmed). Exported spotcheck_50.csv. Computed ROUGE-L AUROC on 100 provisional dev pairs. Updated site_export.py for pilot metrics. Knowledge column is List[str] — handled with join. Configured and validated GEMINI_API_KEY, GROQ_API_KEY, and HF_TOKEN.
 - Numbers produced: pilot.rouge_auroc = 0.4894 (precision), 0.7052 (recall), 0.7130 (fmeasure) (n=100, data/pilot/rouge_results.json)

@@ -48,6 +48,17 @@ class Chunk(BaseModel):
     n_tokens: int
 
 
+class QuestionRecord(BaseModel):
+    """A selected question for Experiment 2 — Design.md §7.1."""
+
+    question_id: str
+    question: str
+    source_doc_id: str
+    condition: Literal["normal", "degraded"]
+    ground_truth_long: str | None = None
+    final_decision: str | None = None
+
+
 class Generated(BaseModel):
     """A RAG-generated answer — §3.3."""
 

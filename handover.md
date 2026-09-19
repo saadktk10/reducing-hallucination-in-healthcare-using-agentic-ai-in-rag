@@ -7,49 +7,45 @@
 ## Current State
 
 - **Date**: 2026-09-19
-- **Session**: 3 (Completed)
+- **Session**: 4 (Completed)
 - **Active Branch**: `main`
-- **Current Phase**: Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 🟡 Partial (Awaiting human spot-check annotation for Gate G1), Phase 2 ✅ Done, Phase 3 🟡 In Progress.
-- **Test Status**: 101 passed in `pytest -q`, 0 lint errors in `ruff check .`.
+- **Current Phase**: Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 🟡 Partial (Awaiting human spot-check annotation for Gate G1), Phase 2 ✅ Done, Phase 3 ✅ Done (Verifiers, dev tuning, frozen prompts & thresholds), Phase 4 🟡 In Progress (Index builder & chunking implemented).
+- **Test Status**: 105 passed in `pytest -q`, 0 lint errors in `ruff check .`.
 - **Site Build**: `mkdocs build --strict` passing with 0 warnings.
 - **Live Documentation**: [https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/](https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/)
 
 ---
 
-## Accomplishments (Session 3)
+## Accomplishments (Session 4)
 
-1. **API Keys Verification & Model Pinning (Phase 0 Task 7 & 8)**:
-   - Validated all three keys from `.env`: `HF_TOKEN`, `GROQ_API_KEY`, `GEMINI_API_KEY`.
-   - Pinned generator model: `qwen/qwen3.8-27b` (Groq provider).
-   - Pinned judge model: `gemini-3.6-flash` (Gemini OpenAI endpoint, 15 RPM limit, `max_tokens=500` to budget reasoning tokens).
-   - Implemented `scripts/smoke_apis.py` and successfully executed smoke calls cached to `data/cache/judge_gemini.jsonl` and `data/cache/generator_groq.jsonl`.
-2. **Experiment 1 Dataset Construction (Phase 2)**:
-   - Executed `src/build_exp1_pairs.py`: generated canonical 250 questions (500 pairs) stratified by difficulty.
-   - Built `data/exp1_medhallu/dev.jsonl` (100 pairs / 50 questions) and `data/exp1_medhallu/test.jsonl` (400 pairs / 200 questions).
-   - Verified strict disjointness (0 question overlap) and exact 50/50 label balance.
-   - Verified that Phase 2 dev set matches Phase 1 pilot provisional dev set byte-identically.
-3. **Verifier Implementation (Phase 3)**:
-   - **Baseline ROUGE-L (`src/filters/baseline_rouge.py`)**: Implemented `RougeLVerifier` supporting precision, recall, and fmeasure variants.
-   - **Filter B NLI (`src/filters/filter_nli.py`)**: Implemented `NLIVerifier` (`nli-deberta-v3-small`). Resolved PyTorch 2.2 / transformers dependency constraints, automated HF authentication, dynamic `id2label` entailment index resolution (Rule R5.5), and sentence-level min-of-max chunk aggregation.
-   - **Filter A API Judge (`src/filters/filter_api.py`)**: Implemented `APIJudgeVerifier` with token bucket rate limiter (15 RPM), tenacity exponential backoff, robust JSON extraction, single retry on parse failure (Rule R2.6), and disk caching (Rule R2.5).
-4. **Evaluation & Verification Framework (Phases 3 & 8)**:
-   - Implemented `src/evaluation/metrics.py`: Precision, Recall, F1, FNR, FPR, AUROC, latency summaries, and shadow cost per 1k verifications.
-   - Implemented `src/evaluation/stats.py`: exact McNemar test, percentile bootstrap confidence intervals, and Cohen's kappa.
-   - Implemented `src/run_verifiers.py`: unified multi-split runner. Successfully ran dev scoring for ROUGE-L (100 pairs) and smoke runs for Filter A and Filter B.
-   - Implemented `src/tune_thresholds.py`: dev-only F1 maximization with lower FNR tie-breaking.
-5. **Testing & Code Quality**:
-   - Added 31 new tests: `test_baseline_rouge.py`, `test_filter_nli.py`, `test_filter_api.py`, `test_metrics.py`, `test_stats.py`.
-   - Total test suite expanded from 70 to 101 tests (100% passing).
-   - Clean lint status (`ruff check .` passes).
+1. **Frozen Prompts & Tamper Verification (Phase 3 & Phase 4)**:
+   - Added `prompts/generator_v1.txt` for RAG answer generation.
+   - Pinned and froze both prompts (`judge_v1.txt` and `generator_v1.txt`) in `prompts/FROZEN.json` (Rule R1.4).
+   - Added `test_frozen_prompt_verification` to `tests/test_filter_api.py` to ensure tampering raises `PromptHashMismatchError`.
+2. **Dev Threshold Tuning Frozen (Phase 3d)**:
+   - Frozen thresholds recorded in `results/thresholds.json` (Filter B dev F1 = 0.6667, ROUGE-L precision dev F1 = 0.6711).
+   - Verified that no test files are read during dev tuning (Rule R1.1, R1.2).
+3. **Experiment 2 PubMedQA Chunking & FAISS Pipeline (Phase 4)**:
+   - Implemented `src/build_index.py`: PubMedQA `pqa_labeled` context extraction (excluding conclusions), sliding-window token chunking (~250 tokens, overlap 30), question selection (100 questions: 50 normal, 50 degraded), and FAISS indexing with `BAAI/bge-small-en-v1.5`.
+   - Updated `tests/test_leakage.py` checking zero question ID overlap between Experiment 2 and Experiment 1 dev/test splits (Rule R1.8).
+4. **Site Numbers Sync & Tile Hook Isolation (Phase 0b & Phase 1)**:
+   - Updated `src/pilot_checks.py` to export `results/pilot/metrics.json`.
+   - Populated `results/site/numbers_of_record.json` via `src/site_export.py` with pilot metrics (`pilot.unsupported_rate` = 46.0%, `pilot.rouge_auroc` = 0.4894).
+   - Updated `tests/test_website.py` with robust unit tests isolating pending vs populated metric rendering.
+5. **Living Documentation & Folder README Synchronization (Rule R9.13)**:
+   - Updated README files across all workspace folders: `README.md`, `configs/README.md`, `prompts/README.md`, `results/README.md`, `src/README.md`, `src/common/README.md`, `tests/README.md`.
+   - Updated `Phase.md` (header, Snapshot table, Phase 3 & 4 criteria checkboxes, and Session 4 log).
+   - Updated `Architecture.md` (directory tree, test file list, Section 12 Change log).
+   - Updated `docs/index.md` current status callout.
+   - Verified `mkdocs build --strict` with zero warnings.
 
 ---
 
 ## Key Technical Decisions
 
-- **Transformers & PyTorch Compatibility**: `transformers 5.x` requires `torch >= 2.5`. Because macOS environment has CPU-only PyTorch 2.2.2, constrained `transformers>=4.42,<5.0` and `sentence-transformers>=3.0,<4.0` in `pyproject.toml`.
-- **HuggingFace HTTP Streaming**: Removed `hf-xet` to avoid hung file lock operations on macOS, allowing fast and stable model downloads via standard HTTP fallback.
-- **Gemini 3.x Flash Reasoning Tokens**: Gemini 3.x Flash models include thinking tokens in completion budgets. Increased `max_tokens` from 64 to 500 and set `reasoning_effort="low"` in `APIJudgeVerifier` to prevent truncated/empty completions.
-- **Automatic `.env` Ingestion**: Added `load_dotenv()` directly to `src/common/config.py:load_config()` so all tools and HuggingFace API clients seamlessly authenticate.
+- **Isolated Metric Testing**: In `tests/test_website.py`, mocked `_load_numbers()` to test pending tile styling independently from committed live numbers in `results/site/numbers_of_record.json`, ensuring unit test determinism.
+- **Frozen Hash Verification**: Filter A verifier checks `verify_frozen()` on load, strictly enforcing that prompt tampering halts execution before any model call is dispatched.
+- **Zero Leakage Invariant**: `src/build_index.py` normalizes and deduplicates PubMedQA questions against both `data/exp1_medhallu/test.jsonl` and `data/exp1_medhallu/dev.jsonl` (per Rule R1.8 and `exclude_exp1_dev: true`).
 
 ---
 
@@ -69,12 +65,11 @@
 1. **Researchers annotate `data/pilot/spotcheck_50.csv`**:
    - Fill 50 rows in `supported_yes_no` column.
    - Run `python -m src.pilot_checks --config configs/config.yaml --step report`.
-2. **Complete Dev Tuning (Phase 3d)**:
-   - Run `python -m src.run_verifiers --config configs/config.yaml --split dev --verifier filter_b`.
-   - Run `python -m src.run_verifiers --config configs/config.yaml --split dev --verifier filter_a`.
-   - Run `python -m src.tune_thresholds --config configs/config.yaml` to freeze thresholds in `results/thresholds.json`.
-3. **Freeze Judge Prompt**:
-   - Verify `prompts/judge_v1.txt` and freeze its SHA-256 in `prompts/FROZEN.json` via `freeze_prompt("judge_v1.txt")`.
+2. **Run Full PubMedQA Indexing & Generation (Phase 4)**:
+   - Execute `python -m src.build_index --config configs/config.yaml` to build `faiss.index`, `corpus_chunks.jsonl`, and `questions.jsonl`.
+   - Execute `python -m src.generate_rag --config configs/config.yaml` to produce `generated.jsonl`.
+3. **Experiment 1 Test Evaluation (Phase 5)**:
+   - Following Gate G1 resolution, run `python -m src.run_verifiers --config configs/config.yaml --split test` and laptop timing benchmarks.
 
 ---
 *Research prototype. Not for clinical use.*

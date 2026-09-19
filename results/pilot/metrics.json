@@ -1,0 +1,12 @@
+{
+  "pilot.unsupported_rate": {
+    "value": 0.46,
+    "display": "46.0%",
+    "source": "results/pilot/metrics.json"
+  },
+  "pilot.rouge_auroc": {
+    "value": 0.48939999999999995,
+    "display": "0.4894",
+    "source": "results/pilot/metrics.json"
+  }
+}

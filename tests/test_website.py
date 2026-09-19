@@ -59,16 +59,36 @@ def test_tile_rendering_missing_keys() -> None:
     assert "pending" in tile_html
 
 
-def test_tile_rendering_registered_pending_keys() -> None:
+def test_tile_rendering_registered_pending_keys(monkeypatch: pytest.MonkeyPatch) -> None:
     """Test that registered tile keys render their expected Phase label when pending."""
+    monkeypatch.setattr("hooks.tiles._load_numbers", lambda: {})
     for key, phase in _TILE_PHASES.items():
         tile_html = _render_tile(key)
         assert "tile-pending" in tile_html
         assert phase in tile_html
 
 
-def test_tile_pair_rendering() -> None:
+def test_tile_rendering_populated_keys(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Test that registered tile keys render actual numbers when present."""
+    monkeypatch.setattr(
+        "hooks.tiles._load_numbers",
+        lambda: {
+            "pilot.unsupported_rate": {
+                "value": 0.46,
+                "display": "46.0%",
+                "source": "results/pilot/metrics.json",
+            }
+        },
+    )
+    tile_html = _render_tile("pilot.unsupported_rate")
+    assert "tile-pending" not in tile_html
+    assert "46.0%" in tile_html
+    assert "results/pilot/metrics.json" in tile_html
+
+
+def test_tile_pair_rendering(monkeypatch: pytest.MonkeyPatch) -> None:
     """Test rendering of tile pairs."""
+    monkeypatch.setattr("hooks.tiles._load_numbers", lambda: {})
     pair_html = _render_tile_pair("timing.filter_b.median_ms", "timing.filter_a.median_ms")
     assert "tile-pair" in pair_html
     assert "Phase 5" in pair_html

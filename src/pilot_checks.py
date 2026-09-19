@@ -479,6 +479,23 @@ def step_report(cfg: Config) -> None:
     with open(report_json_path, "w") as f:
         json.dump(report, f, indent=2, default=str)
 
+    # --- Write site metrics JSON for site_export.py ---
+    metrics_path = results_dir / "metrics.json"
+    pilot_metrics = {
+        "pilot.unsupported_rate": {
+            "value": unsupported_rate,
+            "display": f"{unsupported_rate:.1%}" if unsupported_rate is not None else "N/A",
+            "source": "results/pilot/metrics.json",
+        },
+        "pilot.rouge_auroc": {
+            "value": primary_auroc,
+            "display": f"{primary_auroc:.4f}" if primary_auroc is not None else "N/A",
+            "source": "results/pilot/metrics.json",
+        },
+    }
+    with open(metrics_path, "w") as f:
+        json.dump(pilot_metrics, f, indent=2)
+
     # --- Write pilot report Markdown ---
     report_md_path = results_dir / "pilot_report.md"
     md_lines = [

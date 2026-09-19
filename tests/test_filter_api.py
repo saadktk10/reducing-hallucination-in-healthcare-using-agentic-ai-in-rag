@@ -9,10 +9,12 @@ Checks:
 
 from __future__ import annotations
 
+import json
 from unittest.mock import MagicMock
 
 import pytest
 
+from src.common.prompts import PromptHashMismatchError, compute_hash
 from src.filters.filter_api import APIJudgeVerifier
 
 
@@ -110,3 +112,33 @@ def test_double_parse_failure_recorded(tmp_path) -> None:
     assert result.verdict is None
     assert result.score is None
     assert mock_client.chat.completions.create.call_count == 2
+
+
+def test_frozen_prompt_verification(tmp_path) -> None:
+    """Verifies that tampering with a frozen prompt causes load() to raise PromptHashMismatchError."""
+    prompts_dir = tmp_path / "prompts"
+    prompts_dir.mkdir()
+    prompt_file = prompts_dir / "judge_v1.txt"
+    original_text = "Context: {context}\nAnswer: {answer}\nEvaluate."
+    prompt_file.write_text(original_text)
+
+    # Freeze the prompt
+    frozen_file = prompts_dir / "FROZEN.json"
+    frozen_file.write_text(json.dumps({"judge_v1.txt": compute_hash(original_text)}))
+
+    # Mock config with paths.prompts = str(prompts_dir)
+    mock_cfg = MagicMock()
+    mock_cfg.paths.prompts = str(prompts_dir)
+    mock_cfg.paths.cache = str(tmp_path / "cache")
+    mock_cfg.models.judge.rpm_limit = 10
+    mock_cfg.models.judge.model_id = "test-model"
+
+    # Loading original should succeed
+    verifier = APIJudgeVerifier(cfg=mock_cfg, prompt_name="judge_v1.txt", client=MagicMock())
+    verifier.load()
+    assert verifier.template == original_text
+
+    # Tamper with prompt
+    prompt_file.write_text(original_text + "\nTAMPERED")
+    with pytest.raises(PromptHashMismatchError):
+        verifier.load()
