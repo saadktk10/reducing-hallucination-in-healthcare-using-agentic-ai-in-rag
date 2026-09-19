@@ -13,7 +13,7 @@ src/
 ├── build_exp1_pairs.py  # MedHallu ingestion, stratification, and split construction (Phase 2) ← implemented
 ├── build_index.py       # PubMedQA context chunking & FAISS indexing (Phase 4) ← implemented
 ├── generate_rag.py      # Degraded/normal RAG generation (Phase 4) ← implemented
-├── annotation.py        # Annotation template export, kappa, disagreements (Phase 6)
+├── annotation.py        # Annotation template export, kappa, disagreements, merge (Phase 6) ← implemented
 ├── run_verifiers.py     # Main verification execution loop (Phases 3, 5, 7) ← implemented
 ├── timing.py            # Latency measurement protocol (Phase 5) ← implemented
 ├── tune_thresholds.py   # Dev-only threshold optimization (Phase 3) ← implemented

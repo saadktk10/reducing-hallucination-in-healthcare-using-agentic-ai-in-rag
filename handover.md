@@ -7,59 +7,51 @@
 ## Current State
 
 - **Date**: 2026-09-20
-- **Session**: 6 (Completed)
+- **Session**: 7 (Completed)
 - **Active Branch**: `main`
-- **Current Phase**: Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & ROUGE-L accuracy runs done on 400 test pairs, laptop CPU timing benchmarks done, shadow cost computed, Filter A rate limit flagged).
-- **Test Status**: 107 passed in `pytest -q`, 0 lint errors in `ruff check .`.
+- **Current Phase**: Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & ROUGE-L accuracy runs done on 400 test pairs, laptop CPU timing benchmarks done, shadow cost computed, Filter A deferred per researcher direction), Phase 6 🟡 Partial (Annotation tooling implemented and tested; 200 pairs exported to template.csv, annotator_1.csv, annotator_2.csv, and annotation_guide.md; awaiting human labeling).
+- **Test Status**: 112 passed in `pytest -q`, 0 lint errors in `ruff check .`.
 - **Site Build**: `mkdocs build --strict` passing with 0 warnings.
 - **Live Documentation**: [https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/](https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/)
 
 ---
 
-## Accomplishments (Session 6)
+## Accomplishments (Session 7)
 
-1. **Standardized Timing Protocol Implemented (`src/timing.py`, `tests/test_timing.py`)**:
-   - Implemented `measure_verifier_timing()` enforcing Rules §3: pre-run checklist (`--confirm`), separate model load timing and memory tracking, 10 warm-up pairs discarded, two repeat passes measuring latency with `time.perf_counter()` around inference only (batch size 1), peak RAM sampling via `psutil`, and strict assertion that no timing latency comes from cache hits (Rule R3.2).
-   - Created `tests/test_timing.py` covering mock timing runs, metrics reporting, and cache hit violation detection (all 107 tests passing).
-2. **Pricing Configuration & Shadow Cost Model (Phase 5c)**:
-   - Added `PricingConfig` and `load_pricing()` to `src/common/config.py`.
-   - Updated `configs/pricing.yaml` with Gemini Flash rates ($0.10/1M input tokens, $0.40/1M output tokens, `checked_on: "2026-09-20"`).
-   - Computed shadow cost: `$0.0575` per 1,000 verifications, saved in `results/exp1/20260919-2151-bd5e507/metrics.json`.
-3. **Phase 5a Accuracy Runs Executed for Baseline ROUGE-L & Filter B**:
-   - Enhanced `src/run_verifiers.py` with dynamic run folder resolution (`results/exp1/<run_id>/`), standard prediction filenames (`predictions_<verifier>.jsonl`), manifest creation via `write_manifest()`, and automated classification metrics computation.
-   - Evaluated Baseline ROUGE-L on all 400 test pairs: F1 = **0.6667**, Precision = 0.5013, Recall = 0.9950, FNR = 0.0050, FPR = 0.9900, AUROC = 0.4058.
-   - Evaluated Filter B (`nli-deberta-v3-small`) on all 400 test pairs on CPU: F1 = **0.6667**, Precision = 0.5000, Recall = 1.0000, FNR = 0.0000, FPR = 1.0000, AUROC = 0.5492.
-4. **Phase 5b Laptop Timing Benchmarks Executed**:
-   - ROUGE-L benchmark on laptop CPU: Load time = 0.0001 s, Peak RAM = 355.4 MB, Warm-up = 10 discarded, Pass 1 p50 = 2.5 ms (p95 = 4.3 ms), Pass 2 p50 = 2.5 ms (p95 = 4.1 ms), **POOLED p50 = 2.5 ms (p95 = 4.3 ms)**.
-   - Filter B benchmark on laptop CPU: Load time = 3.5990 s, Peak RAM = **855.7 MB** (well within the 4 GB limit of Rule R6.3), Warm-up = 10 discarded, Pass 1 p50 = 334.3 ms (p95 = 969.1 ms), Pass 2 p50 = 326.7 ms (p95 = 982.1 ms), **POOLED p50 = 332.1 ms (p95 = 978.0 ms)**.
-   - Stored structured timing logs and per-pair latency CSVs in `results/exp1/20260919-2151-bd5e507/`.
-5. **Living Documentation & Website Synchronized**:
-   - `src/site_export.py` updated `results/site/numbers_of_record.json` with `timing.filter_b.median_ms = 332.1 ms` and `cost.filter_a.per_1k_usd = $0.0575`.
-   - `mkdocs build --strict` verified in 0.55s with 0 warnings.
-   - Updated `Phase.md`, `Architecture.md`, `src/README.md`, `tests/README.md`.
+1. **Researcher Decision on Filter A (Rule R8.1)**:
+   - Evaluated Filter A free-tier 20 RPD rate limit options with researcher.
+   - Researcher confirmed decision to defer Filter A evaluation for now, preserve Filter B and Baseline ROUGE-L completed benchmarks, and proceed to Phase 6 annotation tooling.
+2. **Phase 6 Annotation Tooling Implemented (`src/annotation.py`)**:
+   - Implemented `export_sheets()`: generates `template.csv` and two identical, condition-blind copies (`annotator_1.csv`, `annotator_2.csv`) shuffled reproducibly with `seed: 42` (Rule R4.1). Labels remain completely empty (Rule R1.5) and the `condition` column is omitted (Rule R1.6).
+   - Generates `annotation_guide.md` embedding the canonical hallucination definition from Agent.md §3 and three concrete worked clinical examples (Supported, Extrinsic Hallucination, Contradiction) per Rule R1.11.
+   - Implemented `compute_kappa()`: normalizes labels, validates matching pairs, computes raw agreement and Cohen's kappa via `sklearn.metrics.cohen_kappa_score`, exports `disagreements.csv` with context and notes, and verifies the >= 0.6 kappa target.
+   - Implemented `merge_annotations()`: validates `final_label` across all pairs, re-links PubMedQA metadata (`condition`, `source_doc_id`), writes validated `Pair` records to `data/exp2_rag/labeled.jsonl` and `data/exp2_rag/pairs.jsonl` (Rule R5.6), reports class balance by condition, and checks Gate G2 (>= 25% Hallucinated).
+3. **Comprehensive Unit Testing (`tests/test_annotation.py`)**:
+   - Implemented 5 unit tests covering label normalization, blind export, Cohen's kappa calculation, schema-validated merge, and Gate G2 warning.
+   - Full test suite expanded to 112 tests (100% passing, `ruff check .` with 0 errors).
+4. **Experiment 2 Annotation Files Exported**:
+   - Executed `python -m src.annotation export --config configs/config.yaml`.
+   - Exported all 200 pairs into `data/exp2_rag/annotation/annotator_1.csv` and `data/exp2_rag/annotation/annotator_2.csv`.
+5. **Living Documentation Synchronized**:
+   - Updated `Phase.md` (Session 7 log, status, Phase 6 snapshot row), `Architecture.md` (Change log), `src/README.md`, and `tests/README.md`.
+   - Verified strict documentation build via `mkdocs build --strict`.
 
 ---
 
-## Key Technical Findings & Critical Blocker
+## Immediate Next Tasks (Phase 6 Human Labeling & Gate G2)
 
-- **Filter A Free-Tier Quota Constraint (Rule R8.1 & Risk Register)**:
-  - During test scoring, Google AI Studio returned `429 RESOURCE_EXHAUSTED` with violation:
-    `quotaId: GenerateRequestsPerDayPerProjectPerModel-FreeTier`, `quotaValue: 20` for `gemini-3.6-flash`.
-  - On Google AI Studio's Free Tier, `gemini-3.6-flash` is strictly capped at **20 requests per day**. Evaluating 400 test pairs would require 20 days on this free tier.
-  - Per Rule R8.1 ("MUST stop and ask when a rule blocks progress, instead of working around it") and the Risk Register ("Model ID deprecated mid-study | Any | Stop, report, researchers decide; never auto-switch"), this is flagged for researcher decision.
-- **Researcher Options for Filter A**:
-  - **Option 1 (Recommended)**: Enable Google AI Studio Pay-as-you-go (Tier 1) on the project. This lifts the rate limit to 1,000 RPM. For 400 test pairs, the total cost will be approximately **$0.17** (17 cents) and will complete in ~3 minutes.
-  - **Option 2**: Switch the judge model to an active production model with standard free-tier quotas (e.g., `gemini-3.8-flash` which has a 5 RPM free tier, or `gemini-3.5-flash-lite`), update `configs/config.yaml`, and re-freeze prompts if necessary.
-
----
-
-## Immediate Next Tasks
-
-1. **Researcher Decision on Filter A Quota**:
-   - Choose Option 1 (enable AI Studio billing) or Option 2 (approve model ID switch).
-   - Once resolved, run `python -m src.run_verifiers --split test --verifier filter_a` to complete the Filter A test evaluation.
-2. **Phase 6: Two-Annotator Blind Labeling Preparation**:
-   - Implement `src/annotation.py export` to generate blind annotation CSVs (`annotator_1.csv`, `annotator_2.csv`) and `annotation_guide.md` from the 200 RAG answers.
+1. **Independent Human Labeling (Rule R1.5, R1.6)**:
+   - Researcher 1 (Muhammad Saad) labels `data/exp2_rag/annotation/annotator_1.csv`.
+   - Researcher 2 (Rabia Qaiser) labels `data/exp2_rag/annotation/annotator_2.csv`.
+   - Both annotators refer to `data/exp2_rag/annotation/annotation_guide.md` for definitions and examples.
+   - Do not share or view each other's labels until all 200 rows are complete.
+2. **Compute Inter-Annotator Agreement**:
+   - Run `python -m src.annotation kappa` to compute Cohen's kappa and generate `data/exp2_rag/annotation/disagreements.csv`.
+3. **Resolve Disagreements (Gate G2)**:
+   - Researchers discuss disagreements in `disagreements.csv` and fill `final_label` in `data/exp2_rag/labeled.csv`.
+4. **Merge Ground Truth Dataset**:
+   - Run `python -m src.annotation merge --config configs/config.yaml` to create `data/exp2_rag/pairs.jsonl`.
+   - Check Gate G2 condition class balance (>= 25% Hallucinated).
 
 ---
 *Research prototype. Not for clinical use.*

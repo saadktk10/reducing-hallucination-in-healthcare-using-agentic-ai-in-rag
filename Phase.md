@@ -4,9 +4,9 @@ Detailed implementation plan over 10 weeks. Each phase lists goal, owner, tasks,
 
 **Owners.** R1 = researcher leading Experiment 1. R2 = researcher leading Experiment 2. Both = both researchers. Agent = Antigravity.
 
-*Last updated: 2026-09-20, session 6. Updated at the end of every session (Rules section 9).*
+*Last updated: 2026-09-20, session 7. Updated at the end of every session (Rules section 9).*
 
-**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & ROUGE test evaluations done, laptop CPU timing benchmarks done, shadow cost computed; Filter A 20 RPD free quota flagged).
+**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & ROUGE test evaluations done, laptop CPU timing benchmarks done, shadow cost computed; Filter A deferred per researcher decision), Phase 6 🟡 Partial (Annotation tooling implemented; 200 pairs exported to template.csv, annotator_1.csv, annotator_2.csv, and annotation_guide.md; awaiting human labeling).
 
 ## Snapshot
 
@@ -20,8 +20,8 @@ Status legend: ✅ done · 🟡 partial · 🔲 planned · 🔴 open defect · �
 | 2 | Experiment 1 pairs and splits | ✅ Done (2026-09-19). Canonical 250 questions / 500 pairs generated (100 dev / 400 test), zero question overlap, exact 50/50 balance. |
 | 3 | Verifiers and dev tuning | ✅ Done (2026-09-19). Verifiers implemented (baseline_rouge, filter_b, filter_a). Tested on dev. Thresholds frozen in results/thresholds.json (Filter B F1=0.67, ROUGE-L F1=0.67). Prompts frozen in FROZEN.json. 105 tests passing. |
 | 4 | Experiment 2 index and generation | ✅ Done (2026-09-20). 1,790 chunks, FAISS index built on CPU (451.8 MB peak RAM), 100% normal retrieval hit rate. 200 answers (100 normal, 100 degraded) generated via Groq qwen/qwen3.8-27b at temp 0 with zero leakage vs Exp 1. |
-| 5 | Experiment 1 test runs and timing | 🟡 Partial (2026-09-20). ROUGE-L & Filter B scored 400 test pairs (F1=0.6667 each, results/exp1/20260919-2151-bd5e507/metrics.json). Laptop timing done (Filter B pooled p50=332.1 ms, ROUGE p50=2.5 ms). Shadow cost $0.0575/1k. Filter A 20 RPD free quota flagged. |
-| 6 | Two-annotator labeling (Gate G2) | 🔲 Planned |
+| 5 | Experiment 1 test runs and timing | 🟡 Partial (2026-09-20). ROUGE-L & Filter B scored 400 test pairs (F1=0.6667 each, results/exp1/20260919-2151-bd5e507/metrics.json). Laptop timing done (Filter B pooled p50=332.1 ms, ROUGE p50=2.5 ms). Shadow cost $0.0575/1k. Filter A deferred per researcher decision. |
+| 6 | Two-annotator labeling (Gate G2) | 🟡 Partial (2026-09-20). src/annotation.py implemented (export, kappa, merge). 200 pairs exported to template.csv, annotator_1.csv, annotator_2.csv, and annotation_guide.md. Awaiting human labeling (Gate G2). |
 | 7 | Verifiers on the RAG set | 🔲 Planned |
 | 8 | Metrics and statistics | 🔲 Planned |
 | 9 | Cross-experiment and additional analyses | 🔲 Planned |
@@ -502,6 +502,14 @@ A session that skips this leaves the site wrong, which is worse than no site. If
 ## Session Log
 
 Newest first. One entry per session, format in Rules 9.3. Never delete entries (Rules R9.9).
+
+### 2026-09-20, session 7 (Agent)
+- Phases touched: P5 (🟡 -> 🟡), P6 (🔲 -> 🟡)
+- Done: Consulted researcher on Filter A quota blocker; decision confirmed to defer Filter A and proceed to Phase 6. Implemented full Phase 6 annotation tooling (`src/annotation.py` with `export`, `kappa`, and `merge` CLI subcommands). Created `tests/test_annotation.py` covering label normalization, blind export, Cohen's kappa, and Pair record merge (112 tests passing, ruff 0 errors). Exported 200 pairs to `template.csv`, `annotator_1.csv`, `annotator_2.csv`, and `annotation_guide.md` with empty label columns and shuffled order.
+- Numbers produced: none (annotation labels pending human labeling by researchers)
+- Docs changed: Phase.md, src/README.md, tests/README.md, handover.md
+- Open / blocked: Gate G2 human annotation of `annotator_1.csv` and `annotator_2.csv` (200 pairs, Rule R1.5, R1.6). Filter A test run deferred.
+- Next session: Independent human labeling of annotator_1.csv and annotator_2.csv → run `annotation.py kappa` → resolve disagreements → run `annotation.py merge`.
 
 ### 2026-09-20, session 6 (Agent)
 - Phases touched: P5 (🔲 -> 🟡)

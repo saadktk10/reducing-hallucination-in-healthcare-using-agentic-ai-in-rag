@@ -21,6 +21,7 @@ This directory contains automated unit, integration, and regression tests execut
 | `test_metrics.py` | `src/evaluation/metrics.py` | Hand-computed metric tests (Precision, Recall, F1, FNR, FPR, AUROC, shadow cost) (Phase 8). |
 | `test_stats.py` | `src/evaluation/stats.py` | McNemar test matrix calculations, bootstrap confidence intervals, and Cohen's kappa (Phase 8). |
 | `test_timing.py` | `src/timing.py` | Standardized timing benchmark protocol, warm-up discard, repeat passes, cache hit assertions (Phase 5b). |
+| `test_annotation.py` | `src/annotation.py` | Phase 6 annotation tooling: sheet export, Cohen's kappa calculation, merge to Pair records, Gate G2 checks. |
 | `test_leakage.py` | `src/build_index.py`, `src/generate_rag.py` | Assert zero question ID overlap between Experiment 1 and Experiment 2 (Phase 4). |
 
 ## Running Tests
