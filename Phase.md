@@ -503,21 +503,21 @@ A session that skips this leaves the site wrong, which is worse than no site. If
 
 Newest first. One entry per session, format in Rules 9.3. Never delete entries (Rules R9.9).
 
+### 2026-09-19, session 2 (Agent)
+- Phases touched: P1 (🔲 -> 🟡)
+- Done: Implemented pilot_checks.py (4 CLI steps), 17 new unit tests (70 total). Downloaded MedHallu (1000 rows, 6 columns confirmed). Exported spotcheck_50.csv. Computed ROUGE-L AUROC on 100 provisional dev pairs. Updated site_export.py for pilot metrics. Knowledge column is List[str] — handled with join. Configured and validated GEMINI_API_KEY, GROQ_API_KEY, and HF_TOKEN.
+- Numbers produced: pilot.rouge_auroc = 0.4894 (precision), 0.7052 (recall), 0.7130 (fmeasure) (n=100, data/pilot/rouge_results.json)
+- Docs changed: Phase.md, configs/config.yaml (added pilot section), src/common/config.py (PilotConfig)
+- Open / blocked: Human spot-check annotation of spotcheck_50.csv needed before --step report can run (Rule R1.5). HF revision needs pinning (currently at HEAD, commit 515060458a).
+- Next session: Researchers fill spotcheck_50.csv → run --step report → Gate G1 decision → Phase 2
+
 ### 2026-09-18, session 1 (Agent)
 - Phases touched: P0 (🔲 -> ✅), P0b (🔲 -> ✅)
 - Done: Python 3.12 venv, CPU PyTorch 2.2, src/common/ utilities, 53 unit tests passing. MkDocs documentation site with 4 hooks, strict build verified, CI workflows (pages.yml, ci.yml).
 - Numbers produced: none (all 14 tiles pending as expected)
 - Docs changed: Phase.md, mkdocs.yml, requirements-docs.txt, .github/workflows/*.yml, docs/**
 - Open / blocked: API keys for Gemini and Groq in .env to perform smoke tests (researchers)
-- Next session: Phase 1 completion (humans fill spotcheck_50.csv, then --step report for Gate G1)
-
-### 2026-09-19, session 2 (Agent)
-- Phases touched: P1 (🔲 -> 🟡)
-- Done: Implemented pilot_checks.py (4 CLI steps), 17 new unit tests (70 total). Downloaded MedHallu (1000 rows, 6 columns confirmed). Exported spotcheck_50.csv. Computed ROUGE-L AUROC on 100 provisional dev pairs. Updated site_export.py for pilot metrics. Knowledge column is List[str] — handled with join.
-- Numbers produced: pilot.rouge_auroc = 0.4894 (precision), 0.7052 (recall), 0.7130 (fmeasure) (n=100, data/pilot/rouge_results.json)
-- Docs changed: Phase.md, configs/config.yaml (added pilot section), src/common/config.py (PilotConfig)
-- Open / blocked: Human spot-check annotation of spotcheck_50.csv needed before --step report can run (Rule R1.5). HF revision needs pinning (currently at HEAD, commit 515060458a).
-- Next session: Researchers fill spotcheck_50.csv → run --step report → Gate G1 decision → Phase 2
+- Next session: Phase 1 (Pilot checks on MedHallu sample)
 
 ### YYYY-MM-DD, session 0 (setup)
 - Phases touched: none

@@ -120,9 +120,9 @@ def _get_latest_session(phase_md_path: str = "Phase.md") -> str:
     if not entries:
         return "*No session log entries yet.*"
 
-    # Return the last entry block
-    blocks = re.split(r"\n(?=###\s)", entries)
-    return blocks[-1].strip() if blocks else entries[:500]
+    # Return the latest entry block (newest first in Phase.md)
+    blocks = [b.strip() for b in re.split(r"\n(?=###\s)", entries) if b.strip().startswith("###")]
+    return blocks[0] if blocks else entries[:500]
 
 
 def on_page_markdown(markdown, page, config, files, **kwargs):
