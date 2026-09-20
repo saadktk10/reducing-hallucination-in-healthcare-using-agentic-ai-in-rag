@@ -6,6 +6,10 @@
       "precision": 0.5013,
       "recall": 0.995,
       "f1": 0.6667,
+      "f1_ci": [
+        0.6633,
+        0.67
+      ],
       "fnr": 0.005,
       "fpr": 0.99,
       "auroc": 0.4058
@@ -16,6 +20,10 @@
       "precision": 0.5,
       "recall": 1.0,
       "f1": 0.6667,
+      "f1_ci": [
+        0.6667,
+        0.6667
+      ],
       "fnr": 0.0,
       "fpr": 1.0,
       "auroc": 0.5492
@@ -36,5 +44,33 @@
     "value": 332.06,
     "display": "332.1 ms",
     "source": "results/exp1/20260919-2151-bd5e507/timing_filter_b.json"
+  },
+  "exp1.filter_b.f1": {
+    "value": 0.6667,
+    "display": "0.6667 [0.6667, 0.6667]",
+    "ci": [
+      0.6667,
+      0.6667
+    ],
+    "source": "results/exp1/20260919-2151-bd5e507/metrics.json"
+  },
+  "exp1.filter_b.fnr": {
+    "value": 0.0,
+    "display": "0.0000",
+    "source": "results/exp1/20260919-2151-bd5e507/metrics.json"
+  },
+  "exp1.rouge.f1": {
+    "value": 0.6667,
+    "display": "0.6667 [0.6633, 0.6700]",
+    "ci": [
+      0.6633,
+      0.67
+    ],
+    "source": "results/exp1/20260919-2151-bd5e507/metrics.json"
+  },
+  "exp1.rouge.fnr": {
+    "value": 0.005,
+    "display": "0.0050",
+    "source": "results/exp1/20260919-2151-bd5e507/metrics.json"
   }
 }

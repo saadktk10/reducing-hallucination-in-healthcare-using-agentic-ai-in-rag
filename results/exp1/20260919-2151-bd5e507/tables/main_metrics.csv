@@ -1,0 +1,3 @@
+verifier,n,parse_failures,precision,recall,f1,f1_ci_lower,f1_ci_upper,fnr,fpr,auroc
+filter_b,400,0,0.5,1.0,0.6667,0.6667,0.6667,0.0,1.0,0.5492
+rouge,400,0,0.5013,0.995,0.6667,0.6633,0.67,0.005,0.99,0.4058

@@ -17,9 +17,9 @@ src/
 ├── run_verifiers.py     # Main verification execution loop (Phases 3, 5, 7) ← implemented
 ├── timing.py            # Latency measurement protocol (Phase 5) ← implemented
 ├── tune_thresholds.py   # Dev-only threshold optimization (Phase 3) ← implemented
-├── evaluate.py          # Per-experiment tables and breakdowns (Phase 8)
-├── cross_experiment.py  # Cross-experiment ranking check (Phase 9)
-├── figures.py           # Paper figures generation (Phase 10)
+├── evaluate.py          # Per-experiment tables, bootstrap CIs, McNemar, and breakdowns (Phase 8) ← implemented
+├── cross_experiment.py  # Cross-experiment ranking check, threshold transfer, and qualitative review (Phase 9) ← implemented
+├── figures.py           # Publication figures generation in PNG/PDF (Phase 10) ← implemented
 └── site_export.py       # Exporter collecting metrics into results/site/numbers_of_record.json ← implemented
 ```
 

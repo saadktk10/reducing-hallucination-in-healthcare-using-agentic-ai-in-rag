@@ -4,9 +4,9 @@ Detailed implementation plan over 10 weeks. Each phase lists goal, owner, tasks,
 
 **Owners.** R1 = researcher leading Experiment 1. R2 = researcher leading Experiment 2. Both = both researchers. Agent = Antigravity.
 
-*Last updated: 2026-09-20, session 7. Updated at the end of every session (Rules section 9).*
+*Last updated: 2026-09-20, session 8. Updated at the end of every session (Rules section 9).*
 
-**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & ROUGE test evaluations done, laptop CPU timing benchmarks done, shadow cost computed; Filter A deferred per researcher decision), Phase 6 🟡 Partial (Annotation tooling implemented; 200 pairs exported to template.csv, annotator_1.csv, annotator_2.csv, and annotation_guide.md; awaiting human labeling).
+**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & ROUGE test evaluations done, laptop CPU timing benchmarks done, shadow cost computed; Filter A deferred per researcher decision), Phase 6 🟡 Partial (Clean RFC 4180 annotation CSVs validated for 200 pairs; awaiting human labeling for Gate G2), Phase 7 🔲 Planned, Phase 8 🟡 Partial (Exp 1 evaluated: main tables, question bootstrap CIs, McNemar, breakdowns, summary.md; site tiles live), Phase 9 🟡 Partial (cross_experiment.py implemented, Exp 1 ranking and qualitative disagreements exported), Phase 10 🟡 Partial (figures.py implemented, all 6 publication figures generated in 300 dpi PNG & vector PDF), Phase 11 🔲 Planned.
 
 ## Snapshot
 
@@ -21,11 +21,11 @@ Status legend: ✅ done · 🟡 partial · 🔲 planned · 🔴 open defect · �
 | 3 | Verifiers and dev tuning | ✅ Done (2026-09-19). Verifiers implemented (baseline_rouge, filter_b, filter_a). Tested on dev. Thresholds frozen in results/thresholds.json (Filter B F1=0.67, ROUGE-L F1=0.67). Prompts frozen in FROZEN.json. 105 tests passing. |
 | 4 | Experiment 2 index and generation | ✅ Done (2026-09-20). 1,790 chunks, FAISS index built on CPU (451.8 MB peak RAM), 100% normal retrieval hit rate. 200 answers (100 normal, 100 degraded) generated via Groq qwen/qwen3.8-27b at temp 0 with zero leakage vs Exp 1. |
 | 5 | Experiment 1 test runs and timing | 🟡 Partial (2026-09-20). ROUGE-L & Filter B scored 400 test pairs (F1=0.6667 each, results/exp1/20260919-2151-bd5e507/metrics.json). Laptop timing done (Filter B pooled p50=332.1 ms, ROUGE p50=2.5 ms). Shadow cost $0.0575/1k. Filter A deferred per researcher decision. |
-| 6 | Two-annotator labeling (Gate G2) | 🟡 Partial (2026-09-20). src/annotation.py implemented (export, kappa, merge). 200 pairs exported to template.csv, annotator_1.csv, annotator_2.csv, and annotation_guide.md. Awaiting human labeling (Gate G2). |
+| 6 | Two-annotator labeling (Gate G2) | 🟡 Partial (2026-09-20). src/annotation.py implemented and verified; clean RFC 4180 CSVs exported (annotator_1.csv, annotator_2.csv, template.csv, annotation_guide.md); awaiting independent human labeling (Gate G2). |
 | 7 | Verifiers on the RAG set | 🔲 Planned |
-| 8 | Metrics and statistics | 🔲 Planned |
-| 9 | Cross-experiment and additional analyses | 🔲 Planned |
-| 10 | Figures, write-up digests, manuscript pages | 🔲 Planned |
+| 8 | Metrics and statistics | 🟡 Partial (2026-09-20). src/evaluate.py implemented. Exp 1 evaluated on 400 test pairs: main tables, question bootstrap CIs (Filter B F1=0.6667, ROUGE F1=0.6667), McNemar p=1.0, breakdowns, summary.md. Site tiles live. |
+| 9 | Cross-experiment and additional analyses | 🟡 Partial (2026-09-20). src/cross_experiment.py implemented. Exp 1 ranking and 3 qualitative disagreements exported; Exp 2 threshold transfer pending Gate G2. |
+| 10 | Figures, write-up digests, manuscript pages | 🟡 Partial (2026-09-20). src/figures.py implemented; all 6 paper figures generated in 300 dpi PNG & vector PDF (results/figures/). |
 | 11 | Revision and release | 🔲 Planned |
 | S | Session close and site sync (every session) | 🟡 Ongoing |
 
@@ -502,6 +502,14 @@ A session that skips this leaves the site wrong, which is worse than no site. If
 ## Session Log
 
 Newest first. One entry per session, format in Rules 9.3. Never delete entries (Rules R9.9).
+
+### 2026-09-20, session 8 (Agent)
+- Phases touched: P6 (🟡 -> 🟡), P8 (🔲 -> 🟡), P9 (🔲 -> 🟡), P10 (🔲 -> 🟡)
+- Done: Diagnosed and resolved Windows MAX_PATH 260-char limitation by linking `.venv` to short-path virtualenv junction (`C:\Users\muham\.rag_env`). Re-exported and validated clean RFC 4180 annotation CSVs (`annotator_1.csv`, `annotator_2.csv`, `template.csv`, `annotation_guide.md`). Implemented Phase 8 evaluation runner (`src/evaluate.py`), producing main tables, question-level bootstrap 95% CIs, McNemar test, breakdowns, and `summary.md`. Implemented Phase 9 cross-experiment module (`src/cross_experiment.py`) with ranking check, threshold transfer, and qualitative disagreement export. Implemented Phase 10 publication figures generator (`src/figures.py`), generating all 6 figures in 300 dpi PNG & vector PDF using Okabe-Ito palette. Added 10 new tests (`test_evaluate.py`, `test_cross_experiment.py`, `test_figures.py`), expanding suite to 122 tests (100% passing, 0 ruff errors). Exported live metrics to site numbers of record.
+- Numbers produced: exp1.filter_b.f1 = 0.6667 [0.6667, 0.6667] (n=400, results/exp1/20260919-2151-bd5e507/metrics.json), exp1.rouge.f1 = 0.6667 [0.6633, 0.6700] (n=400, results/exp1/20260919-2151-bd5e507/metrics.json), exp1.filter_b.fnr = 0.0000 (results/exp1/20260919-2151-bd5e507/metrics.json), exp1.mcnemar.p = 1.000000 (results/exp1/20260919-2151-bd5e507/tables/mcnemar.csv)
+- Docs changed: Phase.md, Architecture.md, src/README.md, tests/README.md, results/README.md, handover.md
+- Open / blocked: Gate G2 independent human labeling of `annotator_1.csv` and `annotator_2.csv` (200 pairs, Rule R1.5, R1.6).
+- Next session: Independent human labeling of annotator_1.csv and annotator_2.csv → run `python -m src.annotation kappa` → resolve disagreements in `disagreements.csv` → run `python -m src.annotation merge` → execute Phase 7 (`run_verifiers --split rag`).
 
 ### 2026-09-20, session 7 (Agent)
 - Phases touched: P5 (🟡 -> 🟡), P6 (🔲 -> 🟡)

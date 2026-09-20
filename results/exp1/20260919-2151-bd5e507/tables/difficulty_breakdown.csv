@@ -1,0 +1,7 @@
+difficulty,verifier,n,precision,recall,f1,fnr,fpr
+easy,filter_b,108,0.5,1.0,0.6667,0.0,1.0
+easy,rouge,108,0.5,1.0,0.6667,0.0,1.0
+hard,filter_b,160,0.5,1.0,0.6667,0.0,1.0
+hard,rouge,160,0.5032,0.9875,0.6667,0.0125,0.975
+medium,filter_b,132,0.5,1.0,0.6667,0.0,1.0
+medium,rouge,132,0.5,1.0,0.6667,0.0,1.0

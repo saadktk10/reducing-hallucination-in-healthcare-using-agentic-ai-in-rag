@@ -1,0 +1,2 @@
+comparison,n_compared,both_correct,filter_b_only,rouge_only,both_incorrect,statistic,pvalue
+filter_b_vs_rouge,400,199,1,2,198,1.0,1.0

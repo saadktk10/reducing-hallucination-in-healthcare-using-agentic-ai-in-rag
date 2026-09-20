@@ -2,7 +2,7 @@
 
 System architecture for the hallucination verifier study. Diagrams use Mermaid (renders in GitHub, VS Code, Antigravity, and the project website).
 
-*Last updated: 2026-09-19, session 4. This file is updated in every session that changes structure (Rules R9.3). See the Change log at the end.*
+*Last updated: 2026-09-20, session 8. This file is updated in every session that changes structure (Rules R9.3). See the Change log at the end.*
 
 ## 1. System Overview
 
@@ -479,3 +479,4 @@ Append one line per structural change. Never delete lines (Rules R9.9).
 | 2026-09-20 | 5 | Implemented and executed full generate_rag.py pipeline (200 answers generated via Groq qwen/qwen3.8-27b at temp 0). Fixed character encoding (utf-8) in io.py, build_index.py, build_exp1_pairs.py, prompts.py, config.py. Verified zero data leakage (test_leakage.py) and completed Phase 4. |
 | 2026-09-20 | 6 | Implemented timing protocol in src/timing.py and tests/test_timing.py. Added PricingConfig to src/common/config.py and updated configs/pricing.yaml. Executed Phase 5 test evaluations for ROUGE-L and Filter B across 400 test pairs. Executed laptop CPU timing benchmarks for ROUGE-L and Filter B. Exported timing.filter_b.median_ms (332.1 ms) and cost.filter_a.per_1k_usd ($0.0575) to site numbers of record. |
 | 2026-09-20 | 7 | Implemented Phase 6 human annotation tooling in src/annotation.py (export, kappa, merge) and tests/test_annotation.py. Exported 200 Experiment 2 pairs to template.csv, annotator_1.csv, annotator_2.csv, and annotation_guide.md. Total test suite expanded to 112 tests (100% passing). |
+| 2026-09-20 | 8 | Resolved Windows MAX_PATH limitation via short-path virtualenv junction (.rag_env -> .venv). Re-exported and validated RFC 4180 annotation CSVs (annotator_1.csv, annotator_2.csv). Implemented Phase 8 evaluate.py (main tables, question-level bootstrap CIs, McNemar, breakdowns, summary.md), Phase 9 cross_experiment.py, and Phase 10 figures.py (all 6 publication figures generated in 300 dpi PNG & vector PDF). Added test_evaluate.py, test_cross_experiment.py, test_figures.py (122 tests passing, ruff 0 errors). Exported exp1 metrics to site numbers of record. |

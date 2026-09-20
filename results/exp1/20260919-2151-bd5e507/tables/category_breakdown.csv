@@ -1,0 +1,9 @@
+category,verifier,n,precision,recall,f1,fnr,fpr
+Incomplete Information,filter_b,68,0.5,1.0,0.6667,0.0,1.0
+Incomplete Information,rouge,68,0.5075,1.0,0.6733,0.0,0.9706
+Mechanism and Pathway Misattribution,filter_b,6,0.5,1.0,0.6667,0.0,1.0
+Mechanism and Pathway Misattribution,rouge,6,0.5,1.0,0.6667,0.0,1.0
+Methodological and Evidence Fabrication,filter_b,2,0.5,1.0,0.6667,0.0,1.0
+Methodological and Evidence Fabrication,rouge,2,0.5,1.0,0.6667,0.0,1.0
+Misinterpretation of #Question#,filter_b,324,0.5,1.0,0.6667,0.0,1.0
+Misinterpretation of #Question#,rouge,324,0.5,0.9938,0.6653,0.0062,0.9938

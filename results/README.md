@@ -19,6 +19,8 @@ results/
 │       └── tables/               # Formatted markdown/CSV tables of record
 ├── exp2/
 │   └── <run_id>/                 # Phase 7 & 8 real RAG generation evaluations
+├── cross/
+│   └── <run_id>/                 # Phase 9 cross-experiment ranking, threshold transfer, and qualitative review
 └── site/
     ├── numbers_of_record.json    # Published metrics consumed by website tiles
     └── README.md                 # Schema documentation
