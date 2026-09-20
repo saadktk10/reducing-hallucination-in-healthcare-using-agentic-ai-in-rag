@@ -26,6 +26,7 @@ This directory contains automated unit, integration, and regression tests execut
 | `test_cross_experiment.py` | `src/cross_experiment.py` | Ranking agreement check, threshold transfer gap calculation, qualitative disagreement export (Phase 9). |
 | `test_figures.py` | `src/figures.py` | Publication figures generation (PNG/PDF, 300 dpi, Okabe-Ito palette) (Phase 10). |
 | `test_leakage.py` | `src/build_index.py`, `src/generate_rag.py` | Assert zero question ID overlap between Experiment 1 and Experiment 2 (Phase 4). |
+| `test_architecture_drawio.py` | `scripts/generate_architecture_drawio.py` | Assert XML syntax, dark mode `#0D0D0D`, all 7 architecture layers, model badges, and dotted boxes. |
 
 ## Running Tests
 

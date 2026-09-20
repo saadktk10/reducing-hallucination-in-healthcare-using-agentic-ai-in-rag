@@ -2,7 +2,7 @@
 
 System architecture for the hallucination verifier study. Diagrams use Mermaid (renders in GitHub, VS Code, Antigravity, and the project website), and a comprehensive editable draw.io specification is maintained at [`assets/architecture.drawio`](assets/architecture.drawio) (with an identical mirror file at `architecture.drawio` in the repository root).
 
-*Last updated: 2026-09-20, session 9. This file is updated in every session that changes structure (Rules R9.3). See the Change log at the end.*
+*Last updated: 2026-09-21, session 9. This file is updated in every session that changes structure (Rules R9.3). See the Change log at the end.*
 
 ## 1. System Overview
 

@@ -61,6 +61,7 @@ Each results folder includes a `run_manifest.json` linking to the exact config, 
 ## Project Structure
 
 See `Architecture.md` for the full module dependency graph and directory layout.
+An editable, full-system architecture diagram is provided in `architecture.drawio` (and mirrored in `docs/assets/architecture.drawio` for documentation rendering).
 
 ## License
 

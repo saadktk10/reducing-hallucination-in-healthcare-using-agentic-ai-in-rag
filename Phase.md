@@ -4,7 +4,7 @@ Detailed implementation plan over 10 weeks. Each phase lists goal, owner, tasks,
 
 **Owners.** R1 = researcher leading Experiment 1. R2 = researcher leading Experiment 2. Both = both researchers. Agent = Antigravity.
 
-*Last updated: 2026-09-20, session 9. Updated at the end of every session (Rules section 9).*
+*Last updated: 2026-09-21, session 9. Updated at the end of every session (Rules section 9).*
 
 **Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & ROUGE test evaluations done, laptop CPU timing benchmarks done, shadow cost computed; Filter A deferred per researcher decision), Phase 6 🟡 Partial (Clean RFC 4180 annotation CSVs validated for 200 pairs; awaiting human labeling for Gate G2), Phase 7 🔲 Planned, Phase 8 🟡 Partial (Exp 1 evaluated: main tables, question bootstrap CIs, McNemar, breakdowns, summary.md; site tiles live), Phase 9 🟡 Partial (cross_experiment.py implemented, Exp 1 ranking and qualitative disagreements exported), Phase 10 🟡 Partial (figures.py implemented, all 6 publication figures generated in 300 dpi PNG & vector PDF), Phase 11 🔲 Planned.
 
