@@ -4,7 +4,7 @@ Detailed implementation plan over 10 weeks. Each phase lists goal, owner, tasks,
 
 **Owners.** R1 = researcher leading Experiment 1. R2 = researcher leading Experiment 2. Both = both researchers. Agent = Antigravity.
 
-*Last updated: 2026-09-20, session 8. Updated at the end of every session (Rules section 9).*
+*Last updated: 2026-09-20, session 9. Updated at the end of every session (Rules section 9).*
 
 **Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & ROUGE test evaluations done, laptop CPU timing benchmarks done, shadow cost computed; Filter A deferred per researcher decision), Phase 6 🟡 Partial (Clean RFC 4180 annotation CSVs validated for 200 pairs; awaiting human labeling for Gate G2), Phase 7 🔲 Planned, Phase 8 🟡 Partial (Exp 1 evaluated: main tables, question bootstrap CIs, McNemar, breakdowns, summary.md; site tiles live), Phase 9 🟡 Partial (cross_experiment.py implemented, Exp 1 ranking and qualitative disagreements exported), Phase 10 🟡 Partial (figures.py implemented, all 6 publication figures generated in 300 dpi PNG & vector PDF), Phase 11 🔲 Planned.
 
@@ -502,6 +502,14 @@ A session that skips this leaves the site wrong, which is worse than no site. If
 ## Session Log
 
 Newest first. One entry per session, format in Rules 9.3. Never delete entries (Rules R9.9).
+
+### 2026-09-20, session 9 (Agent)
+- Phases touched: P0b (✅), P10 (🟡)
+- Done: Generated comprehensive end-to-end architecture diagram in draw.io XML format (`docs/assets/architecture.drawio` and root `architecture.drawio`). Designed 5-layer horizontal architecture (Data Sources, Exp 1 & Exp 2 RAG Prep, Verification Layer, Evaluation & Profiling, Presentation & Web) with distinct color coding, explicit tool/model badges (Groq `qwen/qwen3.8-27b`, Gemini `gemini-3.6-flash`, Local CPU `nli-deberta-v3-small`, `bge-small-en-v1.5`, `faiss-cpu`, `rouge-score`, `pysbd`), and dotted boxes for planned components (Gate G2, Phase 7, Phase 8 Exp 2 eval, Phase 9 domain shift, Phase 10 manuscript, Phase 11 release). Implemented generator script (`scripts/generate_architecture_drawio.py`) and 5 new unit tests (`tests/test_architecture_drawio.py`). Total test suite expanded to 127 tests (100% passing, 0 ruff errors, strict mkdocs build passing in 1.1s).
+- Numbers produced: none (diagram and architecture documentation update)
+- Docs changed: Architecture.md, Phase.md, docs/assets/architecture.drawio, architecture.drawio, handover.md
+- Open / blocked: Gate G2 independent human labeling of `annotator_1.csv` and `annotator_2.csv` (200 pairs, Rule R1.5, R1.6).
+- Next session: Independent human labeling of annotator_1.csv and annotator_2.csv → run `python -m src.annotation kappa` → resolve disagreements in `disagreements.csv` → run `python -m src.annotation merge` → execute Phase 7 (`run_verifiers --split rag`).
 
 ### 2026-09-20, session 8 (Agent)
 - Phases touched: P6 (🟡 -> 🟡), P8 (🔲 -> 🟡), P9 (🔲 -> 🟡), P10 (🔲 -> 🟡)
