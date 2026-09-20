@@ -1,276 +1,494 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mxfile host="app.diagrams.net" modified="2026-09-20T17:45:00.000Z" agent="Antigravity/2.0" version="24.0.0" type="device">
-  <diagram id="hallucination-verifier-architecture" name="System Architecture (End-to-End)">
-    <mxGraphModel dx="2600" dy="1600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2600" pageHeight="1480" background="#F8FAFC" math="0" shadow="0">
+<mxfile host="app.diagrams.net" agent="Healthcare-RAG-Architecture">
+  <diagram name="Healthcare RAG &amp; Verifier Architecture v3" id="healthcare-rag-v3">
+    <mxGraphModel dx="1200" dy="700" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2100" pageHeight="1200" background="#0D0D0D" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="HEADER" value="&lt;div style=&quot;font-size: 18px; font-weight: bold; color: #0F172A; line-height: 1.3;&quot;&gt;System Architecture: Reducing Hallucination in Healthcare via Agentic AI &amp;amp; Verification&lt;/div&gt;&lt;div style=&quot;font-size: 12px; color: #475569; margin-top: 4px;&quot;&gt;A Comparative Evaluation of LLM-as-Judge (Gemini Flash) vs Local NLI (DeBERTa-v3) &amp;amp; Lexical Baselines across Synthetic Benchmark (Exp 1) &amp;amp; Realistic Healthcare RAG (Exp 2)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.5;align=left;spacingLeft=25;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="40" y="20" width="1600" height="75" as="geometry" />
+        <mxCell id="title" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=20;fontColor=#FFFFFF;fontStyle=1" value="Healthcare RAG &amp; Verifier Architecture — Mitigating Hallucination via Agentic Verification" vertex="1">
+          <mxGeometry height="30" width="1300" x="140" y="24" as="geometry" />
         </mxCell>
-        <mxCell id="LEGEND" value="&lt;div style=&quot;font-size: 11px; font-weight: bold; color: #1E293B; margin-bottom: 2px;&quot;&gt;ARCHITECTURE LEGEND&lt;/div&gt;&lt;div style=&quot;display: flex; gap: 12px; font-size: 10px;&quot;&gt;&lt;span style=&quot;display: inline-block; padding: 2px 6px; background: #ECFDF5; border: 1.5px solid #10B981; border-radius: 4px; color: #065F46; font-weight: 600;&quot;&gt;■ Solid: Built / Active&lt;/span&gt; &lt;span style=&quot;display: inline-block; padding: 2px 6px; background: #FEF2F2; border: 1.5px dashed #EF4444; border-radius: 4px; color: #991B1B; font-weight: 600;&quot;&gt;- - Dotted: Planned / Later Phase&lt;/span&gt; &lt;span style=&quot;display: inline-block; padding: 2px 6px; background: #FFF7ED; border: 1px solid #EA580C; border-radius: 4px; color: #C2410C;&quot;&gt;⚡ Groq API&lt;/span&gt; &lt;span style=&quot;display: inline-block; padding: 2px 6px; background: #EFF6FF; border: 1px solid #2563EB; border-radius: 4px; color: #1D4ED8;&quot;&gt;☁ Gemini API&lt;/span&gt; &lt;span style=&quot;display: inline-block; padding: 2px 6px; background: #F3E8FF; border: 1px solid #9333EA; border-radius: 4px; color: #6B21A8;&quot;&gt;💻 Local CPU&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.5;align=left;spacingLeft=15;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="1660" y="20" width="880" height="75" as="geometry" />
+        <mxCell id="legend" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#BBBBBB" value="Solid boxes = built &amp; validated  ·  Dotted boxes = planned / next phase  ·  ⚡ Groq API (qwen/qwen3.8-27b)  ·  ☁ Gemini API (gemini-3.6-flash)  ·  💻 Local CPU (DeBERTa-v3, BGE, FAISS, ROUGE)" vertex="1">
+          <mxGeometry height="20" width="1500" x="140" y="56" as="geometry" />
         </mxCell>
-        <mxCell id="L1_BG" value="LAYER 1: DATA SOURCES &amp; INGESTION" style="swimlane;startSize=36;rounded=1;arcSize=3;fontColor=#0F172A;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=2;fontSize=13;fontStyle=1;align=center;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry x="40" y="110" width="460" height="1340" as="geometry" />
+        <mxCell id="actor_user" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;html=1;verticalAlign=top;outlineConnect=0;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=11" value="Clinician / Query" vertex="1">
+          <mxGeometry height="60" width="30" x="50" y="200" as="geometry" />
         </mxCell>
-        <mxCell id="L2_BG" value="LAYER 2: EXPERIMENT DATA PREP &amp; RAG GENERATION" style="swimlane;startSize=36;rounded=1;arcSize=3;fontColor=#0F172A;fillColor=#FFFBEB;strokeColor=#F59E0B;strokeWidth=2;fontSize=13;fontStyle=1;align=center;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry x="530" y="110" width="480" height="1340" as="geometry" />
+        <mxCell id="layer0" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#8B4A1F;strokeColor=#D98A4A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;container=1;collapsible=0;arcSize=8" value="Layer 0 — Clinical Knowledge &amp; Corpus Sources" vertex="1">
+          <mxGeometry height="360" width="220" x="140" y="100" as="geometry" />
         </mxCell>
-        <mxCell id="L3_BG" value="LAYER 3: VERIFICATION LAYER (SHARED MULTI-VERIFIER)" style="swimlane;startSize=36;rounded=1;arcSize=3;fontColor=#0F172A;fillColor=#F0FDF4;strokeColor=#10B981;strokeWidth=2;fontSize=13;fontStyle=1;align=center;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry x="1040" y="110" width="490" height="1340" as="geometry" />
+        <mxCell id="l0_medhallu" parent="layer0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;MedHallu Benchmark&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;HF: UTAustin-AIHealth/MedHallu&lt;br&gt;config: pqa_labeled (rev 515060...)&lt;br&gt;500 clinical QA pairs with synthetic sentence-level hallucinations&lt;/font&gt;" vertex="1">
+          <mxGeometry height="85" width="190" x="15" y="45" as="geometry" />
         </mxCell>
-        <mxCell id="L4_BG" value="LAYER 4: EVALUATION, STATISTICS &amp; PROFILING" style="swimlane;startSize=36;rounded=1;arcSize=3;fontColor=#0F172A;fillColor=#FAF5FF;strokeColor=#8B5CF6;strokeWidth=2;fontSize=13;fontStyle=1;align=center;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry x="1560" y="110" width="480" height="1340" as="geometry" />
+        <mxCell id="l0_pubmedqa" parent="layer0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;PubMedQA Corpus&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;HF: qiaojin/PubMedQA&lt;br&gt;config: pqa_labeled (rev 9001f2...)&lt;br&gt;~1,000 biomedical research abstracts for Experiment 2 RAG retrieval&lt;/font&gt;" vertex="1">
+          <mxGeometry height="85" width="190" x="15" y="145" as="geometry" />
         </mxCell>
-        <mxCell id="L5_BG" value="LAYER 5: PRESENTATION, WEB &amp; DISSEMINATION" style="swimlane;startSize=36;rounded=1;arcSize=3;fontColor=#0F172A;fillColor=#FFF1F2;strokeColor=#F43F5E;strokeWidth=2;fontSize=13;fontStyle=1;align=center;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry x="2070" y="110" width="470" height="1340" as="geometry" />
+        <mxCell id="l0_provenance" parent="layer0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Provenance &amp; Integrity&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;SHA-256 manifests per run&lt;br&gt;Pinned commits (Rule R4.4)&lt;br&gt;Fixed seed: 42 (reproducible)&lt;br&gt;Not for clinical use notice&lt;/font&gt;" vertex="1">
+          <mxGeometry height="95" width="190" x="15" y="245" as="geometry" />
         </mxCell>
-        <mxCell id="L1_MEDHALLU" value="&lt;div style=&quot;font-weight: bold; color: #1E3A8A; font-size: 12px;&quot;&gt;HuggingFace: MedHallu (pqa_labeled)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #2563EB; font-weight: 600; margin-bottom: 4px;&quot;&gt;DATA SOURCE | HF: UTAustin-AIHealth/MedHallu&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Pinned Commit: &lt;b&gt;51506045...&lt;/b&gt; (Rule R4.4)&lt;br/&gt;• 500 clinical QA pairs derived from PubMed abstracts&lt;br/&gt;• Synthetic hallucinations injected at sentence level&lt;br/&gt;• Schema: Question, Knowledge, Ground Truth, Hallucinated Answer, Difficulty, Category&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#3B82F6;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="60" y="165" width="420" height="125" as="geometry" />
+        <mxCell id="layer1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#3F3F9E;strokeColor=#8A86E0;fontColor=#FFFFFF;fontSize=12;fontStyle=1;container=1;collapsible=0;arcSize=8" value="Layer 1 — Data Preparation &amp; Stratification" vertex="1">
+          <mxGeometry height="360" width="220" x="385" y="100" as="geometry" />
         </mxCell>
-        <mxCell id="L1_PUBMEDQA" value="&lt;div style=&quot;font-weight: bold; color: #1E3A8A; font-size: 12px;&quot;&gt;HuggingFace: PubMedQA (pqa_labeled)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #2563EB; font-weight: 600; margin-bottom: 4px;&quot;&gt;CORPUS SOURCE | HF: qiaojin/PubMedQA&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Pinned Commit: &lt;b&gt;9001f285...&lt;/b&gt; (Rule R4.4)&lt;br/&gt;• ~1,000 real PubMed biomedical research abstracts&lt;br/&gt;• Unmodified medical literature serving as the retrieval corpus for Experiment 2 RAG&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#3B82F6;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="60" y="310" width="420" height="115" as="geometry" />
+        <mxCell id="l1_builder" parent="layer1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Exp 1 Pair Generator&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;src/build_exp1_pairs.py&lt;br&gt;250 questions sampled &amp; stratified by clinical difficulty&lt;br&gt;→ 500 balanced (50/50) pairs&lt;/font&gt;" vertex="1">
+          <mxGeometry height="85" width="190" x="15" y="45" as="geometry" />
         </mxCell>
-        <mxCell id="L1_PILOT" value="&lt;div style=&quot;font-weight: bold; color: #1E3A8A; font-size: 12px;&quot;&gt;Pilot Inspection &amp;amp; Spot-Check&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #1D4ED8; font-weight: 600; margin-bottom: 4px;&quot;&gt;PHASE 1 | src/pilot_checks.py&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• &lt;b&gt;Risk 1:&lt;/b&gt; Human spotcheck (n=50) uncovered &lt;b&gt;46.0%&lt;/b&gt; unsupported ground-truth answers in MedHallu&lt;br/&gt;• &lt;b&gt;Risk 2:&lt;/b&gt; Lexical shortcut test on 100 dev pairs yielded ROUGE-L AUROC = &lt;b&gt;0.4894&lt;/b&gt; (&amp;lt; 0.95 rule pass)&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#2563EB;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="60" y="445" width="420" height="125" as="geometry" />
+        <mxCell id="l1_splitter" parent="layer1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Question-Level Splitter&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Split by question (0 leakage)&lt;br&gt;Dev: 50 Qs (100 pairs) for tuning&lt;br&gt;Test: 200 Qs (400 pairs) for eval&lt;br&gt;data/exp1/dev.jsonl &amp; test.jsonl&lt;/font&gt;" vertex="1">
+          <mxGeometry height="95" width="190" x="15" y="145" as="geometry" />
         </mxCell>
-        <mxCell id="L1_GATE_G1" value="&lt;div style=&quot;font-weight: bold; color: #B45309; font-size: 12px;&quot;&gt;Gate G1 Decision: Plan 2 Activation&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #D97706; font-weight: 600; margin-bottom: 4px;&quot;&gt;DECISION GATE | Human Sign-off&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• High unsupported rate (&amp;gt; 10%) triggered protocol fallback to &lt;b&gt;Plan 2&lt;/b&gt;&lt;br/&gt;• &lt;b&gt;Experiment 2 (RAG):&lt;/b&gt; Upgraded to Primary Headline Study (200 pairs)&lt;br/&gt;• &lt;b&gt;Experiment 1 (MedHallu):&lt;/b&gt; Retained as Secondary Benchmark&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;strokeWidth=2;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="60" y="590" width="420" height="130" as="geometry" />
+        <mxCell id="l1_leakage" parent="layer1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Leakage Guard&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;test_leakage.py CI gate&lt;br&gt;Exp 1 test questions excluded from Exp 2 candidate pool&lt;br&gt;Zero overlap guaranteed&lt;/font&gt;" vertex="1">
+          <mxGeometry height="85" width="190" x="15" y="255" as="geometry" />
         </mxCell>
-        <mxCell id="L1_CACHE" value="&lt;div style=&quot;font-weight: bold; color: #0F172A; font-size: 12px;&quot;&gt;Cache &amp;amp; Provenance Infrastructure&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #475569; font-weight: 600; margin-bottom: 4px;&quot;&gt;PERSISTENCE | data/cache/ &amp;amp; manifests&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• &lt;b&gt;JsonlCache:&lt;/b&gt; Deterministic hashing &amp;amp; offline storage of API responses&lt;br/&gt;• &lt;b&gt;FROZEN.json:&lt;/b&gt; Pinned prompt hashes (generator_v1, judge_v1)&lt;br/&gt;• SHA-256 manifests tracking data, configs, and seeds (seed=42)&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="60" y="740" width="420" height="120" as="geometry" />
+        <mxCell id="store_cache" parent="1" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=12;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#4FA3C7;fontColor=#FFFFFF;fontSize=11" value="&lt;b&gt;data/cache/ &amp; data/pilot/&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;JsonlCache append-only API response store&lt;br&gt;FROZEN.json prompt hashes (judge_v1, generator_v1)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="465" x="140" y="475" as="geometry" />
         </mxCell>
-        <mxCell id="L2_E1_PAIRS" value="&lt;div style=&quot;font-weight: bold; color: #9A3412; font-size: 12px;&quot;&gt;Exp 1 Pair Generator (src/build_exp1_pairs.py)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #EA580C; font-weight: 600; margin-bottom: 4px;&quot;&gt;PHASE 2 | BENCHMARK DATASET GENERATION&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Samples 250 questions from MedHallu, stratified by clinical difficulty&lt;br/&gt;• Expands to 500 balanced (context, answer) evaluation pairs:&lt;br/&gt;&amp;nbsp;&amp;nbsp;- 250 Ground Truth (Supported, Label 0)&lt;br/&gt;&amp;nbsp;&amp;nbsp;- 250 Hallucinated Answer (Hallucinated, Label 1)&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EA580C;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="550" y="165" width="440" height="125" as="geometry" />
+        <mxCell id="layer_pilot" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#5A1A1A;strokeColor=#C05A5A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;container=1;collapsible=0;arcSize=8" value="Protocol Governance &amp; Pilot Study (Gate G1)" vertex="1">
+          <mxGeometry height="525" width="465" x="140" y="565" as="geometry" />
         </mxCell>
-        <mxCell id="L2_E1_SPLIT" value="&lt;div style=&quot;font-weight: bold; color: #9A3412; font-size: 12px;&quot;&gt;Question-Level Stratified Splitter&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #EA580C; font-weight: 600; margin-bottom: 4px;&quot;&gt;SPLIT ENGINE | 0 QUESTION LEAKAGE&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Splits strictly by question (both GT &amp;amp; Hallucinated stay together):&lt;br/&gt;&amp;nbsp;&amp;nbsp;→ &lt;b&gt;Dev Set:&lt;/b&gt; 50 questions / 100 pairs (for threshold tuning)&lt;br/&gt;&amp;nbsp;&amp;nbsp;→ &lt;b&gt;Test Set:&lt;/b&gt; 200 questions / 400 pairs (for evaluation)&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#EA580C;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="550" y="310" width="440" height="105" as="geometry" />
+        <mxCell id="p_spotcheck" parent="layer_pilot" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Human Spot-Check (n=50)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;spotcheck_50.csv evaluated&lt;br&gt;&lt;b&gt;46.0%&lt;/b&gt; unsupported GT rate!&lt;br&gt;Risk 1 (unsupported correct) confirmed in MedHallu&lt;/font&gt;" vertex="1">
+          <mxGeometry height="85" width="205" x="20" y="42" as="geometry" />
         </mxCell>
-        <mxCell id="L2_E1_FILES" value="&lt;div style=&quot;font-weight: bold; color: #9A3412; font-size: 12px;&quot;&gt;Exp 1 Dev &amp;amp; Test Stores&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #EA580C; font-weight: 600; margin-bottom: 4px;&quot;&gt;STORAGE | data/exp1/dev.jsonl &amp;amp; test.jsonl&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Immutable JSONL test partitions with verified 50/50 balance&lt;br/&gt;• Test questions explicitly excluded from Experiment 2 selection&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#F97316;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="550" y="435" width="440" height="85" as="geometry" />
+        <mxCell id="p_rouge_auroc" parent="layer_pilot" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;ROUGE-L Dev AUROC&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;100 provisional dev pairs&lt;br&gt;AUROC = &lt;b&gt;0.4894&lt;/b&gt; (&amp;lt; 0.95)&lt;br&gt;Risk 2 (lexical shortcut) rejected; MedHallu not trivial&lt;/font&gt;" vertex="1">
+          <mxGeometry height="85" width="205" x="240" y="42" as="geometry" />
         </mxCell>
-        <mxCell id="L2_E2_CHUNK" value="&lt;div style=&quot;font-weight: bold; color: #9A3412; font-size: 12px;&quot;&gt;PubMedQA Abstract Chunker (src/build_index.py)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #D97706; font-weight: 600; margin-bottom: 4px;&quot;&gt;PHASE 4 | RETRIEVAL INDEX PREPARATION&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Chunks 1,000 PubMedQA abstracts into ~250 token segments (30 overlap)&lt;br/&gt;• Generated 1,790 clean chunks tracking source document metadata&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFBEB;strokeColor=#D97706;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="550" y="540" width="440" height="95" as="geometry" />
+        <mxCell id="p_gate_g1" parent="layer_pilot" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3A1010;strokeColor=#C05A5A;fontColor=#EEEEEE;fontSize=10;arcSize=12" value="&lt;b&gt;Gate G1 Decision: Fallback to Plan 2&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Unsupported GT (&amp;gt;10%) triggers Plan 2 protocol:&lt;br&gt;• &lt;b&gt;Experiment 2 (Healthcare RAG):&lt;/b&gt; Primary headline study (200 pairs)&lt;br&gt;• &lt;b&gt;Experiment 1 (MedHallu):&lt;/b&gt; Secondary benchmark (with caveats)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="85" width="425" x="20" y="140" as="geometry" />
         </mxCell>
-        <mxCell id="L2_E2_FAISS" value="&lt;div style=&quot;font-weight: bold; color: #9A3412; font-size: 12px;&quot;&gt;Local Embedding &amp;amp; FAISS Vector Index&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #B45309; font-weight: 600; margin-bottom: 4px;&quot;&gt;💻 TOOL: Local CPU | Model: BAAI/bge-small-en-v1.5 | faiss-cpu&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• 384-dimensional normalized dense vectors embedded locally&lt;br/&gt;• &lt;b&gt;FAISS IndexFlatIP:&lt;/b&gt; Exact inner-product cosine similarity retrieval&lt;br/&gt;• Highly efficient: &lt;b&gt;451.8 MB peak RAM&lt;/b&gt; footprint on laptop CPU&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;strokeWidth=2;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="550" y="655" width="440" height="115" as="geometry" />
+        <mxCell id="p_rules" parent="layer_pilot" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#20BEFF;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Integrity &amp; Governance Safeguards&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;• &lt;b&gt;Rule R1.5:&lt;/b&gt; AI assistant NEVER generates or guesses labels; human judgments only&lt;br&gt;• &lt;b&gt;Rule R1.6:&lt;/b&gt; Progress past Gates G1-G6 requires explicit human sign-off in handover.md&lt;br&gt;• &lt;b&gt;Rule R4.1:&lt;/b&gt; Master seed 42 for all stratified sampling and shuffling&lt;br&gt;• &lt;b&gt;Rule R9.2:&lt;/b&gt; Mandatory session close: pytest + ruff + site_export + docs + git&lt;/font&gt;" vertex="1">
+          <mxGeometry height="115" width="425" x="20" y="240" as="geometry" />
         </mxCell>
-        <mxCell id="L2_E2_RETRIEVAL" value="&lt;div style=&quot;font-weight: bold; color: #9A3412; font-size: 12px;&quot;&gt;Dual-Condition Retrieval Engine&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #EA580C; font-weight: 600; margin-bottom: 4px;&quot;&gt;RETRIEVAL | 100 Normal + 100 Degraded&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• &lt;b&gt;Normal Condition (n=100):&lt;/b&gt; Top-3 nearest chunks retrieved (100% hit)&lt;br/&gt;• &lt;b&gt;Degraded Condition (n=100):&lt;/b&gt; Retrieve top-20, drop source document chunks, retain top-3 distractors to induce realistic hallucinations&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#EA580C;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="550" y="790" width="440" height="115" as="geometry" />
+        <mxCell id="p_report" parent="layer_pilot" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Pilot Report &amp; Artifacts&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;• data/pilot/pilot_report.json &amp; results/pilot/pilot_report.md&lt;br&gt;• results/pilot/metrics.json: pilot.unsupported_rate=0.46, pilot.rouge_auroc=0.4894&lt;br&gt;• Populates live website tiles automatically via results/site/numbers_of_record.json&lt;/font&gt;" vertex="1">
+          <mxGeometry height="135" width="425" x="20" y="370" as="geometry" />
         </mxCell>
-        <mxCell id="L2_E2_GROQ" value="&lt;div style=&quot;font-weight: bold; color: #9A3412; font-size: 12px;&quot;&gt;RAG Generator: Groq Cloud API&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #C2410C; font-weight: 600; margin-bottom: 4px;&quot;&gt;⚡ TOOL: Groq API | Model: qwen/qwen3.8-27b | temp=0&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Generates clinical answers conditioned on retrieved context chunks&lt;br/&gt;• Prompt: generator_v1 (frozen in FROZEN.json) | max_tokens=256&lt;br/&gt;• Outputs 200 answers stored in data/exp2_rag/generated.jsonl&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFEDD5;strokeColor=#C2410C;strokeWidth=2;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="550" y="925" width="440" height="115" as="geometry" />
+        <mxCell id="layer2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#2E2EA8;strokeColor=#8A86E0;fontColor=#FFFFFF;fontSize=12;fontStyle=1;container=1;collapsible=0;arcSize=6" value="Layer 2 — Healthcare RAG Generation Plane (Experiment 2)" vertex="1">
+          <mxGeometry height="595" width="650" x="625" y="100" as="geometry" />
         </mxCell>
-        <mxCell id="L2_E2_ANN_EXPORT" value="&lt;div style=&quot;font-weight: bold; color: #9A3412; font-size: 12px;&quot;&gt;Annotation Preparation (src/annotation.py)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #D97706; font-weight: 600; margin-bottom: 4px;&quot;&gt;PHASE 6 | RFC 4180 CSV SHEETS&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Generates clean RFC 4180 CSV annotation sheets with seed=42 shuffle&lt;br/&gt;• Exports: annotator_1.csv, annotator_2.csv, template.csv, guide&lt;br/&gt;• Degraded/normal conditions completely blinded to annotators&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFBEB;strokeColor=#D97706;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="550" y="1060" width="440" height="105" as="geometry" />
+        <mxCell id="l2_chunker" parent="layer2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;PubMed Chunker&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;src/build_index.py&lt;br&gt;~250 token chunks (30 overlap)&lt;br&gt;1,790 chunks tracking doc_ids&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="190" x="20" y="45" as="geometry" />
         </mxCell>
-        <mxCell id="L2_E2_GATE_G2" value="&lt;div style=&quot;font-weight: bold; color: #B91C1C; font-size: 12px;&quot;&gt;[PLANNED] Gate G2: Human Annotation &amp;amp; Adjudication&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #DC2626; font-weight: 600; margin-bottom: 4px;&quot;&gt;STATUS: IN PROGRESS / BLOCKED | DOTTED BOX&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #450A0A;&quot;&gt;• &lt;b&gt;Independent Human Labeling (Rule R1.5):&lt;/b&gt;&lt;br/&gt;&amp;nbsp;&amp;nbsp;Annotator 1: Muhammad Saad | Annotator 2: Rabia Qaiser (200 pairs)&lt;br/&gt;• Inter-annotator agreement: Cohen&#x27;s Kappa κ computation&lt;br/&gt;• Adjudication of disagreements → labeled.csv → pairs.jsonl ground truth&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DC2626;strokeWidth=2;dashed=1;dashPattern=6 4;fontColor=#7F1D1D;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="550" y="1185" width="440" height="130" as="geometry" />
+        <mxCell id="l2_faiss" parent="layer2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#20BEFF;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Embedding &amp; Vector DB&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;💻 &lt;b&gt;BAAI/bge-small-en-v1.5&lt;/b&gt;&lt;br&gt;💻 &lt;b&gt;faiss-cpu&lt;/b&gt; IndexFlatIP (384-d)&lt;br&gt;Peak RAM: &lt;b&gt;451.8 MB&lt;/b&gt; (under 8GB)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="200" x="225" y="45" as="geometry" />
         </mxCell>
-        <mxCell id="L3_COORDINATOR" value="&lt;div style=&quot;font-weight: bold; color: #065F46; font-size: 12px;&quot;&gt;Shared Verifier Coordinator (src/run_verifiers.py)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #059669; font-weight: 600; margin-bottom: 4px;&quot;&gt;SHARED PIPELINE | filters/base.py&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Abstract BaseVerifier interface establishing unified JSONL schema&lt;br/&gt;• Evaluates Exp 1 and Exp 2 pairs with identical verification code&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="1065" y="165" width="440" height="95" as="geometry" />
+        <mxCell id="l2_retriever" parent="layer2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Dual Retriever&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;• Normal (n=100): top-3 chunks&lt;br&gt;• Degraded (n=100): drop source doc chunks, keep 3 distractors&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="190" x="440" y="45" as="geometry" />
         </mxCell>
-        <mxCell id="L3_TUNING" value="&lt;div style=&quot;font-weight: bold; color: #065F46; font-size: 12px;&quot;&gt;Threshold Optimizer (src/tune_thresholds.py)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #047857; font-weight: 600; margin-bottom: 4px;&quot;&gt;PHASE 3 | TUNED ON EXP 1 DEV (100 PAIRS)&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Grid-searches optimal classification thresholds maximizing F1&lt;br/&gt;• &lt;b&gt;Frozen in results/thresholds.json:&lt;/b&gt;&lt;br/&gt;&amp;nbsp;&amp;nbsp;- ROUGE-L threshold = &lt;b&gt;0.1741&lt;/b&gt; (Dev F1 = 0.6667)&lt;br/&gt;&amp;nbsp;&amp;nbsp;- Filter B threshold = &lt;b&gt;0.0039&lt;/b&gt; (Dev F1 = 0.6667)&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#D1FAE5;strokeColor=#059669;strokeWidth=2;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="1065" y="280" width="440" height="125" as="geometry" />
+        <mxCell id="l2_generator" parent="layer2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#EA580C;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;RAG Generator: Groq Cloud API&lt;/b&gt;  ·  ⚡ &lt;b&gt;Model: qwen/qwen3.8-27b&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Frozen prompt: generator_v1.txt · temp: 0.0 · max_tokens: 256 · Generates 200 clinical answers (100 normal + 100 degraded) into data/exp2_rag/generated.jsonl&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="610" x="20" y="125" as="geometry" />
         </mxCell>
-        <mxCell id="L3_ROUGE" value="&lt;div style=&quot;font-weight: bold; color: #334155; font-size: 12px;&quot;&gt;Baseline Filter: ROUGE-L Precision&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #475569; font-weight: 600; margin-bottom: 4px;&quot;&gt;💻 TOOL: Local CPU | Library: rouge-score&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Measures longest common subsequence precision: answer vs context&lt;br/&gt;• Rule: score &amp;lt; 0.1741 → Hallucinated (1), else Supported (0)&lt;br/&gt;• Ultra-fast lexical baseline: &lt;b&gt;median latency 2.5 ms&lt;/b&gt; on CPU&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="1065" y="425" width="440" height="115" as="geometry" />
+        <mxCell id="sublayer_ann" parent="layer2" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#6E6EDC;strokeColor=#C9C6F5;fontColor=#FFFFFF;fontSize=12;fontStyle=1;container=1;collapsible=0;arcSize=6" value="Annotation, Agreement &amp; Adjudication Sub-layer (Gate G2)" vertex="1">
+          <mxGeometry height="370" width="610" x="20" y="205" as="geometry" />
         </mxCell>
-        <mxCell id="L3_FILTER_B" value="&lt;div style=&quot;font-weight: bold; color: #581C87; font-size: 12px;&quot;&gt;Filter B: Local NLI Cross-Encoder&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #7E22CE; font-weight: 600; margin-bottom: 4px;&quot;&gt;💻 TOOL: PyTorch CPU | Model: cross-encoder/nli-deberta-v3-small&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Sentence Splitter: &lt;b&gt;pysbd&lt;/b&gt; (biomedical rule-based segmentation)&lt;br/&gt;• Sentence × Chunk entailment probability matrix (max 512 tokens)&lt;br/&gt;• Formula: &lt;i&gt;score = min&lt;sub&gt;s&lt;/sub&gt;(max&lt;sub&gt;c&lt;/sub&gt;(P(entailment)))&lt;/i&gt;&lt;br/&gt;• Rule: score &amp;lt; 0.0039 → Hallucinated (1) | 6 CPU threads, batch=16&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#F3E8FF;strokeColor=#9333EA;strokeWidth=2;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="1065" y="560" width="440" height="140" as="geometry" />
+        <mxCell id="sl_export" parent="sublayer_ann" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Phase 6 CSV Exporter&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;src/annotation.py export&lt;br&gt;RFC 4180 CSV export · seed 42 shuffle&lt;br&gt;annotator_1.csv &amp; annotator_2.csv&lt;br&gt;Conditions (normal/degraded) blinded&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="270" x="20" y="40" as="geometry" />
         </mxCell>
-        <mxCell id="L3_FILTER_B_OPT" value="&lt;div style=&quot;font-weight: bold; color: #6B21A8; font-size: 12px;&quot;&gt;[PLANNED] Filter B Optional Base Model&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #9333EA; font-weight: 600; margin-bottom: 4px;&quot;&gt;STATUS: OPTIONAL ABLATION | DOTTED BOX&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #4A044E;&quot;&gt;• Model: cross-encoder/nli-deberta-v3-base&lt;br/&gt;• Tests parameter scaling vs latency trade-off on laptop CPU&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FAF5FF;strokeColor=#A855F7;strokeWidth=2;dashed=1;dashPattern=6 4;fontColor=#581C87;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="1065" y="715" width="440" height="85" as="geometry" />
+        <mxCell id="sl_gate2_label" parent="sublayer_ann" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#888888;fontColor=#CCCCCC;fontSize=11;dashed=1;arcSize=12" value="&lt;b&gt;[PLANNED] Gate G2: Human Annotation&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;&lt;i&gt;(Awaiting Independent Human Labels)&lt;/i&gt;&lt;br&gt;Annotator 1: Muhammad Saad (200 pairs)&lt;br&gt;Annotator 2: Rabia Qaiser (200 pairs)&lt;br&gt;Strict compliance with Rule R1.5&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="280" x="310" y="40" as="geometry" />
         </mxCell>
-        <mxCell id="L3_FILTER_A" value="&lt;div style=&quot;font-weight: bold; color: #0C4A6E; font-size: 12px;&quot;&gt;Filter A: API LLM Judge (Gemini Flash)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #0284C7; font-weight: 600; margin-bottom: 4px;&quot;&gt;☁ TOOL: Google Gemini API | Model: gemini-3.6-flash | temp=0&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Frozen Prompt: judge_v1 (clinical verification instructions)&lt;br/&gt;• Structured JSON output: verdict (0/1), confidence (1-5), rationale&lt;br/&gt;• Resilience: JsonlCache caching, rate limiting (10 RPM), tenacity retry&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#E0F2FE;strokeColor=#0284C7;strokeWidth=2;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="1065" y="820" width="440" height="125" as="geometry" />
+        <mxCell id="sl_kappa" parent="sublayer_ann" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#888888;fontColor=#CCCCCC;fontSize=11;dashed=1;arcSize=12" value="&lt;b&gt;Agreement &amp; Cohen&#x27;s Kappa&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;&lt;i&gt;[PLANNED POST-LABELING]&lt;/i&gt;&lt;br&gt;python -m src.annotation kappa&lt;br&gt;Computes Cohen&#x27;s κ on 200 pairs&lt;br&gt;Exports disagreements.csv&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="270" x="20" y="130" as="geometry" />
         </mxCell>
-        <mxCell id="L3_FILTER_A_FULL" value="&lt;div style=&quot;font-weight: bold; color: #991B1B; font-size: 12px;&quot;&gt;[PLANNED] Full Exp 1 &amp;amp; Exp 2 Filter A Run&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #DC2626; font-weight: 600; margin-bottom: 4px;&quot;&gt;STATUS: DEFERRED (RATE LIMIT) | DOTTED BOX&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #450A0A;&quot;&gt;• Scaffolding &amp;amp; smoke tests verified; deferred due to 20 RPD free tier&lt;br/&gt;• Awaiting batch quota / key upgrade to score 400 Exp 1 + 200 Exp 2 pairs&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#EF4444;strokeWidth=2;dashed=1;dashPattern=6 4;fontColor=#7F1D1D;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="1065" y="965" width="440" height="95" as="geometry" />
+        <mxCell id="sl_adjudication" parent="sublayer_ann" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#888888;fontColor=#CCCCCC;fontSize=11;dashed=1;arcSize=12" value="&lt;b&gt;Consensus Adjudication&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;&lt;i&gt;[PLANNED POST-LABELING]&lt;/i&gt;&lt;br&gt;Researchers reconcile disagreements&lt;br&gt;Populates data/exp2_rag/labeled.csv&lt;br&gt;Rule R1.6 sign-off required&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="280" x="310" y="130" as="geometry" />
         </mxCell>
-        <mxCell id="L3_E1_EXEC" value="&lt;div style=&quot;font-weight: bold; color: #065F46; font-size: 12px;&quot;&gt;Exp 1 Test Scored Runs (Phase 5)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #059669; font-weight: 600; margin-bottom: 4px;&quot;&gt;PHASE 5 | COMPLETED TEST EVALUATION&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• 400 test pairs evaluated by Filter B &amp;amp; Baseline ROUGE-L&lt;br/&gt;• Output: results/exp1/20260919-2151-bd5e507/metrics.json&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#059669;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="1065" y="1080" width="440" height="95" as="geometry" />
+        <mxCell id="sl_merge" parent="sublayer_ann" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#888888;fontColor=#CCCCCC;fontSize=11;dashed=1;arcSize=12" value="&lt;b&gt;Ground Truth Dataset Merge (src/annotation.py merge)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;&lt;i&gt;[PLANNED]&lt;/i&gt; Validates labeled dataset and generates &lt;b&gt;data/exp2_rag/pairs.jsonl&lt;/b&gt;&lt;br&gt;Verifies Gate G2 class balance check (≥ 25% Hallucinated in RAG corpus; triggers extra degraded if &amp;lt;25%)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="570" x="20" y="220" as="geometry" />
         </mxCell>
-        <mxCell id="L3_E2_EXEC" value="&lt;div style=&quot;font-weight: bold; color: #991B1B; font-size: 12px;&quot;&gt;[PLANNED] Phase 7: RAG Verification Run&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #DC2626; font-weight: 600; margin-bottom: 4px;&quot;&gt;STATUS: PLANNED (AWAITS GATE G2) | DOTTED BOX&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #450A0A;&quot;&gt;• Command: python -m src.run_verifiers --config configs/config.yaml --split rag&lt;br/&gt;• Run Filter B, Baseline ROUGE, and Filter A on 200 ground-truth RAG pairs&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DC2626;strokeWidth=2;dashed=1;dashPattern=6 4;fontColor=#7F1D1D;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="1065" y="1195" width="440" height="110" as="geometry" />
+        <mxCell id="sl_note" parent="sublayer_ann" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4A4AC4;strokeColor=#C9C6F5;fontColor=#FFFFFF;fontSize=10;arcSize=12" value="&lt;font style=&quot;font-size:9px; color: #FFFFFF&quot;&gt;&lt;b&gt;Soundness Principle:&lt;/b&gt; Generator condition is blinded to human annotators. RAG hallucinations arise naturally from retrieval distractors rather than synthetic perturbation, providing an ecologically valid test of clinical verifier generalizability.&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="570" x="20" y="295" as="geometry" />
         </mxCell>
-        <mxCell id="L4_METRICS" value="&lt;div style=&quot;font-weight: bold; color: #4C1D95; font-size: 12px;&quot;&gt;Evaluation Engine (src/evaluate.py)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #6D28D9; font-weight: 600; margin-bottom: 4px;&quot;&gt;PHASE 8 | CORE CLASSIFICATION METRICS&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Precision, Recall, F1-Score, FPR, AUROC&lt;br/&gt;• &lt;b&gt;Safety-Critical Metric: False Negative Rate (FNR)&lt;/b&gt;&lt;br/&gt;&amp;nbsp;&amp;nbsp;Measures dangerous uncaught medical hallucinations&lt;br/&gt;• Exp 1 Test: Filter B F1=&lt;b&gt;0.6667&lt;/b&gt;, FNR=0.0; ROUGE F1=&lt;b&gt;0.6667&lt;/b&gt;, FNR=0.0&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FAF5FF;strokeColor=#7C3AED;strokeWidth=2;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="1585" y="165" width="430" height="130" as="geometry" />
+        <mxCell id="layer3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#153D1E;strokeColor=#4E9A5F;fontColor=#FFFFFF;fontSize=12;fontStyle=1;container=1;collapsible=0;arcSize=6" value="Layer 3 — Multi-Verifier Verification Plane (Shared Pipeline)" vertex="1">
+          <mxGeometry height="595" width="680" x="1295" y="100" as="geometry" />
         </mxCell>
-        <mxCell id="L4_STATS" value="&lt;div style=&quot;font-weight: bold; color: #4C1D95; font-size: 12px;&quot;&gt;Statistical Inference Suite (src/evaluation/stats.py)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #6D28D9; font-weight: 600; margin-bottom: 4px;&quot;&gt;STATISTICAL RIGOR | BOOTSTRAP &amp;amp; McNEMAR&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• &lt;b&gt;Question Block Bootstrap (1,000 resamples):&lt;/b&gt; 95% CIs resampling questions to respect clustered test pair variance&lt;br/&gt;• &lt;b&gt;McNemar Paired Chi-Squared Test:&lt;/b&gt; With continuity correction&lt;br/&gt;• Exp 1 Test: Filter B vs ROUGE McNemar &lt;i&gt;p = 1.0000&lt;/i&gt;&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#F5F3FF;strokeColor=#6D28D9;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="1585" y="315" width="430" height="135" as="geometry" />
+        <mxCell id="l3_coord" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Verifier Coordinator&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;src/run_verifiers.py &amp; filters/base.py&lt;br&gt;Unified JSONL contract across Exp 1 &amp; Exp 2&lt;br&gt;Latency timing &amp; token accounting&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="305" x="20" y="42" as="geometry" />
         </mxCell>
-        <mxCell id="L4_BREAKDOWNS" value="&lt;div style=&quot;font-weight: bold; color: #4C1D95; font-size: 12px;&quot;&gt;Granular Breakdown Analyzers&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #7C3AED; font-weight: 600; margin-bottom: 4px;&quot;&gt;SUBGROUP ANALYSIS | EXPORTED CSV TABLES&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• &lt;b&gt;Difficulty Breakdown:&lt;/b&gt; Easy / Medium / Hard questions&lt;br/&gt;• &lt;b&gt;Category Breakdown:&lt;/b&gt; Entity, Relation, Fact, Contradiction&lt;br/&gt;• Confirms whether filters fail on specific medical domain types&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FAF5FF;strokeColor=#8B5CF6;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="1585" y="470" width="430" height="110" as="geometry" />
+        <mxCell id="l3_tune" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#20BEFF;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Dev Threshold Optimizer&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;src/tune_thresholds.py on Exp 1 Dev (100 pairs)&lt;br&gt;Frozen in results/thresholds.json:&lt;br&gt;Filter B thresh: &lt;b&gt;0.0039&lt;/b&gt; · ROUGE thresh: &lt;b&gt;0.1741&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="315" x="345" y="42" as="geometry" />
         </mxCell>
-        <mxCell id="L4_TIMING" value="&lt;div style=&quot;font-weight: bold; color: #1E293B; font-size: 12px;&quot;&gt;Resource &amp;amp; Efficiency Profiler (src/timing.py)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #475569; font-weight: 600; margin-bottom: 4px;&quot;&gt;💻 TOOL: psutil &amp;amp; monotonic clock | SYSTEM EFFICIENCY&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Wall-clock latency (p50/p95): Filter B median &lt;b&gt;332.1 ms&lt;/b&gt;, ROUGE &lt;b&gt;2.5 ms&lt;/b&gt;&lt;br/&gt;• Peak RAM tracking (Under 8 GB laptop memory budget)&lt;br/&gt;• Shadow Financial Cost: Filter A estimated at &lt;b&gt;$0.0575 / 1k queries&lt;/b&gt;&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#64748B;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="1585" y="600" width="430" height="125" as="geometry" />
+        <mxCell id="l3_rouge" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Baseline: ROUGE-L Precision&lt;/b&gt;  ·  💻 &lt;b&gt;Tool: rouge-score (Local CPU)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Lexical LCS overlap between context &amp; answer · Thresh: 0.1741 · Dev F1: 0.6667 · Test F1: 0.6667 · &lt;b&gt;Median latency: 2.5 ms&lt;/b&gt; (CPU)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="640" x="20" y="120" as="geometry" />
         </mxCell>
-        <mxCell id="L4_CROSS" value="&lt;div style=&quot;font-weight: bold; color: #4C1D95; font-size: 12px;&quot;&gt;Cross-Experiment Analysis (src/cross_experiment.py)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #7C3AED; font-weight: 600; margin-bottom: 4px;&quot;&gt;PHASE 9 | RANKING &amp;amp; DISAGREEMENT MINING&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Verifier ranking agreement across datasets (Kendall&#x27;s τ, Spearman&#x27;s ρ)&lt;br/&gt;• Qualitative Disagreement Analyzer: 3 divergent test pairs exported for clinical inspection&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FAF5FF;strokeColor=#7C3AED;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="1585" y="745" width="430" height="115" as="geometry" />
+        <mxCell id="l3_filter_b" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#9333EA;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Filter B: Local NLI Cross-Encoder&lt;/b&gt;&lt;br&gt;💻 &lt;b&gt;Tool: PyTorch CPU&lt;/b&gt; · &lt;b&gt;cross-encoder/nli-deberta-v3-small&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Sentence splitter: &lt;b&gt;pysbd&lt;/b&gt; (biomedical rule-based)&lt;br&gt;Matrix: sentences × context chunks (max 512 tokens)&lt;br&gt;Score = min_s(max_c(P(entailment))) · Thresh: 0.0039&lt;br&gt;6 CPU threads, batch=16 · &lt;b&gt;Median latency: 332.1 ms&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="95" width="410" x="20" y="198" as="geometry" />
         </mxCell>
-        <mxCell id="L4_E2_EVAL" value="&lt;div style=&quot;font-weight: bold; color: #991B1B; font-size: 12px;&quot;&gt;[PLANNED] Phase 8 Exp 2 RAG Evaluation&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #DC2626; font-weight: 600; margin-bottom: 4px;&quot;&gt;STATUS: PLANNED | DOTTED BOX&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #450A0A;&quot;&gt;• Scored on 200 realistic human-annotated RAG pairs&lt;br/&gt;• Confusion matrices, 95% bootstrap CIs, safety-critical FNR analysis&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DC2626;strokeWidth=2;dashed=1;dashPattern=6 4;fontColor=#7F1D1D;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="1585" y="880" width="430" height="100" as="geometry" />
+        <mxCell id="l3_filter_b_opt" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#888888;fontColor=#CCCCCC;fontSize=11;dashed=1;arcSize=12" value="&lt;b&gt;Filter B Base Model&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;&lt;i&gt;[DOTTED: OPTIONAL ABLATION]&lt;/i&gt;&lt;br&gt;Model: nli-deberta-v3-base&lt;br&gt;Evaluates parameter scale vs latency on CPU&lt;/font&gt;" vertex="1">
+          <mxGeometry height="95" width="215" x="445" y="198" as="geometry" />
         </mxCell>
-        <mxCell id="L4_E2_TRANSFER" value="&lt;div style=&quot;font-weight: bold; color: #991B1B; font-size: 12px;&quot;&gt;[PLANNED] Phase 9 Domain Shift &amp;amp; Transfer&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #DC2626; font-weight: 600; margin-bottom: 4px;&quot;&gt;STATUS: PLANNED | DOTTED BOX&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #450A0A;&quot;&gt;• Zero-shot transfer of Exp 1 thresholds to Exp 2 RAG pairs&lt;br/&gt;• Quantifies performance degradation under distribution shift&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DC2626;strokeWidth=2;dashed=1;dashPattern=6 4;fontColor=#7F1D1D;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="1585" y="1000" width="430" height="100" as="geometry" />
+        <mxCell id="l3_filter_a" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#2563EB;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Filter A: API LLM Judge&lt;/b&gt;&lt;br&gt;☁ &lt;b&gt;Tool: Google Gemini API&lt;/b&gt; · &lt;b&gt;gemini-3.6-flash&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Prompt: judge_v1 (frozen in FROZEN.json) · temp: 0.0 · max_tokens: 1000&lt;br&gt;Extracts structured JSON: verdict (0/1), confidence (1-5), rationale&lt;br&gt;Robustness: JsonlCache request caching, RPM limit: 10, tenacity retry&lt;/font&gt;" vertex="1">
+          <mxGeometry height="95" width="410" x="20" y="305" as="geometry" />
         </mxCell>
-        <mxCell id="L4_E2_HYPOTHESIS" value="&lt;div style=&quot;font-weight: bold; color: #991B1B; font-size: 12px;&quot;&gt;[PLANNED] Formal Hypothesis Tests (H1 &amp;amp; H2)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #DC2626; font-weight: 600; margin-bottom: 4px;&quot;&gt;STATUS: PLANNED | DOTTED BOX&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #450A0A;&quot;&gt;• H1: Filter B local NLI non-inferior to Filter A Gemini judge&lt;br/&gt;• H2: Verifier performance degrades under realistic RAG distribution shift&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DC2626;strokeWidth=2;dashed=1;dashPattern=6 4;fontColor=#7F1D1D;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="1585" y="1120" width="430" height="105" as="geometry" />
+        <mxCell id="l3_filter_a_runs" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#888888;fontColor=#CCCCCC;fontSize=11;dashed=1;arcSize=12" value="&lt;b&gt;Filter A Full Runs&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;&lt;i&gt;[DOTTED: DEFERRED]&lt;/i&gt;&lt;br&gt;Deferred due to 20 RPD free tier&lt;br&gt;Awaits batch key / tier upgrade to evaluate 400 Exp 1 + 200 Exp 2 pairs&lt;/font&gt;" vertex="1">
+          <mxGeometry height="95" width="215" x="445" y="305" as="geometry" />
         </mxCell>
-        <mxCell id="L5_SSOT" value="&lt;div style=&quot;font-weight: bold; color: #881337; font-size: 12px;&quot;&gt;Numbers of Record (Single Source of Truth)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #BE123C; font-weight: 600; margin-bottom: 4px;&quot;&gt;CANONICAL STORE | results/site/numbers_of_record.json&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Central repository for all verified numbers, CIs, p-values, timings&lt;br/&gt;• Strictly prevents hard-coding; guarantees zero divergence across docs&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFF1F2;strokeColor=#E11D48;strokeWidth=2;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="2095" y="165" width="420" height="115" as="geometry" />
+        <mxCell id="l3_e1_exec" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#12301E;strokeColor=#4FA96B;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Exp 1 Test Evaluation Execution (Phase 5 Completed)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Evaluated 400 test pairs with Filter B &amp; Baseline ROUGE-L · Output: results/exp1/20260919-2151-bd5e507/metrics.json&lt;br&gt;Both achieve test F1 = 0.6667 [0.6667, 0.6667], FNR = 0.0000 · Shadow cost: $0.0575 / 1k queries&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="640" x="20" y="412" as="geometry" />
         </mxCell>
-        <mxCell id="L5_FIGURES" value="&lt;div style=&quot;font-weight: bold; color: #881337; font-size: 12px;&quot;&gt;Publication Figures Engine (src/figures.py)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #BE123C; font-weight: 600; margin-bottom: 4px;&quot;&gt;🎨 TOOL: matplotlib &amp;amp; seaborn | 6 PUBLICATION FIGURES&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• &lt;b&gt;Fig 1:&lt;/b&gt; Confusion Matrix &amp;nbsp;&amp;nbsp;• &lt;b&gt;Fig 2:&lt;/b&gt; Filter B PR Curve&lt;br/&gt;• &lt;b&gt;Fig 3:&lt;/b&gt; Latency CDF &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;• &lt;b&gt;Fig 4:&lt;/b&gt; Pareto Front&lt;br/&gt;• &lt;b&gt;Fig 5:&lt;/b&gt; Category Breakdown &amp;nbsp;• &lt;b&gt;Fig 6:&lt;/b&gt; Cross-Exp Comparison&lt;br/&gt;• High-res output: 300 DPI PNG &amp;amp; Vector PDF in results/figures/&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFE4E6;strokeColor=#E11D48;strokeWidth=2;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="2095" y="300" width="420" height="150" as="geometry" />
+        <mxCell id="l3_e2_exec" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#888888;fontColor=#CCCCCC;fontSize=11;dashed=1;arcSize=12" value="&lt;b&gt;[PLANNED] Phase 7: RAG Verification Run&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;&lt;i&gt;[DOTTED: PLANNED POST-GATE G2]&lt;/i&gt;&lt;br&gt;Command: python -m src.run_verifiers --config configs/config.yaml --split rag&lt;br&gt;Evaluates Filter B, ROUGE-L, and Filter A on the 200 human-adjudicated healthcare RAG pairs&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="640" x="20" y="500" as="geometry" />
         </mxCell>
-        <mxCell id="L5_SITE_EXPORT" value="&lt;div style=&quot;font-weight: bold; color: #881337; font-size: 12px;&quot;&gt;Site Exporter Engine (src/site_export.py)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #9F1239; font-weight: 600; margin-bottom: 4px;&quot;&gt;SESSION CLOSE ENGINE | Rule R9.2&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• Replaces template macros with canonical numbers of record&lt;br/&gt;• Synchronizes Phase.md Snapshot Progress Board&lt;br/&gt;• Validates all 14 interactive metric tiles on the website&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFF1F2;strokeColor=#BE123C;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="2095" y="470" width="420" height="115" as="geometry" />
+        <mxCell id="layer4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#1E3A4C;strokeColor=#5A9AB8;fontColor=#FFFFFF;fontSize=12;fontStyle=1;container=1;collapsible=0;arcSize=8" value="Layer 4 — Evaluation, Statistics &amp; Efficiency Profiling" vertex="1">
+          <mxGeometry height="380" width="650" x="625" y="710" as="geometry" />
         </mxCell>
-        <mxCell id="L5_MKDOCS" value="&lt;div style=&quot;font-weight: bold; color: #881337; font-size: 12px;&quot;&gt;Project Website (Material for MkDocs)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #9F1239; font-weight: 600; margin-bottom: 4px;&quot;&gt;DOCUMENTATION PORTAL | mkdocs build --strict&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• 4 custom Python hooks (numbers, progress, citations, claim)&lt;br/&gt;• Interactive web presentation of Architecture, Write-up, &amp;amp; Progress&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFE4E6;strokeColor=#BE123C;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="2095" y="605" width="420" height="115" as="geometry" />
+        <mxCell id="l4_eval" parent="layer4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Evaluation Engine&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;src/evaluate.py&lt;br&gt;P, R, F1, FPR, AUROC&lt;br&gt;&lt;b&gt;Safety Metric: FNR&lt;/b&gt; (uncaught)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="195" x="20" y="42" as="geometry" />
         </mxCell>
-        <mxCell id="L5_CICD" value="&lt;div style=&quot;font-weight: bold; color: #0F172A; font-size: 12px;&quot;&gt;Automated CI/CD (GitHub Actions)&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #334155; font-weight: 600; margin-bottom: 4px;&quot;&gt;AUTOMATION | .github/workflows/&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #334155;&quot;&gt;• &lt;b&gt;ci.yml:&lt;/b&gt; Automated pytest (122 passing tests) &amp;amp; ruff linting&lt;br/&gt;• &lt;b&gt;pages.yml:&lt;/b&gt; Continuous deployment to GitHub Pages on git push&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#475569;strokeWidth=1.5;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=1;" vertex="1" parent="1">
-          <mxGeometry x="2095" y="740" width="420" height="110" as="geometry" />
+        <mxCell id="l4_stats" parent="layer4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Bootstrap &amp; McNemar&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;src/evaluation/stats.py&lt;br&gt;1,000 question block resamples&lt;br&gt;McNemar exact test (p=1.000)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="200" x="225" y="42" as="geometry" />
         </mxCell>
-        <mxCell id="L5_PAPER" value="&lt;div style=&quot;font-weight: bold; color: #991B1B; font-size: 12px;&quot;&gt;[PLANNED] Academic Manuscript &amp;amp; LaTeX Assets&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #DC2626; font-weight: 600; margin-bottom: 4px;&quot;&gt;STATUS: PLANNED | DOTTED BOX | paper/&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #450A0A;&quot;&gt;• Automated LaTeX table generation directly from numbers_of_record.json&lt;br/&gt;• Camera-ready clinical paper draft adhering to health AI guidelines&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DC2626;strokeWidth=2;dashed=1;dashPattern=6 4;fontColor=#7F1D1D;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="2095" y="870" width="420" height="115" as="geometry" />
+        <mxCell id="l4_breakdowns" parent="layer4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Subgroup Breakdowns&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Difficulty (Easy/Med/Hard)&lt;br&gt;Category (Entity/Fact/etc.)&lt;br&gt;difficulty_breakdown.csv&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="195" x="435" y="42" as="geometry" />
         </mxCell>
-        <mxCell id="L5_RELEASE" value="&lt;div style=&quot;font-weight: bold; color: #991B1B; font-size: 12px;&quot;&gt;[PLANNED] Open Science Release &amp;amp; Archival&lt;/div&gt;&lt;div style=&quot;font-size: 10px; color: #DC2626; font-weight: 600; margin-bottom: 4px;&quot;&gt;STATUS: PLANNED (PHASE 11) | DOTTED BOX&lt;/div&gt;&lt;div style=&quot;font-size: 10.5px; color: #450A0A;&quot;&gt;• Permanent Zenodo DOI code and data archival&lt;br/&gt;• Reproducible one-click execution bundle (scripts/run_all.sh)&lt;/div&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DC2626;strokeWidth=2;dashed=1;dashPattern=6 4;fontColor=#7F1D1D;fontSize=11;align=left;spacingLeft=12;spacingRight=12;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="2095" y="1005" width="420" height="115" as="geometry" />
+        <mxCell id="l4_timing" parent="layer4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#20BEFF;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Resource &amp; Efficiency Profiler&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;src/timing.py (psutil &amp; monotonic clock)&lt;br&gt;Wall-clock p50/p95 latency (Filter B: 332ms, ROUGE: 2.5ms)&lt;br&gt;RAM tracking &amp; shadow cost ($0.0575 / 1k queries)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="300" x="20" y="125" as="geometry" />
         </mxCell>
-        <mxCell id="E_M_PILOT" value="Sample 50 rows" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L1_MEDHALLU" target="L1_PILOT">
+        <mxCell id="l4_cross" parent="layer4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Cross-Experiment Analysis&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;src/cross_experiment.py&lt;br&gt;Verifier ranking agreement (Kendall&#x27;s τ, Spearman&#x27;s ρ)&lt;br&gt;Qualitative disagreement mining: 3 pairs exported&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="300" x="330" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="l4_e2_eval" parent="layer4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#888888;fontColor=#CCCCCC;fontSize=11;dashed=1;arcSize=12" value="&lt;b&gt;[PLANNED] Phase 8 Exp 2 RAG Evaluation&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;&lt;i&gt;[DOTTED: PLANNED]&lt;/i&gt;&lt;br&gt;Evaluate verifiers on 200 RAG pairs post-Gate G2&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="195" x="20" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="l4_e2_transfer" parent="layer4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#888888;fontColor=#CCCCCC;fontSize=11;dashed=1;arcSize=12" value="&lt;b&gt;[PLANNED] Phase 9 Domain Shift&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;&lt;i&gt;[DOTTED: PLANNED]&lt;/i&gt;&lt;br&gt;Zero-shot transfer of Exp 1 thresholds directly to Exp 2&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="200" x="225" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="l4_hypotheses" parent="layer4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#888888;fontColor=#CCCCCC;fontSize=11;dashed=1;arcSize=12" value="&lt;b&gt;Hypothesis Testing&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;&lt;i&gt;[DOTTED: PLANNED]&lt;/i&gt;&lt;br&gt;H1: Filter B non-inferiority&lt;br&gt;H2: Shift degradation&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="195" x="435" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="l4_banner" parent="layer4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#12293A;strokeColor=#5A9AB8;fontColor=#EEEEEE;fontSize=10;arcSize=12" value="&lt;font style=&quot;font-size:9px; color: #EEEEEE&quot;&gt;&lt;b&gt;Statistical Integrity Rule R8.2:&lt;/b&gt; Question-level block bootstrap (1,000 resamples) keeps positive and negative pair halves coupled to reflect genuine clustered variance. All confidence intervals and p-values are programmatically exported to results/site/numbers_of_record.json.&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="610" x="20" y="298" as="geometry" />
+        </mxCell>
+        <mxCell id="layer5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#5B4416;strokeColor=#C9A24A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;container=1;collapsible=0;arcSize=8" value="Layer 5 — Dissemination, Observability &amp; Web Infrastructure" vertex="1">
+          <mxGeometry height="380" width="680" x="1295" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="l5_ssot" parent="layer5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#20BEFF;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Numbers of Record (Single Source of Truth)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;results/site/numbers_of_record.json&lt;br&gt;Programmatic single source of truth for all verified numbers, CIs, timings, and costs · Zero hand-typed numbers&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="305" x="20" y="42" as="geometry" />
+        </mxCell>
+        <mxCell id="l5_figures" parent="layer5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Publication Figures Engine (src/figures.py)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;🎨 6 publication figures in 300 DPI PNG &amp; Vector PDF:&lt;br&gt;Fig 1: CM · Fig 2: PR Curve · Fig 3: Latency CDF&lt;br&gt;Fig 4: Pareto Front · Fig 5: Category · Fig 6: Cross-Exp&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="325" x="335" y="42" as="geometry" />
+        </mxCell>
+        <mxCell id="l5_export" parent="layer5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Site Exporter (src/site_export.py)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Replaces template macros with numbers of record&lt;br&gt;Updates Phase.md Snapshot Progress Board&lt;br&gt;Validates 14 interactive website metric tiles&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="305" x="20" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="l5_web" parent="layer5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;Project Documentation Site (MkDocs)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Material for MkDocs · strict build (--strict)&lt;br&gt;4 custom Python hooks (numbers, progress, citations, claim)&lt;br&gt;Hosted live on GitHub Pages&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="325" x="335" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="l5_cicd" parent="layer5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#AAAAAA;fontColor=#FFFFFF;fontSize=11;arcSize=12" value="&lt;b&gt;CI/CD Automation (GitHub Actions)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;ci.yml: Automated pytest (127 tests) &amp; ruff linting&lt;br&gt;pages.yml: Automatic MkDocs strict build &amp; deployment&lt;br&gt;Enforces reproducible environment &amp; zero drift&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="305" x="20" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="l5_paper" parent="layer5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#888888;fontColor=#CCCCCC;fontSize=11;dashed=1;arcSize=12" value="&lt;b&gt;[PLANNED] Academic Manuscript&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;&lt;i&gt;[DOTTED: PLANNED]&lt;/i&gt;&lt;br&gt;Phase 10: paper/ draft&lt;br&gt;LaTeX tables from JSON&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="155" x="335" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="l5_release" parent="layer5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111111;strokeColor=#888888;fontColor=#CCCCCC;fontSize=11;dashed=1;arcSize=12" value="&lt;b&gt;[PLANNED] Open Science Release&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;&lt;i&gt;[DOTTED: PLANNED]&lt;/i&gt;&lt;br&gt;Phase 11: Permanent DOI&lt;br&gt;One-click reproduction&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="160" x="500" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="l5_note" parent="layer5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3D2E0E;strokeColor=#C9A24A;fontColor=#FFFFFF;fontSize=10;arcSize=12" value="&lt;font style=&quot;font-size:9px; color: #E0C77A&quot;&gt;&lt;b&gt;Reproducibility Guarantee:&lt;/b&gt; Every number appearing on the website or manuscript is derived via programmatic export from execution manifests. Neither the agent nor researchers may manually edit metric values, guaranteeing absolute synchronization across papers, tables, and website.&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="640" x="20" y="298" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="actor_user" target="l0_medhallu" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="clinical query">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="100" y="230" />
+              <mxPoint x="100" y="185" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="l0_medhallu" target="l1_builder" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="250 questions">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_P_PILOT" value="46% unsupported GT" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L1_PILOT" target="L1_GATE_G1">
+        <mxCell id="e3" edge="1" parent="1" source="l1_builder" target="l1_splitter" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="500 pairs">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_G1_E1" value="Plan 2: Secondary Benchmark" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L1_GATE_G1" target="L2_E1_PAIRS">
+        <mxCell id="e4" edge="1" parent="1" source="l1_splitter" target="l1_leakage" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="leakage check">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_G1_E2" value="Plan 2: Primary Headline RAG" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L1_GATE_G1" target="L2_E2_CHUNK">
+        <mxCell id="e5" edge="1" parent="1" source="l0_medhallu" target="p_spotcheck" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="sample 50 rows">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="250" y="240" />
+              <mxPoint x="250" y="607" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="p_spotcheck" target="p_gate_g1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="46% unsupported">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_M_E1" value="250 questions" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L1_MEDHALLU" target="L2_E1_PAIRS">
+        <mxCell id="e7" edge="1" parent="1" source="p_rouge_auroc" target="p_gate_g1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="AUROC=0.4894">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_P_E2" value="1,000 abstracts" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L1_PUBMEDQA" target="L2_E2_CHUNK">
+        <mxCell id="e8" edge="1" parent="1" source="p_gate_g1" target="l1_builder" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="Plan 2: Secondary Benchmark">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="615" y="747" />
+              <mxPoint x="615" y="207" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="p_gate_g1" target="l2_chunker" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="Plan 2: Primary Headline RAG">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="747" />
+              <mxPoint x="620" y="177" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="l0_pubmedqa" target="l2_chunker" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="1,000 abstracts">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="365" y="285" />
+              <mxPoint x="635" y="285" />
+              <mxPoint x="635" y="177" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="l2_chunker" target="l2_faiss" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="1,790 chunks">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_E1_P_S" value="500 pairs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L2_E1_PAIRS" target="L2_E1_SPLIT">
+        <mxCell id="e12" edge="1" parent="1" source="l2_faiss" target="l2_retriever" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="IndexFlatIP vectors">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_E1_S_F" value="100 dev / 400 test" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L2_E1_SPLIT" target="L2_E1_FILES">
+        <mxCell id="e13" edge="1" parent="1" source="l2_retriever" target="l2_generator" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="top-3 chunks (normal/degraded)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1160" y="210" />
+              <mxPoint x="1160" y="230" />
+              <mxPoint x="930" y="230" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="l2_generator" target="sl_export" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="200 generated answers">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="930" y="290" />
+              <mxPoint x="780" y="290" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="sl_export" target="sl_gate2_label" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;strokeColor=#20BEFF;dashed=1;" value="annotator_1.csv / annotator_2.csv">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_E2_C_F" value="1,790 chunks" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L2_E2_CHUNK" target="L2_E2_FAISS">
+        <mxCell id="e16" edge="1" parent="1" source="sl_gate2_label" target="sl_kappa" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;strokeColor=#20BEFF;dashed=1;" value="200 labeled pairs">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1075" y="380" />
+              <mxPoint x="1075" y="410" />
+              <mxPoint x="780" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e17" edge="1" parent="1" source="sl_kappa" target="sl_adjudication" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;strokeColor=#20BEFF;dashed=1;" value="disagreements.csv">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_E2_F_R" value="IndexFlatIP vectors" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L2_E2_FAISS" target="L2_E2_RETRIEVAL">
+        <mxCell id="e18" edge="1" parent="1" source="sl_adjudication" target="sl_merge" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;strokeColor=#20BEFF;dashed=1;" value="resolved labels">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1075" y="455" />
+              <mxPoint x="1075" y="525" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e19" edge="1" parent="1" source="sl_merge" target="l3_e2_exec" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;strokeColor=#20BEFF;strokeWidth=2;dashed=1;" value="pairs.jsonl (Ground Truth)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1245" y="555" />
+              <mxPoint x="1305" y="555" />
+              <mxPoint x="1305" y="635" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e20" edge="1" parent="1" source="l1_splitter" target="l3_tune" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="Dev 100 pairs">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="615" y="290" />
+              <mxPoint x="1290" y="290" />
+              <mxPoint x="1290" y="172" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e21" edge="1" parent="1" source="l1_splitter" target="l3_coord" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="Test 400 pairs">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="615" y="300" />
+              <mxPoint x="1285" y="300" />
+              <mxPoint x="1285" y="172" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e22" edge="1" parent="1" source="l3_tune" target="l3_rouge" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="threshold: 0.1741">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1785" y="207" />
+              <mxPoint x="1785" y="220" />
+              <mxPoint x="1635" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e23" edge="1" parent="1" source="l3_tune" target="l3_filter_b" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="threshold: 0.0039">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1785" y="207" />
+              <mxPoint x="1785" y="345" />
+              <mxPoint x="1520" y="345" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e24" edge="1" parent="1" source="l3_coord" target="l3_rouge" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="evaluate">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_E2_R_G" value="Top-3 chunks (normal/degraded)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L2_E2_RETRIEVAL" target="L2_E2_GROQ">
+        <mxCell id="e25" edge="1" parent="1" source="l3_coord" target="l3_filter_b" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="evaluate">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_E2_G_A" value="200 generated answers" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L2_E2_GROQ" target="L2_E2_ANN_EXPORT">
+        <mxCell id="e26" edge="1" parent="1" source="l3_coord" target="l3_filter_a" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="evaluate (smoke verified)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1467" y="207" />
+              <mxPoint x="1467" y="450" />
+              <mxPoint x="1520" y="450" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e27" edge="1" parent="1" source="l3_filter_b" target="l3_filter_b_opt" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;strokeColor=#888888;dashed=1;" value="model scale ablation">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_E2_A_G2" value="annotator_1.csv &amp; annotator_2.csv" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;dashed=1;" edge="1" parent="1" source="L2_E2_ANN_EXPORT" target="L2_E2_GATE_G2">
+        <mxCell id="e28" edge="1" parent="1" source="l3_filter_a" target="l3_filter_a_runs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;strokeColor=#888888;dashed=1;" value="deferred (free tier 20 RPD)">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_E1_DEV_TUNE" value="Dev 100 pairs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L2_E1_FILES" target="L3_TUNING">
+        <mxCell id="e29" edge="1" parent="1" source="l3_coord" target="l3_e1_exec" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="score 400 pairs">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1400" y="207" />
+              <mxPoint x="1400" y="545" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e30" edge="1" parent="1" source="l3_e1_exec" target="l4_eval" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="Exp 1 test results">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1635" y="612" />
+              <mxPoint x="1635" y="700" />
+              <mxPoint x="742" y="700" />
+              <mxPoint x="742" y="752" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e31" edge="1" parent="1" source="l3_e1_exec" target="l4_timing" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="latencies &amp; memory">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1635" y="612" />
+              <mxPoint x="1635" y="700" />
+              <mxPoint x="775" y="700" />
+              <mxPoint x="775" y="835" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e32" edge="1" parent="1" source="l3_e2_exec" target="l4_e2_eval" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;strokeColor=#20BEFF;dashed=1;" value="Exp 2 RAG results">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1635" y="700" />
+              <mxPoint x="1285" y="700" />
+              <mxPoint x="1285" y="960" />
+              <mxPoint x="840" y="960" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e33" edge="1" parent="1" source="l3_e2_exec" target="l4_e2_transfer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;strokeColor=#20BEFF;dashed=1;" value="Exp 1 → Exp 2 transfer">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1635" y="700" />
+              <mxPoint x="1285" y="700" />
+              <mxPoint x="1285" y="960" />
+              <mxPoint x="1050" y="960" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e34" edge="1" parent="1" source="l4_eval" target="l4_stats" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="bootstrap &amp; McNemar">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_E1_TEST_COORD" value="Test 400 pairs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L2_E1_FILES" target="L3_COORDINATOR">
+        <mxCell id="e35" edge="1" parent="1" source="l4_eval" target="l4_breakdowns" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="subgroups">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_E2_G2_COORD" value="Reconciled pairs.jsonl" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;dashed=1;" edge="1" parent="1" source="L2_E2_GATE_G2" target="L3_E2_EXEC">
+        <mxCell id="e36" edge="1" parent="1" source="l4_eval" target="l4_cross" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="ranking check">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_TUNE_ROUGE" value="Freeze thresh: 0.1741" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L3_TUNING" target="L3_ROUGE">
+        <mxCell id="e37" edge="1" parent="1" source="l4_eval" target="l5_ssot" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="F1, FNR, P, R">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="722" y="782" />
+              <mxPoint x="722" y="695" />
+              <mxPoint x="1467" y="695" />
+              <mxPoint x="1467" y="752" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e38" edge="1" parent="1" source="l4_stats" target="l5_ssot" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="95% CIs &amp; p-values">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="945" y="782" />
+              <mxPoint x="945" y="695" />
+              <mxPoint x="1467" y="695" />
+              <mxPoint x="1467" y="752" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e39" edge="1" parent="1" source="l4_timing" target="l5_ssot" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="timing &amp; shadow costs">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="945" y="872" />
+              <mxPoint x="1285" y="872" />
+              <mxPoint x="1285" y="789" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e40" edge="1" parent="1" source="l5_ssot" target="l5_figures" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="exact metric values">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_TUNE_NLI" value="Freeze thresh: 0.0039" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L3_TUNING" target="L3_FILTER_B">
+        <mxCell id="e41" edge="1" parent="1" source="l5_ssot" target="l5_export" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="numbers synchronization">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_COORD_ROUGE" value="Evaluate" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L3_COORDINATOR" target="L3_ROUGE">
+        <mxCell id="e42" edge="1" parent="1" source="l5_figures" target="l5_web" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="figures 1-6 (PNG/PDF)">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_COORD_NLI" value="Evaluate" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L3_COORDINATOR" target="L3_FILTER_B">
+        <mxCell id="e43" edge="1" parent="1" source="l5_export" target="l5_web" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="rendered tables &amp; board">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_COORD_API" value="Evaluate (smoke verified)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L3_COORDINATOR" target="L3_FILTER_A">
+        <mxCell id="e44" edge="1" parent="1" source="l5_cicd" target="l5_web" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;" value="automated deploy on push">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="E_COORD_E1_EXEC" value="Score 400 pairs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L3_COORDINATOR" target="L3_E1_EXEC">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e45" edge="1" parent="1" source="l5_ssot" target="l5_paper" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;strokeColor=#888888;dashed=1;" value="LaTeX tables export">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1467" y="827" />
+              <mxPoint x="1467" y="957" />
+              <mxPoint x="1680" y="957" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="E_API_FULL" value="Deferred" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;dashed=1;" edge="1" parent="1" source="L3_FILTER_A" target="L3_FILTER_A_FULL">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e46" edge="1" parent="1" source="l5_web" target="l5_release" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;strokeColor=#888888;dashed=1;" value="reproducible package">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1802" y="910" />
+              <mxPoint x="1875" y="910" />
+              <mxPoint x="1875" y="957" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="E_NLI_OPT" value="Model ablation" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;dashed=1;" edge="1" parent="1" source="L3_FILTER_B" target="L3_FILTER_B_OPT">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e47" edge="1" parent="1" source="store_cache" target="l2_generator" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;strokeColor=#4FA3C7;dashed=1;" value="offline cache">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="605" y="512" />
+              <mxPoint x="620" y="512" />
+              <mxPoint x="620" y="257" />
+              <mxPoint x="645" y="257" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="E_COORD_E2_EXEC" value="Phase 7 RAG run" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;dashed=1;" edge="1" parent="1" source="L3_COORDINATOR" target="L3_E2_EXEC">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_E1_EXEC_METRICS" value="Exp 1 scored pairs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L3_E1_EXEC" target="L4_METRICS">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_E1_EXEC_TIMING" value="Latencies &amp; RAM" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L3_E1_EXEC" target="L4_TIMING">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_E2_EXEC_EVAL" value="Exp 2 scored pairs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;dashed=1;" edge="1" parent="1" source="L3_E2_EXEC" target="L4_E2_EVAL">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_E2_EXEC_TRANS" value="Threshold transfer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;dashed=1;" edge="1" parent="1" source="L3_E2_EXEC" target="L4_E2_TRANSFER">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_METRICS_STATS" value="Question Bootstrap &amp; McNemar" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L4_METRICS" target="L4_STATS">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_METRICS_BREAK" value="Subgroups" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L4_METRICS" target="L4_BREAKDOWN">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_METRICS_CROSS" value="Rank agreement" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L4_METRICS" target="L4_CROSS">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_E2_EVAL_HYP" value="Hypothesis H1 &amp; H2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;dashed=1;" edge="1" parent="1" source="L4_E2_EVAL" target="L4_E2_HYPOTHESIS">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_E2_TRANS_HYP" value="Domain shift impact" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;dashed=1;" edge="1" parent="1" source="L4_E2_TRANSFER" target="L4_E2_HYPOTHESIS">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_METRICS_SSOT" value="F1, FNR, P, R" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L4_METRICS" target="L5_SSOT">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_STATS_SSOT" value="Bootstrap 95% CIs &amp; p-values" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L4_STATS" target="L5_SSOT">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_TIMING_SSOT" value="Latency p50/p95 &amp; costs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L4_TIMING" target="L5_SSOT">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_SSOT_FIG" value="Exact canonical metrics" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L5_SSOT" target="L5_FIGURES">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_SSOT_SITE" value="Numbers synchronization" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L5_SSOT" target="L5_SITE_EXPORT">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_FIG_WEB" value="Figures 1 to 6 (PNG/PDF)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L5_FIGURES" target="L5_MKDOCS">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_SITE_WEB" value="Populated Markdown" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L5_SITE_EXPORT" target="L5_MKDOCS">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_CICD_WEB" value="Automated deployment" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="L5_CICD" target="L5_MKDOCS">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_SSOT_PAPER" value="LaTeX tables export" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;dashed=1;" edge="1" parent="1" source="L5_SSOT" target="L5_PAPER">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="E_WEB_RELEASE" value="Reproducible package" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=2;endArrow=classic;fontSize=10;fontColor=#475569;dashed=1;" edge="1" parent="1" source="L5_MKDOCS" target="L5_RELEASE">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e48" edge="1" parent="1" source="store_cache" target="l3_filter_a" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FFFFFF;fontColor=light-dark(#DDDDDD,#FFFFFF);fontSize=10;strokeColor=#4FA3C7;dashed=1;" value="offline cache">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="605" y="512" />
+              <mxPoint x="620" y="512" />
+              <mxPoint x="620" y="60" />
+              <mxPoint x="1520" y="60" />
+              <mxPoint x="1520" y="405" />
+            </Array>
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>

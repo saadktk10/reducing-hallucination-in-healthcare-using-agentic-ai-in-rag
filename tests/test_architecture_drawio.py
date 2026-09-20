@@ -16,20 +16,23 @@ def test_drawio_xml_validity():
     assert root.tag == "mxfile"
     diagram = root.find("diagram")
     assert diagram is not None
-    assert diagram.get("name") == "System Architecture (End-to-End)"
+    assert diagram.get("name") == "Healthcare RAG & Verifier Architecture v3"
     graph_model = diagram.find("mxGraphModel")
     assert graph_model is not None
+    assert graph_model.get("background") == "#0D0D0D"
 
 
-def test_drawio_five_layers_present():
-    """Verify that all 5 required left-to-right layers are present."""
+def test_drawio_layers_present():
+    """Verify that all architecture layers matching AdaptiShield v3 style are present."""
     content = create_diagram_xml()
     expected_layers = [
-        "LAYER 1: DATA SOURCES &amp; INGESTION",
-        "LAYER 2: EXPERIMENT DATA PREP &amp; RAG GENERATION",
-        "LAYER 3: VERIFICATION LAYER (SHARED MULTI-VERIFIER)",
-        "LAYER 4: EVALUATION, STATISTICS &amp; PROFILING",
-        "LAYER 5: PRESENTATION, WEB &amp; DISSEMINATION",
+        "Layer 0 — Clinical Knowledge &amp; Corpus Sources",
+        "Layer 1 — Data Preparation &amp; Stratification",
+        "Layer 2 — Healthcare RAG Generation Plane",
+        "Layer 3 — Multi-Verifier Verification Plane",
+        "Layer 4 — Evaluation, Statistics &amp; Efficiency Profiling",
+        "Layer 5 — Dissemination, Observability &amp; Web Infrastructure",
+        "Protocol Governance &amp; Pilot Study (Gate G1)",
     ]
     for layer in expected_layers:
         assert layer in content, f"Missing layer in diagram XML: {layer}"
@@ -55,7 +58,6 @@ def test_drawio_dotted_boxes_for_planned_components():
     """Verify that planned/future components use dotted/dashed styling."""
     content = create_diagram_xml()
     assert "dashed=1" in content
-    assert "dashPattern=6 4" in content
     root = ET.fromstring(content)
     all_values = " ".join(cell.get("value", "") for cell in root.iter("mxCell"))
     planned_markers = [
