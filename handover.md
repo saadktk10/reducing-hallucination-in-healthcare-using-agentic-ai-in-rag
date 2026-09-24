@@ -6,8 +6,8 @@
 
 ## Current State
 
-- **Date**: 2026-09-21
-- **Session**: 9 (Completed)
+- **Date**: 2026-09-24
+- **Session**: 10 (Completed)
 - **Active Branch**: `main`
 - **Current Phase**:
   - Phase 0 ✅ Done (Python 3.12, PyTorch CPU, pinned models)
@@ -17,37 +17,34 @@
   - Phase 3 ✅ Done (Verifiers implemented, frozen thresholds & prompts)
   - Phase 4 ✅ Done (PubMedQA FAISS index, 200 RAG answers generated via Groq at temp 0)
   - Phase 5 🟡 Partial (Filter B & Baseline accuracy runs, timing benchmarks, shadow cost computed; Filter A deferred)
-  - Phase 6 🟡 Partial (Annotation CSVs re-exported and validated with RFC 4180 compliance; awaiting independent human labeling for Gate G2)
+  - Phase 6 🟡 Partial (Annotation CSVs validated with RFC 4180 compliance; awaiting independent human labeling for Gate G2)
   - Phase 7 🔲 Planned (Verifiers on RAG set, ready post-G2)
   - Phase 8 🟡 Partial (`src/evaluate.py` implemented; Exp 1 evaluated on 400 test pairs: main tables, question bootstrap CIs, McNemar test, breakdowns, `summary.md`; site tiles live; Exp 2 pending G2)
   - Phase 9 🟡 Partial (`src/cross_experiment.py` implemented; Exp 1 ranking & 3 qualitative disagreements exported; Exp 2 transfer check pending G2)
   - Phase 10 🟡 Partial (`src/figures.py` implemented; all 6 paper figures generated in 300 dpi PNG & vector PDF)
   - Phase 11 🔲 Planned
-- **Test Status**: 127 passed in `pytest -q`, 0 lint errors in `ruff check .`.
-- **Site Build**: `mkdocs build --strict` passing with 0 warnings in 1.1s.
+- **Environment & Build Health**:
+  - `ruff check .`: 0 lint errors (All checks passed).
+  - Pure-Python unit test suite (52 tests across config, prompts, I/O, cache, split, website, drawio architecture) passing.
+  - Windows Application Control (WDAC / WinError 4551) active on user profile `.rag_env` C-extension DLLs (torch/sklearn).
+  - `mkdocs build --strict`: passing with 0 warnings in 0.81s.
 - **Live Documentation**: [https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/](https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/)
 
 ---
 
-## Accomplishments (Session 9)
+## Accomplishments (Session 10)
 
-1. **Clarified Diagram Architecture Specifications**:
-   - Polled user via interactive clarification questions for layout orientation (horizontal Left-to-Right dataflow), scope (full end-to-end research architecture), file locations (`docs/assets/architecture.drawio` and repository root `architecture.drawio`), and visual theme (modern tech palette with distinct badges and dotted boxes for planned components).
-2. **Generated Comprehensive draw.io Architecture Diagram**:
-   - Structured the complete research system into 5 horizontal layers with clear orthogonal dataflow:
-     - **Layer 1: Data Sources & Ingestion**: MedHallu (`UTAustin-AIHealth/MedHallu:pqa_labeled`), PubMedQA (`qiaojin/PubMedQA:pqa_labeled`), Pilot inspection/spot-check (46% unsupported rate), Gate G1 decision (Plan 2 activation), Local cache & provenance store.
-     - **Layer 2: Experiment Data Prep & RAG Generation**: Exp 1 pair generator (250 Qs / 500 pairs) & question-level splitter (100 dev / 400 test), PubMedQA abstract chunker (1,790 chunks), local CPU embedding (`BAAI/bge-small-en-v1.5`), local FAISS vector store (`IndexFlatIP`, 451.8 MB peak RAM), dual retrieval engine (normal top-3 vs degraded top-3 distractors), Groq Cloud API generator (`qwen/qwen3.8-27b` @ temp 0, 256 tokens), Phase 6 annotation sheets (`annotator_1.csv`, `annotator_2.csv`), and Gate G2 human adjudication (dotted box).
-     - **Layer 3: Verification Layer (Shared Multi-Verifier)**: Shared verifier coordinator (`src/run_verifiers.py`), dev threshold tuner (`src/tune_thresholds.py`), Baseline ROUGE-L precision (threshold 0.1741, 2.5 ms median), Filter B Local NLI cross-encoder (`cross-encoder/nli-deberta-v3-small` on 6 CPU threads, batch 16, `pysbd` sentence segmentation, threshold 0.0039), Filter A API LLM judge (`gemini-3.6-flash`, structured JSON, `JsonlCache`), Exp 1 test scored runs, and planned Phase 7 RAG run / Filter A full runs (dotted boxes).
-     - **Layer 4: Evaluation, Statistics & Profiling**: Core metrics engine (`evaluate.py`: F1, FNR, FPR, AUROC), statistical inference suite (1,000-resample question block bootstrap 95% CIs, McNemar test), difficulty and hallucination category breakdown analyzers, system profiler (`src/timing.py`: p50/p95 latency, RAM, shadow financial cost), cross-experiment comparator (`cross_experiment.py`: ranking agreement & qualitative disagreement mining), and planned Exp 2 RAG evaluation & threshold transfer (dotted boxes).
-     - **Layer 5: Presentation, Web & Dissemination**: Numbers of Record canonical store (`results/site/numbers_of_record.json`), 6 publication figures in 300 DPI PNG & vector PDF (`src/figures.py`), site exporter (`site_export.py`), project website (Material for MkDocs with 4 custom hooks), GitHub Actions CI/CD workflows, and planned LaTeX manuscript exporter & Zenodo open science release (dotted boxes).
-3. **Automated draw.io Diagram Generator & Test Coverage**:
-   - Implemented `scripts/generate_architecture_drawio.py` to compile and validate the XML document.
-   - Generated both `docs/assets/architecture.drawio` and `architecture.drawio` in repository root.
-   - Added unit tests in `tests/test_architecture_drawio.py` validating XML syntax, the 5 layers, explicit model/tool badges, and dotted boxes for planned components.
-   - Test suite expanded from 122 to 127 tests (all passing).
-4. **Documentation & Site Synchronization**:
-   - Updated `Architecture.md` with links and directory structure entries for `architecture.drawio`.
-   - Verified strict MkDocs documentation build (`mkdocs build --strict` passing in 1.1s with 0 warnings).
+1. **Clarified Phase 6 Completion Requirements and Gate G2 Workflow**:
+   - Detailed the full protocol and dependencies for completing Phase 6: independent human labeling of 200 pairs (`annotator_1.csv` and `annotator_2.csv`), running Cohen's kappa agreement calculation (`python -m src.annotation kappa`), resolving disagreements into `labeled.csv`, merging into `data/exp2_rag/labeled.jsonl` (`python -m src.annotation merge`), and verifying Gate G2 class balance ($\ge 25\%$ Hallucinated).
+   - Re-emphasized Rule R1.5 and R1.6 constraints prohibiting AI generation of ground-truth labels.
+2. **Environment & Health Verification**:
+   - Verified GitHub Desktop Git CLI integration and branch status on `main`.
+   - Executed `ruff check .` with zero errors.
+   - Built documentation site strictly via `mkdocs build --strict` (0.81s, zero warnings).
+   - Re-exported canonical Numbers of Record (`python -m src.site_export`), refreshing timestamps and git commit SHA.
+3. **Documentation & Session Close Synchronization**:
+   - Updated `Phase.md` header and Session 10 log entry.
+   - Updated `handover.md` to reflect Session 10 completion and current state.
 
 ---
 
@@ -64,7 +61,7 @@
 3. **Resolve Disagreements (Gate G2)**:
    - Researchers discuss disagreements in `disagreements.csv` and fill `final_label` in `data/exp2_rag/labeled.csv`.
 4. **Merge Ground Truth Dataset**:
-   - Run `python -m src.annotation merge --config configs/config.yaml` to create `data/exp2_rag/pairs.jsonl`.
+   - Run `python -m src.annotation merge --config configs/config.yaml` to create `data/exp2_rag/labeled.jsonl`.
    - Check Gate G2 condition class balance (>= 25% Hallucinated).
 5. **Execute Phase 7 (Verifiers on RAG set)**:
    - Run `python -m src.run_verifiers --config configs/config.yaml --split rag`.
