@@ -1,0 +1,5 @@
+condition,verifier,n,precision,recall,f1,fnr,fpr
+normal,filter_b,100,0.05,1.0,0.0952,0.0,1.0
+normal,rouge,100,0.05,1.0,0.0952,0.0,1.0
+degraded,filter_b,100,0.04,1.0,0.0769,0.0,1.0
+degraded,rouge,100,0.04,1.0,0.0769,0.0,1.0

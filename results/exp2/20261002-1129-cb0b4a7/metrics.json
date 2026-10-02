@@ -1,0 +1,65 @@
+{
+  "accuracy": {
+    "rouge": {
+      "n": 200,
+      "parse_failures": 0,
+      "precision": 0.045,
+      "recall": 1.0,
+      "f1": 0.0861,
+      "f1_ci": [
+        0.0392,
+        0.1395
+      ],
+      "fnr": 0.0,
+      "fpr": 1.0,
+      "auroc": 0.8077
+    },
+    "filter_b": {
+      "n": 200,
+      "parse_failures": 0,
+      "precision": 0.045,
+      "recall": 1.0,
+      "f1": 0.0861,
+      "f1_ci": [
+        0.0392,
+        0.1395
+      ],
+      "fnr": 0.0,
+      "fpr": 1.0,
+      "auroc": 0.2199
+    }
+  },
+  "exp2.filter_b.f1": {
+    "value": 0.0861,
+    "display": "0.0861 [0.0392, 0.1395]",
+    "ci": [
+      0.0392,
+      0.1395
+    ],
+    "source": "results/exp2/20261002-1129-cb0b4a7/metrics.json"
+  },
+  "exp2.filter_b.fnr": {
+    "value": 0.0,
+    "display": "0.0000",
+    "source": "results/exp2/20261002-1129-cb0b4a7/metrics.json"
+  },
+  "exp2.rouge.f1": {
+    "value": 0.0861,
+    "display": "0.0861 [0.0392, 0.1395]",
+    "ci": [
+      0.0392,
+      0.1395
+    ],
+    "source": "results/exp2/20261002-1129-cb0b4a7/metrics.json"
+  },
+  "exp2.rouge.fnr": {
+    "value": 0.0,
+    "display": "0.0000",
+    "source": "results/exp2/20261002-1129-cb0b4a7/metrics.json"
+  },
+  "exp2.kappa": {
+    "value": 1.0,
+    "display": "1.0000",
+    "source": "results/exp2/20261002-1129-cb0b4a7/metrics.json"
+  }
+}

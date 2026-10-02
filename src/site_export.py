@@ -125,6 +125,27 @@ def export_site_numbers(
             except Exception as e:
                 logger.warning("Failed to read %s: %s", exp2_metrics_file, e)
 
+    # Check for cross-experiment metrics (Phase 9)
+    cross_dir = results_dir / "cross"
+    if cross_dir.exists():
+        subdirs = [d for d in cross_dir.iterdir() if d.is_dir()]
+        if subdirs:
+            subdirs.sort(key=lambda d: d.name, reverse=True)
+            cross_metrics_file = subdirs[0] / "cross_metrics.json"
+            if cross_metrics_file.exists():
+                try:
+                    with open(cross_metrics_file, encoding="utf-8") as f:
+                        cross_data = json.load(f)
+                    if "ranking_agrees" in cross_data:
+                        agrees = bool(cross_data["ranking_agrees"])
+                        numbers["cross.ranking_agrees"] = {
+                            "value": agrees,
+                            "display": "YES" if agrees else "NO",
+                            "source": str(cross_metrics_file),
+                        }
+                except Exception as e:
+                    logger.warning("Failed to read %s: %s", cross_metrics_file, e)
+
     record = {
         "generated_at": datetime.now(UTC).isoformat(),
         "git_sha": get_git_sha(),

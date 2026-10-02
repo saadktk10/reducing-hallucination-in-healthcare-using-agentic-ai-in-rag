@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-24T10:44:56.950761+00:00",
-  "git_sha": "57e69a3",
+  "generated_at": "2026-10-02T11:48:43.470712+00:00",
+  "git_sha": "cb0b4a7",
   "numbers": {
     "pilot.unsupported_rate": {
       "value": 0.46,
@@ -45,6 +45,25 @@
         0.67
       ],
       "source": "results/exp1/20260919-2151-bd5e507/metrics.json"
+    },
+    "exp2.filter_b.f1": {
+      "value": 0.0861,
+      "display": "0.0861 [0.0392, 0.1395]",
+      "ci": [
+        0.0392,
+        0.1395
+      ],
+      "source": "results/exp2/20261002-1129-cb0b4a7/metrics.json"
+    },
+    "exp2.kappa": {
+      "value": 1.0,
+      "display": "1.0000",
+      "source": "results/exp2/20261002-1129-cb0b4a7/metrics.json"
+    },
+    "cross.ranking_agrees": {
+      "value": true,
+      "display": "YES",
+      "source": "results\\cross\\20260919-2151-bd5e507_20261002-1129-cb0b4a7\\cross_metrics.json"
     }
   }
 }

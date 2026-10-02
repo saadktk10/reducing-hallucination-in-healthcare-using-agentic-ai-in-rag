@@ -26,7 +26,7 @@ __pycache__/
 dist/
 build/
 .pytest_cache/
-site/
+/site/
 
 # Virtual environments
 .venv/
