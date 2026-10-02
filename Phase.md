@@ -4,9 +4,9 @@ Detailed implementation plan over 10 weeks. Each phase lists goal, owner, tasks,
 
 **Owners.** R1 = researcher leading Experiment 1. R2 = researcher leading Experiment 2. Both = both researchers. Agent = Antigravity.
 
-*Last updated: 2026-10-02, session 11. Updated at the end of every session (Rules section 9).*
+*Last updated: 2026-10-02, session 12. Updated at the end of every session (Rules section 9).*
 
-**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & Baseline accuracy runs, timing benchmarks, shadow cost computed; Filter A deferred per researcher decision), Phase 6 ✅ Done (Gate G2 passed, Cohen's Kappa = 1.0000, 200 pairs merged), Phase 7 ✅ Done (Verifiers scored on RAG set: Filter B & ROUGE), Phase 8 ✅ Done (Exp 1 and Exp 2 evaluated: main tables, question/pair bootstrap CIs, McNemar, breakdowns, summary.md; site tiles live), Phase 9 ✅ Done (cross_experiment.py executed on Exp 1 and Exp 2, ranking agreement verified: Filter B > ROUGE, threshold transfer gap computed, 3 qualitative disagreements exported), Phase 10 ✅ Done (all 6 publication figures generated in 300 dpi PNG & vector PDF), Phase 11 🔲 Planned.
+**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & Baseline accuracy runs, timing benchmarks, shadow cost computed; Filter A deferred per researcher decision), Phase 6 ✅ Done (Gate G2 passed, Cohen's Kappa = 1.0000, 200 pairs merged), Phase 7 ✅ Done (Verifiers scored on RAG set: Filter B & ROUGE), Phase 8 ✅ Done (Exp 1 and Exp 2 evaluated: main tables, question/pair bootstrap CIs, McNemar, breakdowns, summary.md; site tiles live), Phase 9 ✅ Done (cross_experiment.py executed on Exp 1 and Exp 2, ranking agreement verified: Filter B > ROUGE, threshold transfer gap computed, 3 qualitative disagreements exported), Phase 10 ✅ Done (all 6 publication figures generated in 300 dpi PNG & vector PDF, results/REPORT.md index created, writeup digests and manuscript section drafts completed, test_writeup.py passing), Phase 11 🔲 Planned.
 
 ## Snapshot
 
@@ -25,7 +25,7 @@ Status legend: ✅ done · 🟡 partial · 🔲 planned · 🔴 open defect · �
 | 7 | Verifiers on the RAG set | ✅ Done (2026-10-02). Frozen dev thresholds applied to RAG set (n=200). Filter B (F1=0.0861) and ROUGE-L (F1=0.0861) scored (results/exp2/20261002-1129-cb0b4a7/). |
 | 8 | Metrics and statistics | ✅ Done (2026-10-02). Exp 1 and Exp 2 evaluated (n=400 test, n=200 RAG). Filter B Exp 2 F1=0.0861 [0.0392, 0.1395], ROUGE F1=0.0861 [0.0392, 0.1395], McNemar p=1.0. Condition breakdowns & summary.md generated. Site tiles live. |
 | 9 | Cross-experiment and additional analyses | ✅ Done (2026-10-02). Cross-experiment analysis complete. Verifier ranking agrees across Exp 1 & Exp 2 (Filter B > ROUGE). Filter B threshold transfer gap = 0.0048. 3 qualitative disagreements exported. |
-| 10 | Figures, write-up digests, manuscript pages | ✅ Done (2026-10-02). All 6 paper figures regenerated in 300 dpi PNG & vector PDF (results/figures/, docs/assets/figures/) with Exp 1 & Exp 2 results. |
+| 10 | Figures, write-up digests, manuscript pages | ✅ Done (2026-10-02). All 6 publication figures generated (300 dpi PNG & vector PDF), results/REPORT.md index created, digests (00-06) and manuscript drafts complete, test_writeup.py passing. |
 | 11 | Revision and release | 🔲 Planned |
 | S | Session close and site sync (every session) | 🟡 Ongoing |
 
@@ -441,8 +441,8 @@ Clinician or medical student reviews 20 to 30 pairs; their labels are stored sep
 
 - [x] `python -m src.figures` regenerates every figure from cached results with no API calls.
 - [x] Consistent verifier colors across all figures and Home tiles.
-- [ ] Every number in `writeup/` has a source path that exists; a test checks this.
-- [ ] Write-up and Manuscript sections render on the site; each manuscript page shows its status badge.
+- [x] Every number in `writeup/` has a source path that exists; a test checks this.
+- [x] Write-up and Manuscript sections render on the site; each manuscript page shows its status badge.
 
 ---
 
@@ -501,7 +501,13 @@ A session that skips this leaves the site wrong, which is worse than no site. If
 
 ## Session Log
  
-Newest first. One entry per session, format in Rules 9.3. Never delete entries (Rules R9.9).
+### 2026-10-02, session 12 (Agent)
+- Phases touched: P10 (✅), S (🟡 -> ✅)
+- Done: Completed all Phase 10 artifacts: generated master index results/REPORT.md linking figures and tables to canonical run IDs. Formulated central research claim in docs/claim.md. Created writeup/rules/general-research-paper-rules.md. Drafted full write-up digests (00-abstract through 06-conclusion) and full manuscript section drafts in paper/manuscript/ (00 through 06) with front matter status: draft. Added tests/test_writeup.py verifying all source paths exist (128 tests passing, ruff 0 errors). Synchronized folder READMEs, handover.md, and validated strict mkdocs build.
+- Numbers produced: none (all figures, digests, and manuscript sections grounded on existing verified numbers of record)
+- Docs changed: Phase.md, handover.md, docs/claim.md, results/REPORT.md, writeup/*.md, paper/manuscript/*.md, tests/test_writeup.py, READMEs
+- Open / blocked: Researcher review of manuscript drafts (Phase 11).
+- Next session: Phase 11 supervisor feedback, revision, final release packaging.
 
 ### 2026-10-02, session 11 (Agent)
 - Phases touched: P6 (🟡 -> ✅), P7 (🔲 -> ✅), P8 (🟡 -> ✅), P9 (🟡 -> ✅), P10 (🟡 -> ✅), S (🟡)

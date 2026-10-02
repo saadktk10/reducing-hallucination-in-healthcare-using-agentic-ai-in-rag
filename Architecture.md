@@ -2,7 +2,7 @@
 
 System architecture for the hallucination verifier study. Diagrams use Mermaid (renders in GitHub, VS Code, Antigravity, and the project website), and a comprehensive editable draw.io specification is maintained at [`assets/architecture.drawio`](assets/architecture.drawio) (with an identical mirror file at `architecture.drawio` in the repository root).
 
-*Last updated: 2026-09-21, session 9. This file is updated in every session that changes structure (Rules R9.3). See the Change log at the end.*
+*Last updated: 2026-10-02, session 12. This file is updated in every session that changes structure (Rules R9.3). See the Change log at the end.*
 
 ## 1. System Overview
 
@@ -485,3 +485,5 @@ Append one line per structural change. Never delete lines (Rules R9.9).
 | 2026-09-20 | 7 | Implemented Phase 6 human annotation tooling in src/annotation.py (export, kappa, merge) and tests/test_annotation.py. Exported 200 Experiment 2 pairs to template.csv, annotator_1.csv, annotator_2.csv, and annotation_guide.md. Total test suite expanded to 112 tests (100% passing). |
 | 2026-09-20 | 8 | Resolved Windows MAX_PATH limitation via short-path virtualenv junction (.rag_env -> .venv). Re-exported and validated RFC 4180 annotation CSVs (annotator_1.csv, annotator_2.csv). Implemented Phase 8 evaluate.py (main tables, question-level bootstrap CIs, McNemar, breakdowns, summary.md), Phase 9 cross_experiment.py, and Phase 10 figures.py (all 6 publication figures generated in 300 dpi PNG & vector PDF). Added test_evaluate.py, test_cross_experiment.py, test_figures.py (122 tests passing, ruff 0 errors). Exported exp1 metrics to site numbers of record. |
 | 2026-09-20 | 9 | Generated comprehensive end-to-end architecture diagram in draw.io XML format (docs/assets/architecture.drawio and architecture.drawio) split into 5 horizontal layers with explicit tool/model badges (Groq, Gemini, DeBERTa, BGE, FAISS, ROUGE) and dotted boxes for planned components. Implemented scripts/generate_architecture_drawio.py and tests/test_architecture_drawio.py (127 tests passing). |
+| 2026-10-02 | 11 | Phase 6 human annotations merged to labeled.jsonl (Gate G2 passed, Kappa = 1.0000). Executed Phase 7 RAG verifiers (results/exp2/), Phase 8 Exp 2 evaluation (bootstrap CIs, condition breakdowns, McNemar), Phase 9 cross-experiment synthesis (ranking agreement, threshold transfer gap), Phase 10 figures regeneration. Updated src/site_export.py and numbers_of_record.json with live Exp 2 and cross tiles. Total 127 tests passing. |
+| 2026-10-02 | 12 | Added results/REPORT.md master index, writeup/rules/general-research-paper-rules.md, complete write-up digests (00-06), and paper/manuscript section drafts (00-06). Formulated central research claim in docs/claim.md. Added tests/test_writeup.py (128 tests passing). Strict site build verified. |

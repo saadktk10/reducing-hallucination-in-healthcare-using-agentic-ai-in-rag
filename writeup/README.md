@@ -29,3 +29,4 @@ Every bullet in the digest follows:
 | `04-results.md` | Results digest |
 | `05-discussion.md` | Discussion digest |
 | `06-conclusion.md` | Conclusion digest |
+| `rules/general-research-paper-rules.md` | General research paper writing rules |

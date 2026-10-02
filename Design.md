@@ -17,7 +17,7 @@ Technical design: data schemas, interfaces, algorithms, and conventions. Code mu
 ```yaml
 project: hallucination-verifier-c
 seed: 42
-plan: 1                          # set after Week 1 pilot: 1 or 2
+plan: 2                          # set after Week 1 pilot: 1 or 2 (Gate G1 resolved to Plan 2)
 
 paths:
   data: data
