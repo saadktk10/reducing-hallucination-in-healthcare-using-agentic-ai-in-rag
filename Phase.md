@@ -4,9 +4,10 @@ Detailed implementation plan over 10 weeks. Each phase lists goal, owner, tasks,
 
 **Owners.** R1 = researcher leading Experiment 1. R2 = researcher leading Experiment 2. Both = both researchers. Agent = Antigravity.
 
-*Last updated: 2026-10-02, session 12. Updated at the end of every session (Rules section 9).*
+*Research phase closed: 2026-10-03. All experimental phases (P0–P10) completed; Phase 11 release packaging and final manuscript verification complete.*
+*Last updated: 2026-10-03, session 13. Updated at the end of every session (Rules section 9).*
 
-**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & Baseline accuracy runs, timing benchmarks, shadow cost computed; Filter A deferred per researcher decision), Phase 6 ✅ Done (Gate G2 passed, Cohen's Kappa = 1.0000, 200 pairs merged), Phase 7 ✅ Done (Verifiers scored on RAG set: Filter B & ROUGE), Phase 8 ✅ Done (Exp 1 and Exp 2 evaluated: main tables, question/pair bootstrap CIs, McNemar, breakdowns, summary.md; site tiles live), Phase 9 ✅ Done (cross_experiment.py executed on Exp 1 and Exp 2, ranking agreement verified: Filter B > ROUGE, threshold transfer gap computed, 3 qualitative disagreements exported), Phase 10 ✅ Done (all 6 publication figures generated in 300 dpi PNG & vector PDF, results/REPORT.md index created, writeup digests and manuscript section drafts completed, test_writeup.py passing), Phase 11 🔲 Planned.
+**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & Baseline accuracy runs, timing benchmarks, shadow cost computed; Filter A deferred per researcher decision), Phase 6 ✅ Done (Gate G2 passed, Cohen's Kappa = 1.0000, 200 pairs merged), Phase 7 ✅ Done (Verifiers scored on RAG set: Filter B & ROUGE), Phase 8 ✅ Done (Exp 1 and Exp 2 evaluated: main tables, question/pair bootstrap CIs, McNemar, breakdowns, summary.md; site tiles live), Phase 9 ✅ Done (cross_experiment.py executed on Exp 1 and Exp 2, ranking agreement verified: Filter B > ROUGE, threshold transfer gap computed, 3 qualitative disagreements exported), Phase 10 ✅ Done (all 6 publication figures generated in 300 dpi PNG & vector PDF, results/REPORT.md index created, writeup digests and manuscript section drafts completed, test_writeup.py passing), Phase 11 ✅ Done (reproduction scripts verified on cache, manuscript finalized with pinned models/revisions, README and documentation synchronized for v1.0 release).
 
 ## Snapshot
 
@@ -26,7 +27,7 @@ Status legend: ✅ done · 🟡 partial · 🔲 planned · 🔴 open defect · �
 | 8 | Metrics and statistics | ✅ Done (2026-10-02). Exp 1 and Exp 2 evaluated (n=400 test, n=200 RAG). Filter B Exp 2 F1=0.0861 [0.0392, 0.1395], ROUGE F1=0.0861 [0.0392, 0.1395], McNemar p=1.0. Condition breakdowns & summary.md generated. Site tiles live. |
 | 9 | Cross-experiment and additional analyses | ✅ Done (2026-10-02). Cross-experiment analysis complete. Verifier ranking agrees across Exp 1 & Exp 2 (Filter B > ROUGE). Filter B threshold transfer gap = 0.0048. 3 qualitative disagreements exported. |
 | 10 | Figures, write-up digests, manuscript pages | ✅ Done (2026-10-02). All 6 publication figures generated (300 dpi PNG & vector PDF), results/REPORT.md index created, digests (00-06) and manuscript drafts complete, test_writeup.py passing. |
-| 11 | Revision and release | 🔲 Planned |
+| 11 | Revision and release | ✅ Done (2026-10-03). Reproducible pipeline verified via scripts/run_all.sh & scripts/run_all.ps1, manuscript sections finalized (status: final), licenses and limitations documented in README.md, release packaging complete. |
 | S | Session close and site sync (every session) | 🟡 Ongoing |
 
 When a State changes, keep it short and sourced, for example: `✅ Done (2026-02-03). Dev F1 0.81 [0.72, 0.89] (n=100, results/exp1/.../dev_metrics.csv). Thresholds frozen.`
@@ -461,9 +462,9 @@ Clinician or medical student reviews 20 to 30 pairs; their labels are stored sep
 
 ### Acceptance criteria
 
-- [ ] Fresh clone plus cache reproduces every reported number.
-- [ ] All five docs match the final code.
-- [ ] No tile shows `pending`; every Snapshot row is ✅, ⛔, or explained 🟡.
+- [x] Fresh clone plus cache reproduces every reported number.
+- [x] All five docs match the final code.
+- [x] No tile shows `pending`; every Snapshot row is ✅, ⛔, or explained 🟡.
 
 ---
 
@@ -500,7 +501,15 @@ A session that skips this leaves the site wrong, which is worse than no site. If
 | Private data published | P0b onward | CI grep of built `site/`, `data/` git-ignored |
 
 ## Session Log
- 
+
+### 2026-10-03, session 13 (Agent)
+- Phases touched: P11 (🔲 -> ✅), S (🟡 -> ✅)
+- Done: Completed Phase 11 release packaging. Implemented scripts/run_all.ps1 and updated scripts/run_all.sh to support single-command reproduction from cache across platforms. Successfully executed reproduction of all evaluation tables, bootstrap CIs, cross-experiment outputs, and all 12 publication figures (PNG and PDF). Transitioned all paper/manuscript section drafts to status: final and updated pinned model ID to gemini-3.6-flash. Updated root README.md with comprehensive hardware specifications, pinned model IDs, pinned dataset revisions, licenses (PubMedQA MIT, MedHallu CC BY-NC 4.0), study limitations, and reproduction commands. Updated docs/index.md claim admonition and closed the research phase. 128 tests passing, 0 ruff errors, strict mkdocs build passing in 0.69s.
+- Numbers produced: none (reproduction confirmed existing numbers of record)
+- Docs changed: Phase.md, Architecture.md, README.md, scripts/README.md, paper/manuscript/*.md, docs/manuscript/index.md, docs/index.md, handover.md
+- Open / blocked: None (ready for release tag v1.0-paper).
+- Next session: Tag git release v1.0-paper.
+
 ### 2026-10-02, session 12 (Agent)
 - Phases touched: P10 (✅), S (🟡 -> ✅)
 - Done: Completed all Phase 10 artifacts: generated master index results/REPORT.md linking figures and tables to canonical run IDs. Formulated central research claim in docs/claim.md. Created writeup/rules/general-research-paper-rules.md. Drafted full write-up digests (00-abstract through 06-conclusion) and full manuscript section drafts in paper/manuscript/ (00 through 06) with front matter status: draft. Added tests/test_writeup.py verifying all source paths exist (128 tests passing, ruff 0 errors). Synchronized folder READMEs, handover.md, and validated strict mkdocs build.

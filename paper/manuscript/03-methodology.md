@@ -1,5 +1,5 @@
 ---
-status: draft
+status: final
 ---
 
 # 3. Methodology
@@ -12,7 +12,7 @@ We evaluated three verification mechanisms under identical interfaces:
 
 1. **Filter B (Local NLI Cross-Encoder):** Uses `cross-encoder/nli-deberta-v3-small` (44M parameters) deployed locally on CPU. Generated answers are segmented into sentences using `pysbd`. For each sentence $s_i$, the cross-encoder computes softmax probabilities over $[P(\text{contradiction}), P(\text{neutral}), P(\text{entailment})]$ using the retrieved context as premise. The sentence score is $1 - P(\text{entailment})$. The overall answer score is the maximum sentence score: $\max_i (1 - P(\text{entailment}_i))$. An answer is classified as Hallucinated ($y=1$) if the score exceeds threshold $\tau_B$.
 2. **Baseline (Lexical Overlap):** Computes sentence-level ROUGE-L recall against the evidence context using `rouge-score`. The score is defined as $1 - \min_i \text{ROUGE-L}(s_i, \text{context})$. If the score exceeds $\tau_{\text{rouge}}$, the answer is flagged as Hallucinated.
-3. **Filter A (API LLM Judge):** Prompts `gemini-2.5-flash` at temperature 0 via structured JSON output using a frozen rubric (`prompts/judge_v1.txt`). Evaluated via token consumption and shadow cost profiling ($0.10/1M prompt, $0.40/1M completion tokens).
+3. **Filter A (API LLM Judge):** Prompts `gemini-3.6-flash` at temperature 0 via structured JSON output using a frozen rubric (`prompts/judge_v1.txt`). Evaluated via token consumption and shadow cost profiling ($0.10/1M prompt, $0.40/1M completion tokens).
 
 ## 3.2 Experiment 1: Synthetic Benchmark Evaluation (MedHallu)
 

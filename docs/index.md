@@ -6,13 +6,13 @@ Muhammad Saad, Rabia Qaiser. Supervisor: Dr. Laeeq Ahmed. UET Peshawar, Jalozai 
 
 ---
 
-!!! abstract "Research questions"
+!!! abstract "The one claim"
 
     --8<-- "docs/claim.md"
 
 !!! info "Current status"
 
-    Phase 0, 0b, 1, 2, 3, 4, 6, 7, 8, 9, 10 Done (Gate G1 Plan 2, Exp 1 & Exp 2 evaluated, Gate G2 passed with human annotation Kappa = 1.0000, cross-experiment ranking confirmed, 6 publication figures generated); Phase 5 partial (Filter A deferred per researcher decision). See [Progress](progress.md) for details.
+    Phase 0, 0b, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11 Done (Gate G1 Plan 2, Exp 1 & Exp 2 evaluated, Gate G2 passed with human annotation Kappa = 1.0000, cross-experiment ranking confirmed, 6 publication figures generated, manuscript sections finalized, reproduction script verified); Phase 5 partial (Filter A deferred per researcher decision). See [Progress](progress.md) for details.
 
 ## Numbers of record
 
