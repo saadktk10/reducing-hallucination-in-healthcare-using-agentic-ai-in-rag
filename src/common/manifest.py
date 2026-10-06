@@ -83,7 +83,7 @@ def get_machine_info() -> dict:
         info["torch_version"] = torch.__version__
         info["cuda_available"] = torch.cuda.is_available()
         info["torch_num_threads"] = torch.get_num_threads()
-    except ImportError:
+    except (ImportError, OSError):
         info["torch_version"] = None
 
     return info

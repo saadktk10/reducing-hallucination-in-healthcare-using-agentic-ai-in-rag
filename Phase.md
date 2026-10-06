@@ -5,9 +5,9 @@ Detailed implementation plan over 10 weeks. Each phase lists goal, owner, tasks,
 **Owners.** R1 = researcher leading Experiment 1. R2 = researcher leading Experiment 2. Both = both researchers. Agent = Antigravity.
 
 *Research phase closed: 2026-10-03. All experimental phases (P0–P10) completed; Phase 11 release packaging and final manuscript verification complete.*
-*Last updated: 2026-10-03, session 13. Updated at the end of every session (Rules section 9).*
+*Last updated: 2026-10-06, session 14. Updated at the end of every session (Rules section 9).*
 
-**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & Baseline accuracy runs, timing benchmarks, shadow cost computed; Filter A deferred per researcher decision), Phase 6 ✅ Done (Gate G2 passed, Cohen's Kappa = 1.0000, 200 pairs merged), Phase 7 ✅ Done (Verifiers scored on RAG set: Filter B & ROUGE), Phase 8 ✅ Done (Exp 1 and Exp 2 evaluated: main tables, question/pair bootstrap CIs, McNemar, breakdowns, summary.md; site tiles live), Phase 9 ✅ Done (cross_experiment.py executed on Exp 1 and Exp 2, ranking agreement verified: Filter B > ROUGE, threshold transfer gap computed, 3 qualitative disagreements exported), Phase 10 ✅ Done (all 6 publication figures generated in 300 dpi PNG & vector PDF, results/REPORT.md index created, writeup digests and manuscript section drafts completed, test_writeup.py passing), Phase 11 ✅ Done (reproduction scripts verified on cache, manuscript finalized with pinned models/revisions, README and documentation synchronized for v1.0 release).
+**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & Baseline accuracy runs, timing benchmarks, shadow cost computed; Filter A deferred per researcher decision reconfirmed in session 14), Phase 6 ✅ Done (Gate G2 passed, Cohen's Kappa = 1.0000, 200 pairs merged), Phase 7 ✅ Done (Verifiers scored on RAG set: Filter B & ROUGE), Phase 8 ✅ Done (Exp 1 and Exp 2 evaluated: main tables, question/pair bootstrap CIs, McNemar, breakdowns, summary.md; site tiles live), Phase 9 ✅ Done (cross_experiment.py executed on Exp 1 and Exp 2, ranking agreement verified: Filter B > ROUGE, threshold transfer gap computed, 3 qualitative disagreements exported), Phase 10 ✅ Done (all 6 publication figures generated in 300 dpi PNG & vector PDF, results/REPORT.md index created, writeup digests and manuscript section drafts completed, test_writeup.py passing), Phase 11 ✅ Done (reproduction scripts verified on cache, manuscript finalized with pinned models/revisions, README and documentation synchronized for v1.0 release).
 
 ## Snapshot
 
@@ -21,7 +21,7 @@ Status legend: ✅ done · 🟡 partial · 🔲 planned · 🔴 open defect · �
 | 2 | Experiment 1 pairs and splits | ✅ Done (2026-09-19). Canonical 250 questions / 500 pairs generated (100 dev / 400 test), zero question overlap, exact 50/50 balance. |
 | 3 | Verifiers and dev tuning | ✅ Done (2026-09-19). Verifiers implemented (baseline_rouge, filter_b, filter_a). Tested on dev. Thresholds frozen in results/thresholds.json (Filter B F1=0.67, ROUGE-L F1=0.67). Prompts frozen in FROZEN.json. 105 tests passing. |
 | 4 | Experiment 2 index and generation | ✅ Done (2026-09-20). 1,790 chunks, FAISS index built on CPU (451.8 MB peak RAM), 100% normal retrieval hit rate. 200 answers (100 normal, 100 degraded) generated via Groq qwen/qwen3.8-27b at temp 0 with zero leakage vs Exp 1. |
-| 5 | Experiment 1 test runs and timing | 🟡 Partial (2026-09-20). ROUGE-L & Filter B scored 400 test pairs (F1=0.6667 each, results/exp1/20260919-2151-bd5e507/metrics.json). Laptop timing done (Filter B pooled p50=332.1 ms, ROUGE p50=2.5 ms). Shadow cost $0.0575/1k. Filter A deferred per researcher decision. |
+| 5 | Experiment 1 test runs and timing | 🟡 Partial (2026-10-06). ROUGE-L & Filter B scored 400 test pairs (F1=0.6667 each, results/exp1/20260919-2151-bd5e507/metrics.json). Laptop timing done (Filter B pooled p50=332.1 ms, ROUGE p50=2.5 ms). Shadow cost $0.0575/1k. Filter A deferred per researcher decision (20 RPD free-tier quota reconfirmed). |
 | 6 | Two-annotator labeling (Gate G2) | ✅ Done (2026-10-02). Human labeling on 200 pairs complete (100% agreement, Cohen's Kappa = 1.0000). Merged to labeled.jsonl (n=200, 4.5% Hallucinated). Gate G2 passed. |
 | 7 | Verifiers on the RAG set | ✅ Done (2026-10-02). Frozen dev thresholds applied to RAG set (n=200). Filter B (F1=0.0861) and ROUGE-L (F1=0.0861) scored (results/exp2/20261002-1129-cb0b4a7/). |
 | 8 | Metrics and statistics | ✅ Done (2026-10-02). Exp 1 and Exp 2 evaluated (n=400 test, n=200 RAG). Filter B Exp 2 F1=0.0861 [0.0392, 0.1395], ROUGE F1=0.0861 [0.0392, 0.1395], McNemar p=1.0. Condition breakdowns & summary.md generated. Site tiles live. |
@@ -501,6 +501,14 @@ A session that skips this leaves the site wrong, which is worse than no site. If
 | Private data published | P0b onward | CI grep of built `site/`, `data/` git-ignored |
 
 ## Session Log
+
+### 2026-10-06, session 14 (Agent)
+- Phases touched: P5 (🟡 -> 🟡), S (🟡 -> ✅)
+- Done: Resumed Phase 5 investigation. Resolved Windows Application Control policy (`WinError 4551`) import issues on local environment DLLs. Ran test suite to 100% green (128/128 passed, ruff clean). Verified frozen prompt hash. Executed Filter A (`gemini-3.6-flash`) test run on Exp 1; cached 16 test pairs before reaching free-tier 20 RPD cap (`RESOURCE_EXHAUSTED`). Presented options to researchers per Rule R8.1; researcher confirmed daily free-tier batch accumulation approach (16/400 cached, 384 remaining).
+- Numbers produced: none (accumulation ongoing)
+- Docs changed: Phase.md, Architecture.md, handover.md, src/filters/filter_nli.py, src/common/manifest.py
+- Open / blocked: Daily batch execution of Filter A test split to accumulate all 400 pairs in cache.
+- Next session: Continue daily Filter A cache accumulation.
 
 ### 2026-10-03, session 13 (Agent)
 - Phases touched: P11 (🔲 -> ✅), S (🟡 -> ✅)

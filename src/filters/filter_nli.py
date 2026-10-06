@@ -10,9 +10,11 @@ import os
 import time
 from typing import Any
 
-import torch
+try:
+    import torch
+except (ImportError, OSError):
+    torch = None  # type: ignore
 from dotenv import load_dotenv
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 from src.common.io import Pair, VerifierResult
 from src.common.text import split_sentences, token_chunks
@@ -50,7 +52,11 @@ class NLIVerifier:
         load_dotenv()
         token = os.getenv("HF_TOKEN")
         t0 = time.perf_counter()
+        if torch is None:
+            raise RuntimeError("PyTorch is not available in the current environment.")
         torch.set_num_threads(self.num_threads)
+
+        from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
         logger.info("Loading NLI tokenizer: %s", self.model_id)
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_id, token=token)
@@ -87,6 +93,8 @@ class NLIVerifier:
 
         assert self.tokenizer is not None
         assert self.model is not None
+        if torch is None:
+            raise RuntimeError("PyTorch is not available in the current environment.")
 
         scores: list[float] = []
         # Rule R6.2: MUST wrap inference in torch.inference_mode()
