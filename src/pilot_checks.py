@@ -23,7 +23,6 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-from datasets import load_dataset
 from rouge_score import rouge_scorer
 from sklearn.metrics import roc_auc_score
 
@@ -53,6 +52,8 @@ def _load_medhallu(cfg: Config) -> Any:
             "MedHallu revision is TBD — downloading at HEAD. "
             "Pin the revision in config.yaml after inspecting fields (Rule R4.4)."
         )
+    from datasets import load_dataset
+
     ds = load_dataset(ds_cfg.hf_id, ds_cfg.config, revision=revision)
     # MedHallu is a single split; get the underlying dataset.
     if hasattr(ds, "keys"):

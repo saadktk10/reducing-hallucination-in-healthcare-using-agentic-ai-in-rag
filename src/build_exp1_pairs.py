@@ -20,8 +20,6 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Literal
 
-from datasets import load_dataset
-
 from src.common.config import Config, load_config
 from src.common.io import Pair, write_jsonl
 from src.common.logging_utils import setup_logging
@@ -38,6 +36,8 @@ def load_medhallu(cfg: Config) -> Any:
     Returns:
         HuggingFace Dataset object.
     """
+    from datasets import load_dataset
+
     ds_cfg = cfg.datasets.medhallu
     revision = None if ds_cfg.revision == "TBD" else ds_cfg.revision
     if revision is None:

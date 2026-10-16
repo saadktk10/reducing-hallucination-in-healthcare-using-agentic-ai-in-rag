@@ -6,8 +6,8 @@
 
 ## Current State
 
-- **Date**: 2026-10-06
-- **Session**: 14 (Completed)
+- **Date**: 2026-10-16
+- **Session**: 16 (Completed)
 - **Active Branch**: `main`
 - **Current Phase**:
   - Phase 0 ✅ Done (Python 3.12, PyTorch CPU, pinned models)
@@ -16,7 +16,7 @@
   - Phase 2 ✅ Done (MedHallu 500 pairs generated, 100 dev / 400 test)
   - Phase 3 ✅ Done (Verifiers implemented, frozen thresholds & prompts)
   - Phase 4 ✅ Done (PubMedQA FAISS index, 200 RAG answers generated via Groq at temp 0)
-  - Phase 5 🟡 Partial (Filter B & Baseline accuracy runs, timing benchmarks, shadow cost computed; Filter A deferred per researcher decision reconfirmed in session 14)
+  - Phase 5 🟡 Partial (Filter B & Baseline accuracy runs, timing benchmarks, shadow cost computed; Filter A daily free-tier accumulation progressing: 56/400 cached, 344 remaining)
   - Phase 6 ✅ Done (Gate G2 passed, Cohen's Kappa = 1.0000, 200 pairs merged, 4.5% Hallucinated)
   - Phase 7 ✅ Done (Verifiers scored on RAG set: Filter B & ROUGE, run ID `20261002-1129-cb0b4a7`)
   - Phase 8 ✅ Done (Exp 1 and Exp 2 evaluated: main tables, condition breakdowns, bootstrap CIs, McNemar tests, summary.md; site tiles live)
@@ -26,50 +26,50 @@
 - **Environment & Build Health**:
   - `ruff check .`: 0 lint errors (All checks passed).
   - Test suite: 128 unit, integration, statistical, and writeup tests passing (100% passing).
-  - `mkdocs build --strict`: passing with 0 warnings in 0.72s.
+  - `mkdocs build --strict`: passing with 0 warnings in 1.47s.
   - Numbers of record: 10 live metrics populated in `results/site/numbers_of_record.json`.
 - **Live Documentation**: [https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/](https://saadktk10.github.io/reducing-hallucination-in-healthcare-using-agentic-ai-in-rag/)
 
 ---
 
-## Accomplishments (Session 14)
+## Accomplishments (Session 16)
 
-1. **Environment Hardening for Windows Application Control (`WinError 4551`)**:
-   - Isolated dynamic C-extension dependencies in `NLIVerifier` (`src/filters/filter_nli.py`) and `get_machine_info` (`src/common/manifest.py`) to prevent OS-level code integrity blocks during test collection and non-NLI operations.
-   - Restored complete test suite execution: **128/128 tests passing (100%)** and clean `ruff check .` linter status.
-2. **Phase 5 Filter A Resume Attempt & Quota Assessment**:
-   - Re-verified prompt hash for `judge_v1.txt` against `prompts/FROZEN.json` (`c09600773742...`).
-   - Launched Filter A (`gemini-3.6-flash`) against Experiment 1 test split (400 pairs) under run ID `20260919-2151-bd5e507`.
-   - Reached the hard Google AI Studio free-tier limit of 20 requests per day (RPD) on the pinned model (`RESOURCE_EXHAUSTED`). Responses up to the limit were persisted to `data/cache/judge_gemini.jsonl`.
-3. **Researcher Consultation & Option Selection (Rule R8.1)**:
-   - Presented options (Option A: AI Studio pay-as-you-go, Option B: model switch, Option C: reconfirm deferral).
-   - Researcher confirmed **Option C**: Maintain Filter A deferral, relying on the comprehensive local NLI (Filter B), ROUGE-L baseline, human-annotated Exp 2 RAG set, and cross-experiment analyses.
-4. **Documentation & Phase Board Synchronization**:
-   - Updated `Phase.md` (header, status, Snapshot row, Session 14 log entry).
-   - Updated `Architecture.md` Change log.
-   - Confirmed strict MkDocs documentation build with 0 warnings.
+1. **Pre-Execution Health Checks & Environment Verification**:
+   - Executed full test suite: 128 unit, integration, statistical, and writeup tests passing (100% passing in 72.89s).
+   - Executed `ruff check .`: 0 lint errors (All checks passed).
+   - Verified strict MkDocs build with 0 warnings in 1.47s.
+   - Verified frozen prompt SHA-256 hash integrity (`prompts/FROZEN.json` matching `judge_v1.txt`).
+2. **Phase 5 Filter A Daily Cache Accumulation Run**:
+   - Executed Filter A (`gemini-3.6-flash`) runner on Exp 1 test split under run ID `20260919-2151-bd5e507`.
+   - Reused all 37 previously cached test pairs; queried and successfully persisted 19 new test pairs to `data/cache/judge_gemini.jsonl`.
+   - Cache increased from **37 / 400** to **56 / 400** test pairs (344 remaining).
+   - Reached Google AI Studio free-tier daily cap of 20 requests per day (`RESOURCE_EXHAUSTED` on `generativelanguage.googleapis.com/generate_content_free_tier_requests` with quota ID `GenerateRequestsPerDayPerProjectPerModel-FreeTier`), reporting reset delay of ~18 hours (`65207s`).
+3. **Documentation & Phase Board Synchronization**:
+   - Updated `Phase.md` (header, status, Snapshot, Session 16 log entry).
+   - Synchronized root `handover.md` with exact cache counts and reset timer.
+   - Verified strict MkDocs documentation build with 0 warnings.
 
 ---
 
 ## Key Decisions
 
-- **Filter A Daily Free-Tier Accumulation Strategy**: The researcher selected the daily batch accumulation approach on Google AI Studio's free tier (20 RPD cap on `gemini-3.6-flash`).
-  - **Current Cache Status**: 16 / 400 test pairs cached in `data/cache/judge_gemini.jsonl` (384 remaining).
-  - **Execution Protocol**: Each day (or whenever the ~6-hour quota window resets), execute:
+- **Filter A Daily Free-Tier Accumulation Strategy**:
+  - **Current Cache Status**: 56 / 400 test pairs cached in `data/cache/judge_gemini.jsonl` (344 remaining).
+  - **Execution Protocol**: Each day (or whenever the ~18-hour quota window resets), execute:
     ```powershell
-    python -m src.run_verifiers --config configs/config.yaml --split test --verifier filter_a --run-id 20260919-2151-bd5e507
+    .venv\Scripts\python -m src.run_verifiers --config configs/config.yaml --split test --verifier filter_a --run-id 20260919-2151-bd5e507
     ```
-    The runner will instantly skip all previously cached records from disk and query the next available batch, incrementally filling the cache without wasting quota or re-querying existing pairs (Rule R4.7).
+    The runner will instantly skip all 56 previously cached records and query the next available batch, incrementally filling the cache without wasting quota or re-querying existing pairs (Rule R4.7).
   - Once all 400 pairs are cached, Filter A predictions, metrics, and bootstrap comparisons will finalize automatically.
 
 ---
 
 ## Immediate Next Tasks
 
-1. **Daily Incremental Runs**:
-   - Run the verifier command above daily until all 400 pairs are completed.
+1. **Next Incremental Batch Run**:
+   - Run the verifier command once the quota window resets (in ~18 hours) to accumulate the next batch towards 400 pairs.
 2. **Repository Synchronization**:
-   - Keep `data/cache/judge_gemini.jsonl` updated as calls accumulate.
+   - Keep `data/cache/judge_gemini.jsonl` committed as calls accumulate.
 
 ---
 *Research prototype. Not for clinical use.*

@@ -2,7 +2,7 @@
 
 System architecture for the hallucination verifier study. Diagrams use Mermaid (renders in GitHub, VS Code, Antigravity, and the project website), and a comprehensive editable draw.io specification is maintained at [`assets/architecture.drawio`](assets/architecture.drawio) (with an identical mirror file at `architecture.drawio` in the repository root).
 
-*Last updated: 2026-10-03, session 13. This file is updated in every session that changes structure (Rules R9.3). See the Change log at the end.*
+*Last updated: 2026-10-10, session 15. This file is updated in every session that changes structure (Rules R9.3). See the Change log at the end.*
 
 ## 1. System Overview
 
@@ -490,3 +490,4 @@ Append one line per structural change. Never delete lines (Rules R9.9).
 | 2026-10-02 | 12 | Added results/REPORT.md master index, writeup/rules/general-research-paper-rules.md, complete write-up digests (00-06), and paper/manuscript section drafts (00-06). Formulated central research claim in docs/claim.md. Added tests/test_writeup.py (128 tests passing). Strict site build verified. |
 | 2026-10-03 | 13 | Finalized Phase 11 release packaging: implemented scripts/run_all.ps1, updated scripts/run_all.sh for reproducible cache replay, transitioned all paper/manuscript section drafts to status: final with pinned model ID gemini-3.6-flash, updated root README.md with comprehensive license/benchmark specs, updated docs/claim.md integration in docs/index.md, and closed the research phase. 128 tests passing. |
 | 2026-10-06 | 14 | Hardened imports in src/filters/filter_nli.py and src/common/manifest.py against Windows Application Control (WinError 4551) code integrity blocks. Resumed Phase 5 Filter A run on Exp 1; free-tier 20 RPD quota blocker reconfirmed by researcher (Option C deferral). |
+| 2026-10-10 | 15 | Hardened datasets imports across src/build_exp1_pairs.py, src/build_index.py, and src/pilot_checks.py against Windows Application Control pyarrow DLL blocks during test collection. Resumed Phase 5 Filter A daily cache accumulation on Exp 1 test split (advanced from 16 to 37 / 400 pairs). 128 tests passing. |

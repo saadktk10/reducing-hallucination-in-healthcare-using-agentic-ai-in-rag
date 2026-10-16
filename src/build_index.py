@@ -21,7 +21,6 @@ import numpy as np
 import psutil
 import torch
 import torch.nn.functional as F
-from datasets import load_dataset
 from dotenv import load_dotenv
 from tqdm import tqdm
 from transformers import AutoModel, AutoTokenizer
@@ -314,6 +313,8 @@ def main() -> None:
         cfg.datasets.pubmedqa.revision,
     )
     load_dotenv()
+    from datasets import load_dataset
+
     token = os.getenv("HF_TOKEN")
     dataset = load_dataset(
         cfg.datasets.pubmedqa.hf_id,
