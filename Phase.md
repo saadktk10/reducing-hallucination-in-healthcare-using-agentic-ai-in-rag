@@ -5,9 +5,9 @@ Detailed implementation plan over 10 weeks. Each phase lists goal, owner, tasks,
 **Owners.** R1 = researcher leading Experiment 1. R2 = researcher leading Experiment 2. Both = both researchers. Agent = Antigravity.
 
 *Research phase closed: 2026-10-03. All experimental phases (P0–P10) completed; Phase 11 release packaging and final manuscript verification complete.*
-*Last updated: 2026-10-16, session 16. Updated at the end of every session (Rules section 9).*
+*Last updated: 2026-10-22, session 17. Updated at the end of every session (Rules section 9).*
 
-**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & Baseline accuracy runs, timing benchmarks, shadow cost computed; Filter A daily free-tier accumulation progressing: 56/400 cached), Phase 6 ✅ Done (Gate G2 passed, Cohen's Kappa = 1.0000, 200 pairs merged), Phase 7 ✅ Done (Verifiers scored on RAG set: Filter B & ROUGE), Phase 8 ✅ Done (Exp 1 and Exp 2 evaluated: main tables, question/pair bootstrap CIs, McNemar, breakdowns, summary.md; site tiles live), Phase 9 ✅ Done (cross_experiment.py executed on Exp 1 and Exp 2, ranking agreement verified: Filter B > ROUGE, threshold transfer gap computed, 3 qualitative disagreements exported), Phase 10 ✅ Done (all 6 publication figures generated in 300 dpi PNG & vector PDF, results/REPORT.md index created, writeup digests and manuscript section drafts completed, test_writeup.py passing), Phase 11 ✅ Done (reproduction scripts verified on cache, manuscript finalized with pinned models/revisions, README and documentation synchronized for v1.0 release).
+**Current status:** Phase 0 ✅ Done, Phase 0b ✅ Done, Phase 1 ✅ Done (Gate G1 resolved to Plan 2), Phase 2 ✅ Done, Phase 3 ✅ Done, Phase 4 ✅ Done, Phase 5 🟡 Partial (Filter B & Baseline accuracy runs, timing benchmarks, shadow cost computed; Filter A daily free-tier accumulation progressing: 75/400 cached), Phase 6 ✅ Done (Gate G2 passed, Cohen's Kappa = 1.0000, 200 pairs merged), Phase 7 ✅ Done (Verifiers scored on RAG set: Filter B & ROUGE), Phase 8 ✅ Done (Exp 1 and Exp 2 evaluated: main tables, question/pair bootstrap CIs, McNemar, breakdowns, summary.md; site tiles live), Phase 9 ✅ Done (cross_experiment.py executed on Exp 1 and Exp 2, ranking agreement verified: Filter B > ROUGE, threshold transfer gap computed, 3 qualitative disagreements exported), Phase 10 ✅ Done (all 6 publication figures generated in 300 dpi PNG & vector PDF, results/REPORT.md index created, writeup digests and manuscript section drafts completed, test_writeup.py passing), Phase 11 ✅ Done (reproduction scripts verified on cache, manuscript finalized with pinned models/revisions, README and documentation synchronized for v1.0 release).
 
 ## Snapshot
 
@@ -501,6 +501,14 @@ A session that skips this leaves the site wrong, which is worse than no site. If
 | Private data published | P0b onward | CI grep of built `site/`, `data/` git-ignored |
 
 ## Session Log
+
+### 2026-10-22, session 17 (Agent)
+- Phases touched: P5 (🟡 -> 🟡)
+- Done: Resumed Phase 5 Filter A (gemini-3.6-flash) test split accumulation run under run ID 20260919-2151-bd5e507. Reused 56 cached test pairs, successfully queried and persisted 19 new test pairs to data/cache/judge_gemini.jsonl. Cache advanced from 56 to 75 / 400 test pairs (325 remaining) before reaching 20 RPD free-tier limit (RESOURCE_EXHAUSTED, retry delay ~47m). Ran src.site_export, full test suite (128/128 passing, ruff clean), and strict MkDocs build (0.66s).
+- Numbers produced: none (accumulation ongoing: 75/400 test pairs cached)
+- Docs changed: Phase.md, handover.md
+- Open / blocked: Continue Filter A cache accumulation in next batch (quota window reports ~47m delay).
+- Next session: Execute next batch of Filter A test split queries.
 
 ### 2026-10-16, session 16 (Agent)
 - Phases touched: P5 (🟡 -> 🟡)
