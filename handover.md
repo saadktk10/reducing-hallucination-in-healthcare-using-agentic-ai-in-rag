@@ -7,7 +7,7 @@
 ## Current State
 
 - **Date**: 2026-11-18
-- **Session**: 24 (Completed)
+- **Session**: 25 (Completed)
 - **Active Branch**: `main`
 - **Current Phase**:
   - Phase 0 ✅ Done (Python 3.12, PyTorch CPU, pinned models)
@@ -16,7 +16,7 @@
   - Phase 2 ✅ Done (MedHallu 500 pairs generated, 100 dev / 400 test)
   - Phase 3 ✅ Done (Verifiers implemented, frozen thresholds & prompts)
   - Phase 4 ✅ Done (PubMedQA FAISS index, 200 RAG answers generated via Groq at temp 0)
-  - Phase 5 🟡 Partial (Filter B & Baseline accuracy runs, timing benchmarks, shadow cost computed; Filter A daily free-tier accumulation progressing: 228/400 cached, 172 remaining)
+  - Phase 5 🟡 Partial (Filter B & Baseline accuracy runs, timing benchmarks, shadow cost computed; Filter A daily free-tier accumulation progressing: 269/400 cached, 131 remaining)
   - Phase 6 ✅ Done (Gate G2 passed, Cohen's Kappa = 1.0000, 200 pairs merged, 4.5% Hallucinated)
   - Phase 7 ✅ Done (Verifiers scored on RAG set: Filter B & ROUGE, run ID `20261002-1129-cb0b4a7`)
   - Phase 8 ✅ Done (Exp 1 and Exp 2 evaluated: main tables, condition breakdowns, bootstrap CIs, McNemar tests, summary.md; site tiles live)
@@ -32,7 +32,7 @@
 
 ---
 
-## Accomplishments (Session 24)
+## Accomplishments (Session 25)
 
 1. **Pre-Execution Health Checks & Environment Verification**:
    - Verified `ruff check .`: 0 lint errors (All checks passed).
@@ -40,13 +40,13 @@
    - Verified frozen prompt integrity (`prompts/FROZEN.json`).
 2. **Phase 5 Filter A Daily Cache Accumulation Run**:
    - Executed Filter A (`gemini-3.6-flash`) runner on Exp 1 test split under run ID `20260919-2151-bd5e507`.
-   - Reused all 206 previously cached test pairs; queried and successfully persisted 22 new test pairs to `data/cache/judge_gemini.jsonl`.
-   - Cache increased from **206 / 400** to **228 / 400** test pairs (172 remaining, total records in cache = 232).
-   - Reached Google AI Studio free-tier daily requests limit (`RESOURCE_EXHAUSTED` on `generativelanguage.googleapis.com/generate_content_free_tier_requests` with quota ID `GenerateRequestsPerDayPerProjectPerModel-FreeTier`, limit: 20 per day), reporting retry delay of ~2h 33m (`retryDelay: 9191s`).
+   - Reused all 228 previously cached test pairs; queried and successfully persisted 41 new test pairs to `data/cache/judge_gemini.jsonl`.
+   - Cache increased from **228 / 400** to **269 / 400** test pairs (131 remaining, total records in cache = 273).
+   - Reached Google AI Studio free-tier daily requests limit (`RESOURCE_EXHAUSTED` on `generativelanguage.googleapis.com/generate_content_free_tier_requests` with quota ID `GenerateRequestsPerDayPerProjectPerModel-FreeTier`, limit: 20 per day), reporting retry delay of ~22h 40m (`retryDelay: 81652s`).
 3. **Documentation, Site & Repository Synchronization**:
    - Ran `src.site_export` to refresh numbers of record.
-   - Updated `Phase.md` (header, status, Snapshot row 5, Session 24 log entry).
-   - Updated `docs/index.md` status with new 228/400 cache progress.
+   - Updated `Phase.md` (header, status, Snapshot row 5, Session 25 log entry).
+   - Updated `docs/index.md` status with new 269/400 cache progress.
    - Verified strict MkDocs documentation build with 0 warnings.
    - Synchronized root `handover.md`.
 
@@ -55,12 +55,12 @@
 ## Key Decisions
 
 - **Filter A Daily Free-Tier Accumulation Strategy**:
-  - **Current Cache Status**: 228 / 400 test pairs cached in `data/cache/judge_gemini.jsonl` (172 remaining).
-  - **Execution Protocol**: Each day (or whenever the quota window resets, ~2h 33m reported delay), execute:
+  - **Current Cache Status**: 269 / 400 test pairs cached in `data/cache/judge_gemini.jsonl` (131 remaining).
+  - **Execution Protocol**: Each day (or whenever the quota window resets, ~22h 40m reported delay), execute:
     ```powershell
     .venv\Scripts\python -m src.run_verifiers --config configs/config.yaml --split test --verifier filter_a --run-id 20260919-2151-bd5e507
     ```
-    The runner will instantly skip all 228 previously cached records and query the next available batch, incrementally filling the cache without wasting quota or re-querying existing pairs (Rule R4.7).
+    The runner will instantly skip all 269 previously cached records and query the next available batch, incrementally filling the cache without wasting quota or re-querying existing pairs (Rule R4.7).
   - Once all 400 pairs are cached, Filter A predictions, metrics, and bootstrap comparisons will finalize automatically.
 
 ---
@@ -68,7 +68,7 @@
 ## Immediate Next Tasks
 
 1. **Next Incremental Batch Run**:
-   - Run the verifier command once the daily quota window resets (in ~2h 33m) to accumulate the next batch towards 400 pairs.
+   - Run the verifier command once the daily quota window resets (in ~22h 40m) to accumulate the next batch towards 400 pairs.
 2. **Repository Synchronization**:
    - Keep `data/cache/judge_gemini.jsonl` committed as calls accumulate.
 
